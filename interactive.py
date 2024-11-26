@@ -137,15 +137,15 @@ p2.circle(x='x', y='y', source=move_source_p1, size=10,
 
 # Create sliders for interactivity
 theta1_slider = Slider(
-    start=0, end=np.pi, value=theta1_fixed, step=0.1, title="Theta1")
+    start=0, end=np.pi, value=theta1_fixed, step=np.pi/200, title="Theta1")
 phi1_slider = Slider(start=0, end=np.pi / 2,
-                     value=phi1_fixed, step=0.1, title="Phi1")
+                     value=phi1_fixed, step=np.pi/200, title="Phi1")
 theta2_slider = Slider(
-    start=0, end=np.pi, value=theta2_fixed, step=0.1, title="Theta2")
+    start=0, end=np.pi, value=theta2_fixed, step=np.pi/20, title="Theta2")
 phi2_slider = Slider(start=0, end=np.pi / 2,
-                     value=phi2_fixed, step=0.1, title="Phi2")
+                     value=phi2_fixed, step=np.pi/200, title="Phi2")
 gamma_slider = Slider(start=0, end=np.pi / 2, value=gamma_fixed,
-                      step=np.pi / 40, title="Gamma")
+                      step=np.pi / 200, title="Gamma")
 
 # Update function
 
