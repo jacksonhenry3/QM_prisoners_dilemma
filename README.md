@@ -1,12 +1,20 @@
 # QM_prisoners_dilemma
 An exploration of the quantum Prisoners Dilemma
 
+
+
 ## To run the exploratory `interactive.py`
 requires 
 ```python
 numpy
 scipy
 bokeh
+```
+
+these can all be installed using 
+
+```bash
+pip install -r requirements.txt
 ```
 
 run with 
