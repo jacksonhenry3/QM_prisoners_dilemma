@@ -9,11 +9,11 @@ from scipy.linalg import expm
 # Please feel free to ask questions
 # I'd also request that you keep approximate track of how much time this takes.
 
-C = np.array([[1], [0]]) # |C>
-D = np.array([[0], [1]]) # |D>
+C = np.array([1, 0]) # |C>
+D = np.array([0, 1]) # |D>
 
-# U(θ, φ)
-def U(theta: float, phi: float) -> np.ndarray:
+# U(θ, φ); return a 2x2 nparray
+def U(theta: float, phi: float):
     uni = np.array([[np.exp(1j * phi) * np.cos(theta/2), np.sin(theta/2)],
                     [-np.sin(theta/2), np.exp(-1j * phi) * np.cos(theta/2)]])
     return uni
@@ -29,22 +29,31 @@ Q_op = U(0, np.pi/2)
 def J(gamma):
     return expm(np.kron(-1j*gamma*D_op, D_op/2))
 
-# get final state vector; should be 4x1 array (complex)
+#get final state vector; should return 4x1 array (complex)
+#48 minutes; @ not * and forgot conj()
 def final_state(U_A: np.ndarray, U_B: np.ndarray, J: np.ndarray, initial_state: np.ndarray):
-    """
-    Compute the final state vector.
-    This should return a 4x1 NumPy array (complex).
-    """
-    fs_vect = J.transpose() * np.kron(U_A, U_B) * J * inital_state
+    fs_vect = J.conj().transpose() @ np.kron(U_A, U_B) @ J @ initial_state
     return fs_vect
-    #46 minutes; yet to output a 4x1 matrix, however does output a 4x4
-print(final_state(C_op, D_op, J(0), np.kron(C, C))) #test that doesn't produce a 4x1
 
-def payoff_A(final_state: np.ndarray) -> float:
-    """
-    Compute the payoff given the final_state as a 1D NumPy array.
-    The result should be a floating-point number.
-    """
-    pass
+#Alice's payoff; return a float
+#24 minutes;
+def payoff_A(final_state: np.ndarray):
+    r = 3 #(“reward”)
+    p = 1 #(“punishment”)
+    t = 5 #(“temptation”)
+    s = 0 #(“sucker’s pay-off ”).
+    PCC = pow(np.kron(C, C).transpose() @ final_state, 2)
+    PDD = pow(np.kron(D, D).transpose() @ final_state, 2)
+    PDC = pow(np.kron(D, C).transpose() @ final_state, 2)
+    PCD = pow(np.kron(C, D).transpose() @ final_state, 2)
+    pay_A = r*PCC + p*PDD + t*PDC + s*PCD
+    return pay_A
+    
 
 # After implementing these, test with all classical strategies (C and D) to verify correctness.
+# Tests; 5 minutes
+print(payoff_A(final_state(C_op, D_op, J(0), np.kron(C,C)))) #Alice Cooperate, Bob Defect -> (1.1248198369963932e-32+0j); essentially 0
+print(payoff_A(final_state(D_op, D_op, J(0), np.kron(C,C)))) #Alice Defect, Bob Defect -> (1+0j);
+print(payoff_A(final_state(C_op, C_op, J(0), np.kron(C,C)))) #Alice Cooperate, Bob Cooperate -> (3+0j);
+print(payoff_A(final_state(D_op, C_op, J(0), np.kron(C,C)))) #Alice Defect, Bob Cooperate -> (5+0j);
+
