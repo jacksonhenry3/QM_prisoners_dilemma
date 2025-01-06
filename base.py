@@ -38,15 +38,9 @@ def final_state(U_A: np.ndarray, U_B: np.ndarray, J: np.ndarray, initial_state: 
 #Alice's payoff; return a float
 #24 minutes;
 def payoff_A(final_state: np.ndarray):
-    r = 3 #(“reward”)
-    p = 1 #(“punishment”)
-    t = 5 #(“temptation”)
-    s = 0 #(“sucker’s pay-off ”).
-    PCC = pow(np.kron(C, C).transpose() @ final_state, 2)
-    PDD = pow(np.kron(D, D).transpose() @ final_state, 2)
-    PDC = pow(np.kron(D, C).transpose() @ final_state, 2)
-    PCD = pow(np.kron(C, D).transpose() @ final_state, 2)
-    pay_A = r*PCC + p*PDD + t*PDC + s*PCD
+    payoff_vect1 = np.array([3, 0, 5, 1])
+    payoff_vect2 = np.abs(final_state)**2
+    pay_A = np.dot(payoff_vect1, payoff_vect2)
     return pay_A
     
 
