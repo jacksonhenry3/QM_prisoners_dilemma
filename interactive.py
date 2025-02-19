@@ -85,8 +85,8 @@ def get_average_payoff_fixed_vectorized_p2(gamma, theta_grid, phi_grid, fixed_th
 
 
 # Resolution and fixed values
-theta_grid = np.linspace(0, np.pi, 50)
-phi_grid = np.linspace(0, np.pi / 2, 50)
+theta_grid = np.linspace(0, np.pi, 20)
+phi_grid = np.linspace(0, np.pi / 2, 20)
 theta1_fixed = np.pi / 4
 phi1_fixed = np.pi / 4
 theta2_fixed = np.pi / 4
