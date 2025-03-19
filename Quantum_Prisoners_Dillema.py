@@ -77,11 +77,19 @@ class StrategySpace:
 
 def dihedral_group(n: int) -> StrategySpace:
     """
-    becouse of the float operations, sometimes it may make sense to round the result to get integer values.
+    because of the float operations, sometimes it may make sense to round the result to get integer values.
     """
-    r = np.array([[np.exp(2*np.pi*1j/n), 0], [0, np.exp(-2*np.pi*1j/n)]])
-    s = np.array([[0, 1], [1, 0]])
-    return StrategySpace([r, s])
+    r_lst = []
+    s_lst = []
+    for k in range(0, n-1):
+        r = np.array([[cos((2*pi*k)/n), -sin((2*pi*k)/n)],
+                     [sin((2*pi*k)/n), cos((2*pi*k)/n)]])
+        s = np.array([[cos((2 * pi * k) / n), sin((2 * pi * k) / n)],
+                      [sin((2 * pi * k) / n), -cos((2 * pi * k) / n)]])
+        r_lst.append(r)
+        s_lst.append(s)
+
+    return StrategySpace([r_lst, s_lst])
 
 
 
@@ -90,12 +98,14 @@ class QuantumPrisonersDilema:
         self.J = EntanglementOperator
         self.strategy_space = strategy_space
         self.payoff_list = np.array([3, 0, 5, 1])
+        self.inital_state = np.kron(C, C)
 
     def play(self, alice_move: np.ndarray, bob_move: np.ndarray) -> np.ndarray:
         """
         Return the final state after alice and bob play their moves
         """
-        pass
+        fs_vect = (self.EntanglementOperator.conj().transpose() @ np.kron(alice_move, bob_move) @ self.EntanglementOperator) @ self.initial_state
+        return fs_vect
 
     def _calculate_payoff(self, final_state: np.ndarray) -> tuple[float, float]:
         """
@@ -143,10 +153,10 @@ class QuantumPrisonersDilema:
             plt.imshow(payoff_matrix)
             plt.show()
 
-def J(A:np.ndarray,B:np.ndarray) -> np.ndarray:
-    """
-    generate the entanglement operator from two input arrays
-
-    This function should enforce the conditions on A and B
-    """
-    pass
+    def J(A:np.ndarray,B:np.ndarray) -> np.ndarray:
+        """
+        generate the entanglement operator from two input arrays
+    
+        This function should enforce the conditions on A and B
+        """
+        pass
