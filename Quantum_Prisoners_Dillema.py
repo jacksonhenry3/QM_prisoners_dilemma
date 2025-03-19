@@ -75,15 +75,6 @@ class StrategySpace:
                         changed = True
         return [np.array(g) for g in group]
 
-
-# Some common strategy spaces
-sigma1 = np.array([[0, 1], [1, 0]], dtype=complex)
-sigma2 = np.array([[0, -1j], [1j, 0]], dtype=complex)
-sigma3 = np.array([[1, 0], [0, -1]], dtype=complex)
-SU2_bassis = [sigma1, sigma2, sigma3]
-SU2 = StrategySpace(SU2_bassis, is_discrete=False)
-
-
 def dihedral_group(n: int) -> StrategySpace:
     """
     becouse of the float operations, sometimes it may make sense to round the result to get integer values.
@@ -92,8 +83,6 @@ def dihedral_group(n: int) -> StrategySpace:
     s = np.array([[0, 1], [1, 0]])
     return StrategySpace([r, s])
 
-
-d4 = dihedral_group(4)
 
 
 class QuantumPrisonersDilema:
@@ -141,7 +130,7 @@ class QuantumPrisonersDilema:
         """
         pass
 
-    def vizualize(self):
+    def plot(self):
         """
         If the self.strategy_space is discrete then plot a payoff matrix for all moves.
 
@@ -153,3 +142,11 @@ class QuantumPrisonersDilema:
                                      0] for alice_strat in strats] for bob_strat in strats])
             plt.imshow(payoff_matrix)
             plt.show()
+
+def J(A:np.ndarray,B:np.ndarray) -> np.ndarray:
+    """
+    generate the entanglement operator from two input arrays
+
+    This function should enforce the conditions on A and B
+    """
+    pass
