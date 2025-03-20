@@ -79,17 +79,9 @@ def dihedral_group(n: int) -> StrategySpace:
     """
     because of the float operations, sometimes it may make sense to round the result to get integer values.
     """
-    r_lst = []
-    s_lst = []
-    for k in range(0, n-1):
-        r = np.array([[cos((2*pi*k)/n), -sin((2*pi*k)/n)],
-                     [sin((2*pi*k)/n), cos((2*pi*k)/n)]])
-        s = np.array([[cos((2 * pi * k) / n), sin((2 * pi * k) / n)],
-                      [sin((2 * pi * k) / n), -cos((2 * pi * k) / n)]])
-        r_lst.append(r)
-        s_lst.append(s)
-
-    return StrategySpace([r_lst, s_lst])
+    r = np.array([[np.exp(2*np.pi*1j/n), 0], [0, np.exp(-2*np.pi*1j/n)]])
+    s = np.array([[0, 1], [1, 0]])
+    return StrategySpace([r, s])
 
 
 
@@ -164,5 +156,6 @@ class QuantumPrisonersDilema:
     
         This function should enforce the conditions on A and B
         """
+        
         return expm(np.kron(-1j*gamma*A, B/2))
         pass
