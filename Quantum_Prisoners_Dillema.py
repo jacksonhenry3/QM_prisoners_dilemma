@@ -97,21 +97,25 @@ class QuantumPrisonersDilema:
     def __init__(self, EntanglementOperator: np.ndarray, strategy_space):
         self.J = EntanglementOperator
         self.strategy_space = strategy_space
-        self.payoff_list = np.array([3, 0, 5, 1])
+        self.alice_payoff_list = np.array([3, 0, 5, 1])
+        self.bob_payoff_list = np.array([3, 5, 0, 1])
         self.inital_state = np.kron(C, C)
 
     def play(self, alice_move: np.ndarray, bob_move: np.ndarray) -> np.ndarray:
         """
         Return the final state after alice and bob play their moves
         """
-        fs_vect = (self.EntanglementOperator.conj().transpose() @ np.kron(alice_move, bob_move) @ self.EntanglementOperator) @ self.initial_state
+        fs_vect = (EntanglementOperator.conj().transpose() @ np.kron(alice_move, bob_move) @ EntanglementOperator) @ self.initial_state
         return fs_vect
 
     def _calculate_payoff(self, final_state: np.ndarray) -> tuple[float, float]:
         """
         Return a tuple of (alice payoff, bob payoff)
         """
-        pass
+        payoff_vect = np.abs(final_state)**2
+        pay_A = np.dot(self.alice_payoff_list, payoff_vect)
+        pay_B = np.dot(self.bob_payoff_list, payoff_vect)
+        return [pay_A, pay_B]
 
     def payoff(self, alice_move: np.ndarray, bob_move: np.ndarray) -> tuple[float, float]:
         return self._calculate_payoff(self.play(alice_move, bob_move))
@@ -154,9 +158,11 @@ class QuantumPrisonersDilema:
             plt.show()
 
     def J(A:np.ndarray,B:np.ndarray) -> np.ndarray:
+        gamma = np.pi/2
         """
         generate the entanglement operator from two input arrays
     
         This function should enforce the conditions on A and B
         """
+        return expm(np.kron(-1j*gamma*A, B/2))
         pass
