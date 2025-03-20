@@ -5,6 +5,8 @@ from numpy.linalg import matrix_power, det
 import itertools
 from functools import reduce
 
+#C = np.array([1, 0]) # |C>
+#D = np.array([0, 1]) # |D>
 
 class StrategySpace:
     def __init__(self, generators: list[np.ndarray], is_discrete=True):
@@ -84,14 +86,13 @@ def dihedral_group(n: int) -> StrategySpace:
     return StrategySpace([r, s])
 
 
-
 class QuantumPrisonersDilema:
     def __init__(self, EntanglementOperator: np.ndarray, strategy_space):
         self.J = EntanglementOperator
         self.strategy_space = strategy_space
         self.alice_payoff_list = np.array([3, 0, 5, 1])
         self.bob_payoff_list = np.array([3, 5, 0, 1])
-        self.inital_state = np.kron(C, C)
+        self.inital_state = np.array(1 0 0 0)
 
     def play(self, alice_move: np.ndarray, bob_move: np.ndarray) -> np.ndarray:
         """
@@ -149,13 +150,13 @@ class QuantumPrisonersDilema:
             plt.imshow(payoff_matrix)
             plt.show()
 
-    def J(A:np.ndarray,B:np.ndarray) -> np.ndarray:
-        gamma = np.pi/2
-        """
-        generate the entanglement operator from two input arrays
-    
-        This function should enforce the conditions on A and B
-        """
-        
-        return expm(np.kron(-1j*gamma*A, B/2))
-        pass
+    #A_param[0] = a; A_param[1] = x
+    #B_param[0] = b; B_param[1] = y
+    #get D_op by *_params = (0, 1)
+    def J(A_params, B_params, gamma) -> np.ndarray:
+        if gamma < 0 or gamma > np.pi/2:
+            raise ValueError("Expected a gamma value between 0 and pi/2")
+        else:
+            A = [[A_param[0]*1j,A_param[1]],[-A_param[1],A_param[0]*1j]]
+            B = [[B_param[0]*1j,B_param[1]],[-B_param[1],B_param[0]*1j]]
+            return expm(np.kron(-1j*gamma*A, B/2))
