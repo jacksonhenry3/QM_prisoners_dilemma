@@ -92,13 +92,13 @@ class QuantumPrisonersDilema:
         self.strategy_space = strategy_space
         self.alice_payoff_list = np.array([3, 0, 5, 1])
         self.bob_payoff_list = np.array([3, 5, 0, 1])
-        self.inital_state = np.array(1 0 0 0)
+        self.initial_state = np.array([1, 0, 0, 0])
 
     def play(self, alice_move: np.ndarray, bob_move: np.ndarray) -> np.ndarray:
         """
         Return the final state after alice and bob play their moves
         """
-        fs_vect = (EntanglementOperator.conj().transpose() @ np.kron(alice_move, bob_move) @ EntanglementOperator) @ self.initial_state
+        fs_vect = (self.J.conj().transpose() @ np.kron(alice_move, bob_move) @ self.J) @ self.initial_state
         return fs_vect
 
     def _calculate_payoff(self, final_state: np.ndarray) -> tuple[float, float]:
@@ -108,7 +108,9 @@ class QuantumPrisonersDilema:
         payoff_vect = np.abs(final_state)**2
         pay_A = np.dot(self.alice_payoff_list, payoff_vect)
         pay_B = np.dot(self.bob_payoff_list, payoff_vect)
-        return [pay_A, pay_B]
+        return (pay_A, pay_B)
+
+
 
     def payoff(self, alice_move: np.ndarray, bob_move: np.ndarray) -> tuple[float, float]:
         return self._calculate_payoff(self.play(alice_move, bob_move))
@@ -133,7 +135,7 @@ class QuantumPrisonersDilema:
         """
         find a pair of moves the is a nash equilibrium
 
-        A Nash equilibrium is a set of strategies where no player can improve their payoff by unilaterally changing their own strategy, assuming all other players' strategies remain constant. 
+        A Nash equilibrium is a set of strategies where no player can improve their payoff by unilaterally changing their own strategy, assuming all other players' strategies remain constant.
         """
         pass
 
@@ -148,15 +150,34 @@ class QuantumPrisonersDilema:
             payoff_matrix = np.array([[self.payoff(alice_strat, bob_strat)[
                                      0] for alice_strat in strats] for bob_strat in strats])
             plt.imshow(payoff_matrix)
+            plt.colorbar()
             plt.show()
 
     #A_param[0] = a; A_param[1] = x
     #B_param[0] = b; B_param[1] = y
     #get D_op by *_params = (0, 1)
-    def J(A_params, B_params, gamma) -> np.ndarray:
-        if gamma < 0 or gamma > np.pi/2:
-            raise ValueError("Expected a gamma value between 0 and pi/2")
-        else:
-            A = [[A_param[0]*1j,A_param[1]],[-A_param[1],A_param[0]*1j]]
-            B = [[B_param[0]*1j,B_param[1]],[-B_param[1],B_param[0]*1j]]
-            return expm(np.kron(-1j*gamma*A, B/2))
+def J(A_params, B_params, gamma) -> np.ndarray:
+    #if gamma < 0 or gamma > np.pi/2:
+     #   raise ValueError("Expected a gamma value between 0 and pi/2")
+    #else:
+    A = np.array([[A_params[0]*1j,A_params[1]],[-A_params[1],A_params[0]*1j]])
+    B = np.array([[B_params[0]*1j,B_params[1]],[-B_params[1],B_params[0]*1j]])
+    return expm(np.kron((-1j*gamma*A), B/2))
+
+DD_QPD = QuantumPrisonersDilema(EntanglementOperator=J((0, 1), (0, 1), gamma=np.pi/2), strategy_space= dihedral_group(4))
+DD_QPD.plot()
+
+Weird_QPD = QuantumPrisonersDilema(EntanglementOperator=J((4/2, 2/2), (7/2, 8/2), gamma=(np.pi*4)/2), strategy_space= dihedral_group(4))
+Weird_QPD.plot()
+
+#[1] is C
+#[5] is D
+C = DD_QPD.strategy_space.all_elements()[1]
+D = DD_QPD.strategy_space.all_elements()[5]
+E = DD_QPD.strategy_space.all_elements()
+#print(DD_QPD.payoff(C, C))
+#print(DD_QPD.payoff(C, D))
+#print(DD_QPD.payoff(D, C))
+#print(DD_QPD.payoff(D, D))
+#print(E)
+#print(np.round(J((4/2, 2/2), (7, 8), gamma=np.pi/2), 4))
