@@ -123,22 +123,59 @@ class QuantumPrisonersDilema:
         """
         pass
 
-    def find_pareto_optimum(self) -> tuple[np.ndarray, np.ndarray]:
-        """
+    def find_pareto_optimums(self):
+        """np.ndarray, np.ndarray)
         find a pair of moves that is pareto optimal
 
         A Pareto optimum is a state of resource allocation where no individual's situation can be improved without making at least one other individual worse off.
         """
-        pass
+        optimums = []
+        Strats = self.strategy_space.all_elements()
+        for i, s1 in enumerate(Strats):
+            for j, s2 in enumerate(Strats):
+                if self.is_pareto_optimal((s1,s2),(i, j)):
+                    optimums.append((s1,s2))
+        return optimums
 
-    def find_nash_equilibrium(self) -> tuple[np.ndarray, np.ndarray]:
-        """
-        find a pair of moves the is a nash equilibrium
+    def is_pareto_optimal(self, currentstrats, indexes) -> bool:
+        Strats = self.strategy_space.all_elements()
+        initscore = self.payoff(alice_move=currentstrats[0], bob_move=currentstrats[1])
+        for i, s1 in enumerate(Strats):
+            for j, s2 in enumerate(Strats):
+                compare = self.payoff(s1, s2)
+                greatereqA = compare[0] >= initscore[0]
+                greatereqB = compare[1] >= initscore[1]
+                notsameck = (i != indexes[0] or j != indexes[1])
+                if greatereqA and greatereqB and notsameck:
+                    return False
+        return True
 
-        A Nash equilibrium is a set of strategies where no player can improve their payoff by unilaterally changing their own strategy, assuming all other players' strategies remain constant.
-        """
-        pass
+        def find_nash_equilibrium(self):
+    """
+    find a pair of moves the is a nash equilibrium
+    A Nash equilibrium is a set of strategies where no player can improve their payoff by unilaterally changing their own strategy, assuming all other players' strategies remain constant.
+    """
+    equilibriums = []
+    Strats = self.strategy_space.all_elements()
+    for i, s1 in enumerate(Strats):
+        for j, s2 in enumerate(Strats):
+                if self.is_nash_equilibrium((s1, s2), (i, j)):
+                equilibriums.append((s1, s2))
+    return equilibriums
 
+    def is_nash_equilibrium(self, currentstrats, indexes):
+        Strats = self.strategy_space.all_elements()
+        initscore = self.payoff(alice_move=currentstrats[0], bob_move=currentstrats[1])
+        for i, s1 in enumerate(Strats):
+            for j, s2 in enumerate(Strats):
+                compare = self.payoff(s1, s2)
+                greatereqA = compare[0] >= initscore[0]
+                greatereqB = compare[1] >= initscore[1]
+                notsameck = (i != indexes[0] or j != indexes[1])
+                if greatereqA or greatereqB and notsameck:
+                    return False
+        return True
+        
     def plot(self):
         """
         If the self.strategy_space is discrete then plot a payoff matrix for all moves.
