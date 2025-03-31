@@ -150,30 +150,38 @@ class QuantumPrisonersDilema:
                     return False
         return True
 
-        def find_nash_equilibrium(self):
-    """
-    find a pair of moves the is a nash equilibrium
-    A Nash equilibrium is a set of strategies where no player can improve their payoff by unilaterally changing their own strategy, assuming all other players' strategies remain constant.
-    """
-    equilibriums = []
-    Strats = self.strategy_space.all_elements()
-    for i, s1 in enumerate(Strats):
-        for j, s2 in enumerate(Strats):
+    def find_nash_equilibrium(self):
+        """
+        find a pair of moves the is a nash equilibrium
+
+        A Nash equilibrium is a set of strategies where no player can improve their payoff by unilaterally changing their own strategy, assuming all other players' strategies remain constant.
+        """
+        equilibriums = []
+        Strats = self.strategy_space.all_elements()
+        for i, s1 in enumerate(Strats):
+            for j, s2 in enumerate(Strats):
                 if self.is_nash_equilibrium((s1, s2), (i, j)):
-                equilibriums.append((s1, s2))
-    return equilibriums
+                    equilibriums.append((s1, s2))
+        return equilibriums
 
     def is_nash_equilibrium(self, currentstrats, indexes):
         Strats = self.strategy_space.all_elements()
         initscore = self.payoff(alice_move=currentstrats[0], bob_move=currentstrats[1])
         for i, s1 in enumerate(Strats):
-            for j, s2 in enumerate(Strats):
-                compare = self.payoff(s1, s2)
-                greatereqA = compare[0] >= initscore[0]
-                greatereqB = compare[1] >= initscore[1]
-                notsameck = (i != indexes[0] or j != indexes[1])
-                if greatereqA or greatereqB and notsameck:
-                    return False
+            compare = self.payoff(s1, currentstrats[1])
+            greatereqA = compare[0] >= initscore[0]
+            greatereqB = compare[1] >= initscore[1]
+            notsameck = (i != indexes[0])
+            if greatereqA or greatereqB and notsameck:
+                return False
+
+        for j, s2 in enumerate(Strats):
+            compare = self.payoff(currentstrats[0], s2)
+            greatereqA = compare[0] >= initscore[0]
+            greatereqB = compare[1] >= initscore[1]
+            notsameck = (j != indexes[1])
+            if greatereqA or greatereqB and notsameck:
+                return False
         return True
         
     def plot(self):
@@ -218,3 +226,5 @@ E = DD_QPD.strategy_space.all_elements()
 #print(DD_QPD.payoff(D, D))
 #print(E)
 #print(np.round(J((4/2, 2/2), (7, 8), gamma=np.pi/2), 4))
+print(DD_QPD.find_pareto_optimums())
+print(DD_QPD.find_nash_equilibrium())
