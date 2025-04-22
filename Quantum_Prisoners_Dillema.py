@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.linalg import expm
+from multiprocessing import Pool
 from numpy.linalg import matrix_power, det
 import itertools
 from functools import reduce
@@ -8,83 +9,23 @@ from functools import reduce
 #C = np.array([1, 0]) # |C>
 #D = np.array([0, 1]) # |D>
 
-class StrategySpace:
-    def __init__(self, generators: list[np.ndarray], is_discrete=True):
-        if is_discrete:
-            for generator in generators:
-                # Enforce unitarity
-                assert np.all(np.isclose(generator@generator.conjugate().T, np.eye(2))
-                              ), "all generators must be unitary for discrete groups."
+def base_qpd():
+    c_op = np.eye(2)
+    d_op = np.array([[0, 1], [-1, 0]])
+    return [c_op, d_op]
 
-                # enforce that it has det 1 (special)
-                assert np.isclose(np.abs(det(
-                    generator)), 1), "All generators must have determinant 1 or -1 for discrete groups"
-        else:
-            for generator in generators:
+def cyclic_group(n: int):
+    r = np.array([[np.cos(2*np.pi/n), -np.sin(2*np.pi/n)], [np.sin(2*np.pi/n), np.cos(2*np.pi/n)]])
+    return [np.linalg.matrix_power(r,i) for i in range(0, n)]
 
-                # Enforce hermiticity
-                assert np.all(np.isclose(generator, generator.conjugate(
-                ).T)), "All generators must be hermitian for continuous groups"
-
-                # enforce traceless
-                assert np.isclose(
-                    generator.trace(), 0), "All generators must be traceless for continuous groups"
-        self.generators = generators
-        self.is_discrete = is_discrete
-
-    def get_value(self, parameters: list[float]):
-        if len(parameters) != len(self.generators):
-            raise ValueError(
-                f"Expected {len(self.generators)} parameters, got {len(parameters)}.")
-        if self.is_discrete:
-            assert np.issubdtype(parameters.dtype, np.integer)
-            matrices = [matrix_power(gen,pow) for (gen, pow)
-                        in zip(self.generators, parameters)]
-            return reduce(np.dot, matrices)
-        else:
-            return expm(1j*np.sum([gen*scale for (gen, scale) in zip(self.generators, parameters)], axis=0))
-
-    def all_elements(self):
-        if not self.is_discrete:
-            raise ValueError(
-                "can't realize all elements of a continous group")
-
-        # Convert a numpy array to a hashable canonical tuple representation.
-        def canonical(mat):
-            # THe rounding here is so that elements are identified even with float errors.
-            return tuple(map(tuple, np.round(mat, 5)))
-
-            # Assume all generators are square matrices; start with the identity.
-        identity = np.eye(
-            self.generators[0].shape[0], dtype=self.generators[0].dtype)
-
-        group = {canonical(identity)}
-        for g in self.generators:
-            group.add(canonical(g))
-
-            changed = True
-            while changed:
-                changed = False
-                new_elems = set()
-                # Use itertools.product to generate pairwise products.
-                for a, b in itertools.product(group, repeat=2):
-                    prod = np.dot(np.array(a), np.array(b))
-                    prod_can = canonical(prod)
-                    if prod_can not in group:
-                        new_elems.add(prod_can)
-                    if new_elems:
-                        group.update(new_elems)
-                        changed = True
-        return [np.array(g) for g in group]
-
-def dihedral_group(n: int) -> StrategySpace:
+def dihedral_group(n: int):
     """
     because of the float operations, sometimes it may make sense to round the result to get integer values.
     """
-    r = np.array([[np.exp(2*np.pi*1j/n), 0], [0, np.exp(-2*np.pi*1j/n)]])
-    s = np.array([[0, 1], [1, 0]])
-    return StrategySpace([r, s])
-
+    c = cyclic_group(n)
+    s = np.array([[0, 1],[1, 0]])
+    c_prime = [i @ s for i in c]
+    return c+c_prime
 
 class QuantumPrisonersDilema:
     def __init__(self, EntanglementOperator: np.ndarray, strategy_space):
@@ -130,7 +71,7 @@ class QuantumPrisonersDilema:
         A Pareto optimum is a state of resource allocation where no individual's situation can be improved without making at least one other individual worse off.
         """
         optimums = []
-        Strats = self.strategy_space.all_elements()
+        Strats = self.strategy_space
         for i, s1 in enumerate(Strats):
             for j, s2 in enumerate(Strats):
                 if self.is_pareto_optimal((s1,s2),(i, j)):
@@ -138,15 +79,19 @@ class QuantumPrisonersDilema:
         return optimums
 
     def is_pareto_optimal(self, currentstrats, indexes) -> bool:
-        Strats = self.strategy_space.all_elements()
+        Strats = self.strategy_space
         initscore = self.payoff(alice_move=currentstrats[0], bob_move=currentstrats[1])
         for i, s1 in enumerate(Strats):
             for j, s2 in enumerate(Strats):
                 compare = self.payoff(s1, s2)
-                greatereqA = compare[0] >= initscore[0]
-                greatereqB = compare[1] >= initscore[1]
+                greaterA = compare[0] > initscore[0]
+                greaterB = compare[1] > initscore[1]
+                eqA =  compare[0] == initscore[0]
+                eqB =  compare[1] == initscore[1]
+                if (eqA and greaterB) or (eqB and greaterA):
+                    return False
                 notsameck = (i != indexes[0] or j != indexes[1])
-                if greatereqA and greatereqB and notsameck:
+                if greaterA and greaterB and notsameck:
                     return False
         return True
 
@@ -157,74 +102,104 @@ class QuantumPrisonersDilema:
         A Nash equilibrium is a set of strategies where no player can improve their payoff by unilaterally changing their own strategy, assuming all other players' strategies remain constant.
         """
         equilibriums = []
-        Strats = self.strategy_space.all_elements()
-        for i, s1 in enumerate(Strats):
-            for j, s2 in enumerate(Strats):
-                if self.is_nash_equilibrium((s1, s2), (i, j)):
+        Strats = self.strategy_space
+        for s1 in Strats:
+            for s2 in Strats:
+                if self.is_nash_equilibrium((s1, s2)):
                     equilibriums.append((s1, s2))
         return equilibriums
 
-    def is_nash_equilibrium(self, currentstrats, indexes):
-        Strats = self.strategy_space.all_elements()
+    def is_nash_equilibrium(self, currentstrats):
+        Strats = self.strategy_space
         initscore = self.payoff(alice_move=currentstrats[0], bob_move=currentstrats[1])
-        for i, s1 in enumerate(Strats):
+        for s1 in Strats:
             compare = self.payoff(s1, currentstrats[1])
-            greatereqA = compare[0] >= initscore[0]
-            greatereqB = compare[1] >= initscore[1]
-            notsameck = (i != indexes[0])
-            if greatereqA or greatereqB and notsameck:
+            greatereqA = compare[0] > initscore[0]
+            if greatereqA:
                 return False
 
-        for j, s2 in enumerate(Strats):
+        for s2 in Strats:
             compare = self.payoff(currentstrats[0], s2)
-            greatereqA = compare[0] >= initscore[0]
-            greatereqB = compare[1] >= initscore[1]
-            notsameck = (j != indexes[1])
-            if greatereqA or greatereqB and notsameck:
+            greatereqB = compare[1] > initscore[1]
+            if greatereqB:
                 return False
         return True
-        
+
     def plot(self):
         """
         If the self.strategy_space is discrete then plot a payoff matrix for all moves.
 
         If not, maybe something related to a cayleigh graph?
         """
-        if self.strategy_space.is_discrete:
-            strats = self.strategy_space.all_elements()
-            payoff_matrix = np.array([[self.payoff(alice_strat, bob_strat)[
-                                     0] for alice_strat in strats] for bob_strat in strats])
-            plt.imshow(payoff_matrix)
-            plt.colorbar()
-            plt.show()
+        strats = self.strategy_space
+        payoff_matrix = np.array([[self.payoff(alice_strat, bob_strat)[
+        0] for alice_strat in strats] for bob_strat in strats])
+        plt.imshow(payoff_matrix)
+        plt.colorbar()
+        plt.show()
 
     #A_param[0] = a; A_param[1] = x
     #B_param[0] = b; B_param[1] = y
     #get D_op by *_params = (0, 1)
-def J(A_params, B_params, gamma) -> np.ndarray:
+def J(A_param, B_param, gamma) -> np.ndarray:
     #if gamma < 0 or gamma > np.pi/2:
      #   raise ValueError("Expected a gamma value between 0 and pi/2")
     #else:
-    A = np.array([[A_params[0]*1j,A_params[1]],[-A_params[1],A_params[0]*1j]])
-    B = np.array([[B_params[0]*1j,B_params[1]],[-B_params[1],B_params[0]*1j]])
+    A = np.array([[A_param*1j,1],[-1,A_param*1j]])
+    B = np.array([[B_param*1j,1],[-1,B_param*1j]])
     return expm(np.kron((-1j*gamma*A), B/2))
 
-DD_QPD = QuantumPrisonersDilema(EntanglementOperator=J((0, 1), (0, 1), gamma=np.pi/2), strategy_space= dihedral_group(4))
+def find_best_ab(num_steps, start, stop, strats):
+    best_a = 0.0
+    best_b = 0.0
+    best_gamma = 0.0
+    best_scores = (0, 0)
+    ab_range = np.linspace(start, stop, num_steps, True, True)
+    gamma_range = np.linspace(0, np.pi/2, num_steps, True, True)
+    for A in ab_range[0]: #A
+        for B in ab_range[0]: #B
+
+                    qpd = QuantumPrisonersDilema(J(A, B, g), strats)
+                    nash_lst = qpd.find_nash_equilibrium()
+                    if len(nash_lst) == 1:
+                        scores = qpd.payoff(nash_lst[0][0], nash_lst[0][1])
+                        if scores[0] > best_scores[0] or scores[1] > best_scores[1]:
+                            best_scores = scores
+                            best_a = A
+                            best_b = B
+                            best_gamma = g
+
+    return best_a, best_b, best_gamma, best_scores
+DD_QPD = QuantumPrisonersDilema(EntanglementOperator=J((9.84924623115578), (9.949748743718594), gamma=.4183527905534147), strategy_space= dihedral_group(4))
+lst = DD_QPD.find_nash_equilibrium()
 DD_QPD.plot()
+for i in range(len(lst)):
+    print(DD_QPD.payoff(lst[i][0], lst[i][1]))
+print(lst)
+print(dihedral_group(4))
 
-Weird_QPD = QuantumPrisonersDilema(EntanglementOperator=J((4/2, 2/2), (7/2, 8/2), gamma=(np.pi*4)/2), strategy_space= dihedral_group(4))
-Weird_QPD.plot()
+#DD_QPD.find_nash_equilibrium()
+#Weird_QPD = QuantumPrisonersDilema(EntanglementOperator=J((4/2, 2/2), (7/2, 8/2), gamma=(np.pi*4)/2), strategy_space= dihedral_group(2))
+#Weird_QPD.plot()
 
+rotation_QPD = QuantumPrisonersDilema(EntanglementOperator=J((0),(0), gamma= np.pi/2), strategy_space= cyclic_group(128))
+#rotation_QPD.plot()
 #[1] is C
 #[5] is D
-C = DD_QPD.strategy_space.all_elements()[1]
-D = DD_QPD.strategy_space.all_elements()[5]
-E = DD_QPD.strategy_space.all_elements()
+#C = DD_QPD.strategy_space.all_elements()[1]
+#D = DD_QPD.strategy_space.all_elements()[5]
+#E = DD_QPD.strategy_space.all_elements()
 #print(DD_QPD.payoff(C, C))
 #print(DD_QPD.payoff(C, D))
 #print(DD_QPD.payoff(D, C))
 #print(DD_QPD.payoff(D, D))
 #print(E)
 #print(np.round(J((4/2, 2/2), (7, 8), gamma=np.pi/2), 4))
-print(DD_QPD.find_pareto_optimums())
-print(DD_QPD.find_nash_equilibrium())
+#print((DD_QPD.find_pareto_optimums()))
+#print(DD_QPD.find_nash_equilibrium())
+#print(DD_QPD.payoff(DD_QPD.find_nash_equilibrium()[0][0],DD_QPD.find_nash_equilibrium()[0][1]))
+
+#print(dihedral_group(4))
+#print(cyclic_group(4))
+
+print(find_best_ab(200, 0, 10, dihedral_group(4)))
