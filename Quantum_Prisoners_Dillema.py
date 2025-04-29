@@ -114,16 +114,30 @@ class QuantumPrisonersDilema:
         initscore = self.payoff(alice_move=currentstrats[0], bob_move=currentstrats[1])
         for s1 in Strats:
             compare = self.payoff(s1, currentstrats[1])
-            greatereqA = compare[0] > initscore[0]
+            greatereqA = round(compare[0], 14) > round(initscore[0], 14)
             if greatereqA:
                 return False
 
         for s2 in Strats:
             compare = self.payoff(currentstrats[0], s2)
-            greatereqB = compare[1] > initscore[1]
+            greatereqB = round(compare[1], 14) > round(initscore[1], 14)
             if greatereqB:
                 return False
         return True
+
+    def get_all_scores(self):
+        all_alice_scores = []
+        all_bob_scores = []
+        Strats = self.strategy_space
+        for s1 in Strats:
+            new_row_alice = []
+            new_row_bob = []
+            for s2 in Strats:
+                new_row_alice.append(self.payoff(s1, s2)[0])
+                new_row_bob.append(self.payoff(s1, s2)[1])
+            all_alice_scores.append(new_row_alice)
+            all_bob_scores.append(new_row_bob)
+        return (np.array(np.round(all_alice_scores, 2)), np.array(np.round(all_bob_scores, 2)))
 
     def plot(self):
         """
