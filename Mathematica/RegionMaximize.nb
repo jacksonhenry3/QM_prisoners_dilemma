@@ -1,0 +1,280 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     10860,        272]
+NotebookOptionsPosition[     10404,        257]
+NotebookOutlinePosition[     10810,        273]
+CellTagsIndexPosition[     10767,        270]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"::", "Package", "::"}], "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"RegionMaximize", " ", "Function", " ", 
+     RowBox[{"Author", ":", 
+      RowBox[{"Gemini", " ", "Date"}], ":", 
+      RowBox[{"23", " ", "September", " ", "2025", " ", 
+       RowBox[{"Description", ":", 
+        RowBox[{
+        "This", " ", "function", " ", "takes", " ", "an", " ", "objective", 
+         " ", "function"}]}]}]}]}], ",", 
+    RowBox[{"a", " ", "list", " ", "of", " ", "variables"}], ",", 
+    RowBox[{
+    "and", " ", "a", " ", "complex", " ", "logical", " ", "constraint", " ", 
+     "containing", " ", "OR", " ", 
+     RowBox[{"(", "||", ")"}], " ", 
+     RowBox[{"clauses", ".", "It"}], " ", "automatically", " ", "splits", " ",
+      "the", " ", "constraint", " ", "into", " ", "separate", " ", 
+     "regions"}], ",", 
+    RowBox[{
+    "runs", " ", "NMaximize", " ", "on", " ", "each", " ", "valid", " ", 
+     "region"}], ",", 
+    RowBox[{"and", " ", "returns", " ", "the", " ", "single"}], ",", 
+    RowBox[{"overall", " ", "best", " ", 
+     RowBox[{"result", "."}]}]}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"RegionMaximize", "::", "usage"}], "=", 
+     "\"\<RegionMaximize[objective, {var1, var2, ...}, constraint] splits the \
+constraint by ||, runs NMaximize on each sub-region, and returns the global \
+maximum found.\>\""}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"RegionMaximize", "[", 
+      RowBox[{"objective_", ",", "vars_List", ",", "constraint_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"orClauses", ",", 
+         RowBox[{"(*", 
+          RowBox[{
+          "List", " ", "of", " ", "constraints", " ", "separated", " ", "by", 
+           " ", "OR"}], "*)"}], "andClausesList", ",", 
+         RowBox[{"(*", 
+          RowBox[{
+          "Each", " ", "constraint", " ", "converted", " ", "from", " ", 
+           RowBox[{"And", "[", "...", "]"}], " ", "to", " ", 
+           RowBox[{"{", "...", "}"}]}], "*)"}], "results", ",", 
+         RowBox[{"(*", 
+          RowBox[{
+          "Raw", " ", "results", " ", "from", " ", "running", " ", 
+           "NMaximize", " ", "on", " ", "each", " ", "region"}], "*)"}], 
+         "validResults"}], "    ", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Results", " ", "with", " ", "failures", " ", "filtered", " ", 
+          "out"}], "*)"}], "}"}], ",", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Step", " ", "1"}], ":", 
+          RowBox[{
+           RowBox[{
+           "Expand", " ", "the", " ", "constraint", " ", "and", " ", "split", 
+            " ", "it", " ", "at", " ", "the", " ", "top"}], "-", 
+           RowBox[{"level", " ", 
+            RowBox[{"ORs", ".", "If"}], " ", "there", " ", "are", " ", "no", 
+            " ", "ORs"}]}]}], ",", 
+         RowBox[{
+         "it", " ", "treats", " ", "the", " ", "whole", " ", "thing", " ", 
+          "as", " ", "a", " ", "single", " ", 
+          RowBox[{"region", "."}]}]}], "*)"}], 
+       RowBox[{
+        RowBox[{"orClauses", "=", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Head", "[", 
+             RowBox[{"LogicalExpand", "[", "constraint", "]"}], "]"}], "===", 
+            "Or"}], ",", 
+           RowBox[{"List", "@@", 
+            RowBox[{"LogicalExpand", "[", "constraint", "]"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"LogicalExpand", "[", "constraint", "]"}], "}"}]}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Step", " ", "2"}], ":", 
+           RowBox[{"For", " ", "each", " ", "OR", " ", "clause"}]}], ",", 
+          RowBox[{
+          "convert", " ", "the", " ", "inner", " ", "AND", " ", "expressions",
+            " ", "into", " ", "a", " ", "simple", " ", "list", " ", "of", " ",
+            "constraints", " ", "that", " ", "NMaximize", " ", "can", " ", 
+           RowBox[{"understand", "."}]}]}], "*)"}], 
+        RowBox[{"andClausesList", "=", 
+         RowBox[{
+          RowBox[{"Function", "[", 
+           RowBox[{"clause", ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Head", "[", "clause", "]"}], "===", "And"}], ",", 
+              RowBox[{"List", "@@", "clause"}], ",", 
+              RowBox[{"{", "clause", "}"}]}], "]"}]}], "]"}], "/@", 
+          "orClauses"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Step", " ", "3"}], ":", 
+           RowBox[{
+           "Map", " ", "NMaximize", " ", "over", " ", "each", " ", "list", 
+            " ", "of", " ", 
+            RowBox[{"constraints", ".", "We"}], " ", "use", " ", "Quiet", " ",
+             "and", " ", "Check", " ", "to", " ", "gracefully", " ", "handle",
+             " ", "regions", " ", "where", " ", "maximization", " ", "is", 
+            " ", "not", " ", "possible", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"e", ".", "g", "."}], ",", 
+              RowBox[{
+              "the", " ", "region", " ", "is", " ", "empty", " ", "or", " ", 
+               "invalid"}]}], ")"}]}]}], ",", 
+          RowBox[{"returning", " ", 
+           RowBox[{"$Failed", "."}]}]}], "*)"}], 
+        RowBox[{"Print", "[", 
+         RowBox[{"\"\<Found \>\"", ",", 
+          RowBox[{"Length", "[", "andClausesList", "]"}], ",", 
+          "\"\< distinct regions to analyze. Running NMaximize on \
+each...\>\""}], "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"results", "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Quiet", "@", 
+            RowBox[{"Check", "[", 
+             RowBox[{
+              RowBox[{"NMaximize", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"objective", ",", "#"}], "}"}], ",", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"a\[Prime]", ",", "\[Gamma]\[Prime]"}], "}"}], 
+                 "\[Element]", 
+                 RowBox[{"Rectangle", "[", "]"}]}], ",", 
+                RowBox[{"Method", "->", "\"\<SimulatedAnnealing\>\""}]}], 
+               "]"}], ",", "$Failed"}], "]"}]}], "&"}], "/@", 
+          "andClausesList"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Step", " ", "4"}], ":", 
+          RowBox[{
+          "Filter", " ", "out", " ", "any", " ", "runs", " ", "that", " ", 
+           "resulted", " ", "in", " ", "a", " ", 
+           RowBox[{"failure", "."}]}]}], "*)"}], 
+        RowBox[{"validResults", "=", 
+         RowBox[{"DeleteCases", "[", 
+          RowBox[{"results", ",", "$Failed"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Step", " ", "5"}], ":", 
+          RowBox[{
+          "Check", " ", "if", " ", "any", " ", "of", " ", "the", " ", 
+           "regions", " ", "produced", " ", "a", " ", "valid", " ", 
+           RowBox[{"result", "."}]}]}], "*)"}], 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "validResults", "]"}], "==", "0"}], ",", 
+          RowBox[{"Return", "[", 
+           RowBox[{
+           "\"\<NMaximize failed to find a valid maximum in any of the \
+specified sub-regions.\>\"", ",", "Module"}], "]"}], ",", 
+          RowBox[{"(*", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Step", " ", "6"}], ":", 
+             RowBox[{"From", " ", "the", " ", "successful", " ", "runs"}]}], 
+            ",", 
+            RowBox[{
+            "find", " ", "the", " ", "one", " ", "with", " ", "the", " ", 
+             "highest", " ", "objective", " ", "value", " ", "and", " ", 
+             "return", " ", 
+             RowBox[{"it", ".", "MaximalBy"}], " ", "is", " ", "perfect", " ",
+              "for", " ", 
+             RowBox[{"this", "."}]}]}], "*)"}], 
+          RowBox[{
+           RowBox[{
+           "Print", "[", 
+            "\"\<Analysis complete. Returning the best result found.\>\"", 
+            "]"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"Return", "[", 
+            RowBox[{"First", "@", 
+             RowBox[{"MaximalBy", "[", 
+              RowBox[{"validResults", ",", "First"}], "]"}]}], "]"}]}]}], 
+         "]"}]}]}], "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.967624231257349*^9, 3.9676242337169724`*^9}, 
+   3.9676242940714455`*^9},
+ CellLabel->
+  "In[105]:=",ExpressionUUID->"72a7f4d1-63bc-fd45-b96b-2c11e0452d09"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MultipleRegionNMaximize", "[", 
+   RowBox[{"objectives_", ",", "variables_", ",", "regions_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "results", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"results", " ", "=", " ", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"RegionMaximize", "[", 
+         RowBox[{
+          RowBox[{"objectives", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], ",", "variables", ",", 
+          RowBox[{"regions", "[", 
+           RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", 
+          RowBox[{"Length", "[", "objectives", "]"}]}], "}"}]}], "]"}]}], ";",
+      "\[IndentingNewLine]", 
+     RowBox[{"Print", "[", "results", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"First", "@", 
+      RowBox[{"MaximalBy", "[", 
+       RowBox[{"results", ",", "First"}], "]"}]}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.967623873135914*^9, 3.9676240076576557`*^9}, {
+  3.9676241175726833`*^9, 3.967624123027529*^9}},
+ CellLabel->
+  "In[100]:=",ExpressionUUID->"1ed2404e-ee3d-c444-abaf-6158c9a873de"]
+},
+WindowSize->{718.5, 825},
+WindowMargins->{{Automatic, -5.25}, {Automatic, 0}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"0a803bcd-350f-2246-b174-fd2fd8099ad2"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 8642, 204, 866, "Input",ExpressionUUID->"72a7f4d1-63bc-fd45-b96b-2c11e0452d09"],
+Cell[9203, 226, 1197, 29, 124, "Input",ExpressionUUID->"1ed2404e-ee3d-c444-abaf-6158c9a873de"]
+}
+]
+*)
+
