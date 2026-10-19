@@ -1,0 +1,17 @@
+In[123]:= tieScore=0;
+winScore = 1;
+loseScore = -1;
+PayoffMatrix = {{tie,lose,win},{win,tie,lose},{lose,win,tie}};
+In[112]:= agentsPlayingRock = {1,1,1,0,0,0,0,0,0,0};
+agentsPlayingPaper = {0,0,0,1,1,1,0,0,0,0};
+agentsPlayingScissors = {0,0,0,0,0,0,1,1,1,1};
+In[121]:= adgentStrategies = {agentsPlayingRock,agentsPlayingPaper,agentsPlayingScissors};
+In[115]:= adjcencyMatrix = am = GraphData[{"CayleyTree", {3, 2}}]//AdjacencyMatrix;
+In[117]:= numberOfOpponentsPlayingRock = am.rock;
+numberOfOpponentsPlayingPaper = am.paper;
+numberOfOpponentsPlayingScissors= am.scissors;
+numberOfOpponentsPlayingRPS = {numberOfOpponentsPlayingRock,numberOfOpponentsPlayingPaper,numberOfOpponentsPlayingScissors}
+Out[120]= {{1,2,1,1,0,0,1,0,0,1},{0,0,1,2,1,1,0,0,0,0},{0,1,1,0,0,0,2,1,1,0}}
+In[132]:= allPayoffs = PayoffMatrix.adgentStrategies;
+In[133]:= Total[numberOfOpponentsPlayingRPS*allPayoffs,1]
+Out[133]= {0,-1,0,-1,0,0,1,0,0,1}

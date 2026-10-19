@@ -1,0 +1,189 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6990,        181]
+NotebookOptionsPosition[      6405,        163]
+NotebookOutlinePosition[      6814,        179]
+CellTagsIndexPosition[      6771,        176]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"VisualizeSO3", "[", 
+    RowBox[{"\[Theta]_", ",", "\[Phi]_", ",", "\[Zeta]_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"R", ",", "grid", ",", "transformed"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"R", "=", 
+       RowBox[{"SU2toSO3", "[", 
+        RowBox[{"\[Theta]", ",", "\[Phi]", ",", "\[Zeta]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"grid", "=", 
+       RowBox[{"Flatten", "[", 
+        RowBox[{
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"x", ",", "y", ",", "z"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"-", "1"}], ",", "1", ",", "0.5"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"y", ",", 
+             RowBox[{"-", "1"}], ",", "1", ",", "0.5"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"z", ",", 
+             RowBox[{"-", "1"}], ",", "1", ",", "0.5"}], "}"}]}], "]"}], ",", 
+         "2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"transformed", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"R", ".", "#"}], ")"}], "&"}], "/@", "grid"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Graphics3D", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"Blue", ",", 
+          RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+          RowBox[{"Opacity", "[", ".3", "]"}], ",", 
+          RowBox[{"Point", "/@", "grid"}], ",", "Red", ",", 
+          RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+          RowBox[{"Point", "/@", "transformed"}]}], "}"}], ",", 
+        RowBox[{"Axes", "->", "True"}], ",", 
+        RowBox[{"Boxed", "->", "False"}], ",", 
+        RowBox[{"PlotRange", "->", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]}]}], 
+    "]"}]}], "\n"}]], "Input",
+ CellChangeTimes->{{3.9544119266482677`*^9, 3.9544119266482677`*^9}, {
+  3.954412144240944*^9, 3.9544121892893486`*^9}, {3.9544122537763805`*^9, 
+  3.9544122571505737`*^9}, {3.9544127833966064`*^9, 3.954412787877142*^9}},
+ CellLabel->"In[74]:=",ExpressionUUID->"892e4c50-153f-3447-95e5-23a78915cb77"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Round", "[", 
+        RowBox[{
+         RowBox[{"su2", "[", 
+          RowBox[{"\[Theta]", ",", "\[Phi]", ",", "\[Zeta]"}], "]"}], ",", 
+         ".01"}], "]"}], "//", "MatrixForm"}], ",", 
+      RowBox[{"VisualizeSO3", "[", 
+       RowBox[{"\[Theta]", ",", "\[Phi]", ",", "\[Zeta]"}], "]"}]}], "}"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{"\[Theta]", ",", "0", ",", 
+      RowBox[{"2", "Pi"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\[Phi]", ",", "0", ",", 
+      RowBox[{"2", "Pi"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\[Zeta]", ",", "0", ",", 
+      RowBox[{"2", "Pi"}]}], "}"}]}], "]"}], "\n"}]], "Input",
+ CellChangeTimes->{{3.954411931790041*^9, 3.954411967150236*^9}, {
+  3.95441222855558*^9, 3.954412282419964*^9}},
+ CellLabel->"In[73]:=",ExpressionUUID->"377ad4d8-87f3-c146-93d4-fba5ee9be3f6"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`\[Zeta]$$ = 
+    2.1237166338267004`, $CellContext`\[Theta]$$ = 
+    1.4451326206513049`, $CellContext`\[Phi]$$ = 0., Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`\[Theta]$$], 0, 2 Pi, ControlType -> Manipulator}, {
+      Hold[$CellContext`\[Phi]$$], 0, 2 Pi, ControlType -> Manipulator}, {
+      Hold[$CellContext`\[Zeta]$$], 0, 2 Pi, ControlType -> Manipulator}}, 
+    Typeset`size$$ = {402.72196320295336`, {93., 97.3296508658448}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`\[Zeta]$$ = 0, $CellContext`\[Theta]$$ = 
+        0, $CellContext`\[Phi]$$ = 0}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> {
+        MatrixForm[
+         Round[
+          $CellContext`su2[$CellContext`\[Theta]$$, $CellContext`\[Phi]$$, \
+$CellContext`\[Zeta]$$], 0.01]], 
+        $CellContext`VisualizeSO3[$CellContext`\[Theta]$$, \
+$CellContext`\[Phi]$$, $CellContext`\[Zeta]$$]}, 
+      "Specifications" :> {{$CellContext`\[Theta]$$, 0, 2 
+         Pi}, {$CellContext`\[Phi]$$, 0, 2 Pi}, {$CellContext`\[Zeta]$$, 0, 2 
+         Pi}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{451., {158.63403309800196`, 164.36596690199804`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.954412241061556*^9, 3.9544122827158375`*^9}},
+ CellLabel->"Out[73]=",ExpressionUUID->"123ebe46-10b2-ca49-bc45-7fc92bc43c32"]
+}, Open  ]]
+},
+WindowSize->{718.5, 825},
+WindowMargins->{{13.5, Automatic}, {Automatic, 23.25}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"3c78d289-6762-104a-bca6-ce2544e453c1"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 2528, 64, 143, "Input",ExpressionUUID->"892e4c50-153f-3447-95e5-23a78915cb77"],
+Cell[CellGroupData[{
+Cell[3111, 88, 955, 26, 67, "Input",ExpressionUUID->"377ad4d8-87f3-c146-93d4-fba5ee9be3f6"],
+Cell[4069, 116, 2320, 44, 342, "Output",ExpressionUUID->"123ebe46-10b2-ca49-bc45-7fc92bc43c32"]
+}, Open  ]]
+}
+]
+*)
+

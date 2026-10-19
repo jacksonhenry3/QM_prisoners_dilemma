@@ -1,0 +1,3757 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    149063,       3749]
+NotebookOptionsPosition[    144834,       3674]
+NotebookOutlinePosition[    145270,       3691]
+CellTagsIndexPosition[    145227,       3688]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"Import", "[", 
+  "\"\<C:\\\\Users\\\\jhenry1\\\\Documents\\\\GitHub\\\\QM_prisoners_dilemma\\\
+\\Mathematica\\\\StrategySpaces.wl\>\"", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Import", "[", 
+  "\"\<C:\\\\Users\\\\jhenry1\\\\Documents\\\\GitHub\\\\QM_prisoners_dilemma\\\
+\\Mathematica\\\\QPD_dynamics.wl\>\"", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Import", "[", 
+  "\"\<C:\\\\Users\\\\jhenry1\\\\Documents\\\\GitHub\\\\QM_prisoners_dilemma\\\
+\\Mathematica\\\\DiscreteNashEqulibrium.wl\>\"", "]"}]}], "Input",
+ CellChangeTimes->{{3.959416695769684*^9, 3.9594167288139*^9}, 
+   3.959416765255457*^9, {3.959418830835617*^9, 3.9594188310399723`*^9}, {
+   3.959418873977455*^9, 3.959418875270279*^9}, 3.960294071095133*^9, {
+   3.965981022982691*^9, 3.9659810256547565`*^9}, {3.9659811000002575`*^9, 
+   3.96598110983037*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"6f45211f-9b98-5445-a58e-73a53925e335"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"D8", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"DeleteDuplicates", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", "[", 
+           RowBox[{"[", 
+            RowBox[{"1", ",", "1"}], "]"}], "]"}], "!=", "0"}], ",", 
+         FractionBox["#", 
+          RowBox[{"#", "[", 
+           RowBox[{"[", 
+            RowBox[{"1", ",", "1"}], "]"}], "]"}]], ",", 
+         FractionBox["#", 
+          RowBox[{"#", "[", 
+           RowBox[{"[", 
+            RowBox[{"1", ",", "2"}], "]"}], "]"}]]}], "]"}], "&"}], "/@", 
+      RowBox[{"binaryDihedralGroup", "[", "8", "]"}]}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "3", ",", "5", ",", "7", ",", "9", ",", "11", ",", "13", ",", 
+       "15", ",", "2", ",", "4", ",", "6", ",", "8", ",", "10", ",", "12", 
+       ",", "14", ",", "16"}], "}"}], "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.9664132860522594`*^9, 3.966413339435354*^9}, {
+  3.966413430805744*^9, 3.966413433463297*^9}, {3.9664135414681263`*^9, 
+  3.966413541708958*^9}, {3.9664137152915993`*^9, 3.966413775325308*^9}, {
+  3.966413962366522*^9, 3.966414003647055*^9}, {3.966414117051868*^9, 
+  3.96641413914674*^9}, {3.966414287084513*^9, 3.9664143139321175`*^9}, {
+  3.9666041401254196`*^9, 3.9666041427650757`*^9}, {3.9666057196483746`*^9, 
+  3.966605741724266*^9}},
+ CellLabel->
+  "In[578]:=",ExpressionUUID->"66d33f37-b4d4-084a-9834-251dc0d216e8"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"symmetricJ", " ", "=", " ", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"J", "[", 
+        RowBox[{"a\[Prime]", ",", "a\[Prime]", ",", "\[Gamma]\[Prime]"}], 
+        "]"}], "//", "FullSimplify"}], ")"}], ",", 
+     RowBox[{"Assumptions", "->", 
+      RowBox[{"0", "<", "\[Gamma]\[Prime]", "<", 
+       FractionBox["\[Pi]", "2"]}]}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.966450570771984*^9, 3.96645058140514*^9}, {
+   3.966450641178575*^9, 3.966450641372202*^9}, {3.966450714065239*^9, 
+   3.966450714307804*^9}, {3.966451913046465*^9, 3.966451920974926*^9}, {
+   3.966451961378034*^9, 3.966451982194835*^9}, 3.9664520514184628`*^9, {
+   3.966452082790434*^9, 3.9664520861099987`*^9}, {3.966452133671028*^9, 
+   3.966452137727932*^9}, {3.966453413172361*^9, 3.966453414524313*^9}, {
+   3.966454004007288*^9, 3.966454011737393*^9}, {3.966454099441311*^9, 
+   3.96645415222731*^9}, 3.9664542604439335`*^9, {3.966514440603052*^9, 
+   3.9665144844793854`*^9}, {3.966533967160036*^9, 3.966533967504358*^9}, {
+   3.966536801355728*^9, 3.966536801758837*^9}, {3.966537586506241*^9, 
+   3.9665375905867004`*^9}, {3.966604363172884*^9, 3.966604363645893*^9}, {
+   3.966605840274729*^9, 3.966605843122864*^9}},
+ CellLabel->
+  "In[585]:=",ExpressionUUID->"faf1e126-6d46-8048-9b26-b1b4967e3181"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"finalStates", " ", "=", " ", 
+   RowBox[{
+    RowBox[{"Simplify", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"play", "[", 
+          RowBox[{"symmetricJ", ",", 
+           RowBox[{"D8", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", 
+           RowBox[{"D8", "[", 
+            RowBox[{"[", "j", "]"}], "]"}]}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "16"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"j", ",", "16"}], "}"}]}], "]"}], "/.", 
+       RowBox[{"Conjugate", "->", "MyConj"}]}], ",", 
+      RowBox[{"Assumptions", "->", 
+       RowBox[{"0", "<", "\[Gamma]\[Prime]", "<", 
+        FractionBox["\[Pi]", "2"]}]}]}], "]"}], "//", "FullSimplify"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.9664522928290424`*^9, 3.9664522993829174`*^9}, {
+  3.966454574135528*^9, 3.966454575362444*^9}, {3.966514581963963*^9, 
+  3.9665145900711336`*^9}, {3.9666041518980713`*^9, 3.9666041705234528`*^9}, {
+  3.966604401988987*^9, 3.966604407033745*^9}},
+ CellLabel->
+  "In[586]:=",ExpressionUUID->"3b58efe6-68bc-ca46-8e8b-001a3a91e267"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"finalStates", "[", 
+  RowBox[{"[", 
+   RowBox[{"1", ",", "2"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.9666107942012634`*^9, 3.966610797880207*^9}},
+ CellLabel->
+  "In[612]:=",ExpressionUUID->"0acb8a95-cdd4-824a-b3a5-5f4877996680"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    FractionBox["1", "2"], " ", 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"-", "1"}], ")"}], 
+       RowBox[{"3", "/", "4"}]], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         SuperscriptBox[
+          RowBox[{"(", 
+           RowBox[{"-", "1"}], ")"}], 
+          RowBox[{"3", "/", "4"}]]}], ")"}], " ", 
+       RowBox[{"Cos", "[", "\[Gamma]\[Prime]", "]"}], " ", 
+       RowBox[{"Cos", "[", 
+        RowBox[{"a\[Prime]", " ", "\[Gamma]\[Prime]"}], "]"}]}]}], ")"}]}], 
+   ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      FractionBox["1", "4"], "-", 
+      FractionBox["\[ImaginaryI]", "4"]}], ")"}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "1"}], "-", "\[ImaginaryI]"}], ")"}], "+", 
+      SqrtBox["2"]}], ")"}], " ", 
+    RowBox[{"Cos", "[", "\[Gamma]\[Prime]", "]"}], " ", 
+    RowBox[{"Sin", "[", 
+     RowBox[{"a\[Prime]", " ", "\[Gamma]\[Prime]"}], "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      FractionBox["1", "4"], "+", 
+      FractionBox["\[ImaginaryI]", "4"]}], ")"}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "1"}], "-", "\[ImaginaryI]"}], ")"}], "+", 
+      SqrtBox["2"]}], ")"}], " ", 
+    RowBox[{"Sin", "[", "\[Gamma]\[Prime]", "]"}], " ", 
+    RowBox[{"Sin", "[", 
+     RowBox[{"a\[Prime]", " ", "\[Gamma]\[Prime]"}], "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      FractionBox["1", "4"], "+", 
+      FractionBox["\[ImaginaryI]", "4"]}], ")"}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "1"}], "-", "\[ImaginaryI]"}], ")"}], "+", 
+      SqrtBox["2"]}], ")"}], " ", 
+    RowBox[{"Cos", "[", 
+     RowBox[{"a\[Prime]", " ", "\[Gamma]\[Prime]"}], "]"}], " ", 
+    RowBox[{"Sin", "[", "\[Gamma]\[Prime]", "]"}]}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.9666107957242317`*^9, 3.966610798132475*^9}, 
+   3.966611132258854*^9},
+ CellLabel->
+  "Out[612]=",ExpressionUUID->"d731725b-be3c-054b-86dc-993d7b06a700"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "/@", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"alicesScore", "[", 
+         RowBox[{"finalStates", "[", 
+          RowBox[{"[", 
+           RowBox[{"3", ",", "4"}], "]"}], "]"}], "]"}], "//", 
+        "ComplexExpand"}], ")"}], "/.", 
+      RowBox[{"a\[Prime]", " ", "->", 
+       FractionBox[
+        RowBox[{"ArcSin", "[", 
+         RowBox[{"Sqrt", "[", "a", "]"}], "]"}], "\[Gamma]\[Prime]"]}]}], 
+     ")"}], "/.", 
+    RowBox[{"\[Gamma]\[Prime]", "->", 
+     RowBox[{"ArcSin", "[", 
+      RowBox[{"Sqrt", "[", "\[Gamma]", "]"}], "]"}]}]}], ")"}]}]], "Input",
+ CellChangeTimes->{{3.966611149657097*^9, 3.966611185716259*^9}, {
+  3.9666112481535225`*^9, 3.966611257762188*^9}},
+ CellLabel->
+  "In[620]:=",ExpressionUUID->"3a4471eb-e075-3142-8c5b-a711f4c450f1"],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{{3.966611241935869*^9, 3.966611258690241*^9}, 
+   3.966611307017317*^9},
+ CellLabel->
+  "Out[620]=",ExpressionUUID->"d5e3d579-8597-ab4a-a285-24e282369582"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{
+   RowBox[{"Cos", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"2", "+", 
+       FractionBox[
+        RowBox[{"ArcSin", "[", 
+         SqrtBox["a"], "]"}], 
+        RowBox[{"ArcSin", "[", 
+         SqrtBox["\[Gamma]"], "]"}]]}], ")"}], " ", 
+     RowBox[{"ArcSin", "[", 
+      SqrtBox["\[Gamma]"], "]"}]}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"0", "<", "a", "<", "1"}], "&&", 
+    RowBox[{"0", "<", "\[Gamma]", "<", "1"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.9666109618941936`*^9, 3.966611006181383*^9}, {
+  3.966611072352066*^9, 3.9666110940346107`*^9}},
+ CellLabel->
+  "In[611]:=",ExpressionUUID->"41efd7b2-bc83-3441-b880-2436d135a218"],
+
+Cell[BoxData[
+ RowBox[{"Cos", "[", 
+  RowBox[{
+   RowBox[{"ArcSin", "[", 
+    SqrtBox["a"], "]"}], "+", 
+   RowBox[{"2", " ", 
+    RowBox[{"ArcSin", "[", 
+     SqrtBox["\[Gamma]"], "]"}]}]}], "]"}]], "Output",
+ CellChangeTimes->{
+  3.9666109649614506`*^9, {3.9666110030771656`*^9, 3.966611006576042*^9}, {
+   3.9666110734247093`*^9, 3.9666110947429047`*^9}},
+ CellLabel->
+  "Out[611]=",ExpressionUUID->"e2c311d0-abc3-604f-9a80-8157c5183bd6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"alicesScore", "[", 
+      RowBox[{"finalStates", "[", 
+       RowBox[{"[", 
+        RowBox[{"3", ",", "4"}], "]"}], "]"}], "]"}], ")"}], "/.", 
+    RowBox[{"Conjugate", "->", "MyConj"}]}], ",", 
+   RowBox[{"0", "<", "\[Gamma]\[Prime]", "<", 
+    FractionBox["Pi", "2"]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.966611012526308*^9, 3.966611047244751*^9}, {
+  3.9666113194900455`*^9, 3.9666113606807594`*^9}, {3.9666113908252506`*^9, 
+  3.9666114045297794`*^9}},
+ CellLabel->
+  "In[624]:=",ExpressionUUID->"c232d35a-c632-ae4e-a6e4-fc0df4511d3c"],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{
+  3.9666109397516193`*^9, {3.9666110105718822`*^9, 3.966611047802723*^9}, {
+   3.9666113279698143`*^9, 3.9666113383203945`*^9}, 3.9666113888911076`*^9, 
+   3.9666114526843624`*^9},
+ CellLabel->
+  "Out[624]=",ExpressionUUID->"55a1fdbe-71d9-0543-b287-2aed1316339a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"alicesScore", "[", 
+         RowBox[{"finalStates", "[", 
+          RowBox[{"[", 
+           RowBox[{"3", ",", "4"}], "]"}], "]"}], "]"}], "//", 
+        "ComplexExpand"}], ")"}], "/.", 
+      RowBox[{"a\[Prime]", " ", "->", 
+       FractionBox[
+        RowBox[{"ArcSin", "[", 
+         RowBox[{"Sqrt", "[", "a", "]"}], "]"}], "\[Gamma]\[Prime]"]}]}], 
+     ")"}], "/.", 
+    RowBox[{"\[Gamma]\[Prime]", "->", 
+     RowBox[{"ArcSin", "[", 
+      RowBox[{"Sqrt", "[", "\[Gamma]", "]"}], "]"}]}]}], ",", 
+   RowBox[{"Assumptions", "->", 
+    RowBox[{
+     RowBox[{"0", "<", "a", "<", "1"}], "&&", 
+     RowBox[{"0", "<", "\[Gamma]", "<", "1"}]}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.966605857894348*^9, 3.966605872409708*^9}, {
+  3.9666108243956604`*^9, 3.966610901179142*^9}},
+ CellLabel->
+  "In[599]:=",ExpressionUUID->"6c4252b8-d62d-4c40-8d3f-3a11de9ddf9d"],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{
+  3.9666107774524193`*^9, {3.966610835791727*^9, 3.966610876557852*^9}, 
+   3.9666109311760273`*^9},
+ CellLabel->
+  "Out[599]=",ExpressionUUID->"4428c858-cfc0-0549-9633-49a7e0ccb4f5"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"alicesScores", " ", "=", " ", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"Map", "[", 
+           RowBox[{"alicesScore", ",", "finalStates", ",", 
+            RowBox[{"{", "2", "}"}]}], "]"}], "//", "ComplexExpand"}], ")"}], 
+        "/.", 
+        RowBox[{"a\[Prime]", " ", "->", 
+         FractionBox[
+          RowBox[{"ArcSin", "[", 
+           RowBox[{"Sqrt", "[", "a", "]"}], "]"}], "\[Gamma]\[Prime]"]}]}], 
+       ")"}], "/.", 
+      RowBox[{"\[Gamma]\[Prime]", "->", 
+       RowBox[{"ArcSin", "[", 
+        RowBox[{"Sqrt", "[", "\[Gamma]", "]"}], "]"}]}]}], ",", 
+     RowBox[{"0", "<", "\[Gamma]", "<", "1"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bobsScores", "     ", "=", " ", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"Map", "[", 
+           RowBox[{"bobsScore", " ", ",", "finalStates", ",", 
+            RowBox[{"{", "2", "}"}]}], "]"}], "//", "ComplexExpand"}], ")"}], 
+        "/.", 
+        RowBox[{"a\[Prime]", " ", "->", 
+         FractionBox[
+          RowBox[{"ArcSin", "[", 
+           RowBox[{"Sqrt", "[", "a", "]"}], "]"}], "\[Gamma]\[Prime]"]}]}], 
+       ")"}], "/.", 
+      RowBox[{"\[Gamma]\[Prime]", "->", 
+       RowBox[{"ArcSin", "[", 
+        RowBox[{"Sqrt", "[", "\[Gamma]", "]"}], "]"}]}]}], ",", 
+     RowBox[{"0", "<", "\[Gamma]", "<", "1"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9664547119535522`*^9, 3.966454716055474*^9}, {
+   3.966511407086378*^9, 3.966511426670412*^9}, {3.9665148120034294`*^9, 
+   3.966514816534949*^9}, 3.966536851788636*^9, {3.9665945005369797`*^9, 
+   3.9665945045330353`*^9}, 3.9666034933159256`*^9, {3.966605135722725*^9, 
+   3.9666051533470154`*^9}, {3.9666051950463696`*^9, 
+   3.9666051996215267`*^9}, {3.966605428311533*^9, 3.9666054336217213`*^9}, {
+   3.9666054974118824`*^9, 3.96660549896706*^9}, {3.96660597202137*^9, 
+   3.966605993361561*^9}, {3.9666108160086327`*^9, 
+   3.966610816150648*^9}},ExpressionUUID->"ecb2abca-cde3-bd40-af73-\
+b51fab64630c"],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{3.966610767225136*^9},
+ CellLabel->
+  "Out[587]=",ExpressionUUID->"f44ced47-7eef-5f47-b7c4-f14daaca63ae"],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{3.9666107678218727`*^9},
+ CellLabel->
+  "Out[588]=",ExpressionUUID->"6e9d2fac-f621-9f4a-adf8-0b9ae931a087"]
+}, Open  ]],
+
+Cell[TextData[Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Convert", " ", "to", " ", "\[Gamma]"}], " ", "==", " ", 
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"Sin", "[", "\[Gamma]\[Prime]", "]"}], "2"], " ", "a"}]}], " ", 
+  "=", " ", 
+  RowBox[{
+   SuperscriptBox[
+    RowBox[{"Sin", "[", 
+     RowBox[{"\[Gamma]\[Prime]", " ", "a\[Prime]"}], "]"}], "2"], "  ", "for",
+    " ", "simplification"}]}]],
+ CellChangeTimes->{{3.966515963884895*^9, 3.966516024744064*^9}, {
+   3.966516056136996*^9, 3.9665161324470634`*^9}, 3.966516165340683*^9, {
+   3.9665339766341248`*^9, 3.9665339912344036`*^9}, 
+   3.9666035179492188`*^9},ExpressionUUID->"a505f364-0efe-2745-9e1f-\
+26d6ebdc1d97"]], "Text",
+ CellChangeTimes->{{3.9666035284692726`*^9, 
+  3.9666035389562664`*^9}},ExpressionUUID->"d376d8d8-b010-4e42-910a-\
+b87d3167cb49"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"eq", " ", "=", " ", 
+   RowBox[{"DiscreteNashEquilibria", "[", 
+    RowBox[{
+     RowBox[{"(", "alicesScores", ")"}], ",", 
+     RowBox[{"(", "bobsScores", ")"}], ",", 
+     RowBox[{"0", "<", "\[Gamma]", "<", "1"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.9664528007427197`*^9, 3.9664528022252903`*^9}, 
+   3.966452978620407*^9, 3.966453047963562*^9, {3.966516281953945*^9, 
+   3.966516306330515*^9}, 3.966536869523203*^9, {3.966536971886395*^9, 
+   3.9665369790440903`*^9}, {3.9665955423999157`*^9, 3.966595553882717*^9}, {
+   3.966605187068775*^9, 3.966605187619316*^9}},
+ CellLabel->
+  "In[551]:=",ExpressionUUID->"6d047f06-9918-ed4e-a1be-7da5eb021ea9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"eq", "[", 
+  RowBox[{"[", 
+   RowBox[{"1", ",", "3"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.9666053178989735`*^9, 3.966605375696924*^9}},
+ CellLabel->
+  "In[540]:=",ExpressionUUID->"b1c1e826-bdc2-214b-b2e8-47caabaa18e4"],
+
+Cell[BoxData[
+ TemplateBox[<|"shortenedBoxes" -> TagBox[
+     RowBox[{"Reduce", "[", 
+       RowBox[{
+         TemplateBox[{"1"}, "OutputSizeLimit`Skeleton"], ",", 
+         RowBox[{"{", 
+           RowBox[{"a", ",", "\[Gamma]"}], "}"}], ",", 
+         TemplateBox[{}, "Reals"]}], "]"}], Short[#, 64]& ], "line" -> 540, 
+   "sessionID" -> 33110397198064177675, "byteCount" -> 3277576, "size" -> 64, 
+   "stored" -> False, "expr" -> Missing["NotStored"], "wrap" -> 
+   OutputSizeLimit`Defer, "version" -> 1|>,
+  "OutputSizeLimitTemplate"]], "Output",
+ CellChangeTimes->{{3.9666053327546005`*^9, 3.966605376011484*^9}},
+ CellLabel->
+  "Out[540]=",ExpressionUUID->"0fdb0df6-1c8e-9a49-9567-698f1b17f9f2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"alicesScores", "/.", 
+     RowBox[{"\[Gamma]", "->", "g"}]}], "//", "MatrixPlot"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"g", ",", "0", ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.96660561626437*^9, 3.966605682774946*^9}},
+ CellLabel->
+  "In[577]:=",ExpressionUUID->"381d2e89-5c11-9b42-bfae-022c398cb648"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`g$$ = 1., Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`g$$], 0, 1, ControlType -> Manipulator}}, 
+    Typeset`size$$ = {324., {160., 163.61016500000005`}}, Typeset`update$$ = 
+    0, Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`g$$ = 0}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> MatrixPlot[
+        ReplaceAll[$CellContext`alicesScores, $CellContext`\[Gamma] -> \
+$CellContext`g$$]], "Specifications" :> {{$CellContext`g$$, 0, 1}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{367., {198.92062981973868`, 204.07937018026132`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.9666056242889614`*^9, 3.966605683278517*^9}},
+ CellLabel->
+  "Out[577]=",ExpressionUUID->"0ac56bf7-e895-734e-a4c6-fcfe56fdbb85"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Gamma]Orig", "[", "\[Gamma]_", "]"}], ":=", 
+   RowBox[{"ArcSin", "[", 
+    RowBox[{"Sqrt", "[", "\[Gamma]", "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"aOrig", "[", 
+   RowBox[{"\[Gamma]_", ",", "a_"}], "]"}], ":=", 
+  FractionBox[
+   RowBox[{"ArcSin", "[", 
+    RowBox[{"Sqrt", "[", "a", "]"}], "]"}], 
+   RowBox[{"ArcSin", "[", 
+    RowBox[{"Sqrt", "[", "\[Gamma]", "]"}], "]"}]]}]}], "Input",
+ CellChangeTimes->{{3.966534057587765*^9, 3.96653412706198*^9}, {
+  3.9665343135087147`*^9, 3.9665343827975397`*^9}},
+ CellLabel->
+  "In[619]:=",ExpressionUUID->"b6da4c75-288c-5646-81bc-63ff6991d99b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"inequalities", "=", 
+   RowBox[{"eq", "[", 
+    RowBox[{"[", 
+     RowBox[{";;", ",", "3"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"numRegions", "=", 
+   RowBox[{"Length", "[", "inequalities", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"colors", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"ColorData", "[", 
+      RowBox[{"97", ",", "i"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "numRegions"}], "}"}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"labels", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"\"\<Region \>\"", "<>", 
+       RowBox[{"ToString", "[", "i", "]"}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "1", ",", "numRegions"}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"textures", "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"HatchFilling", "[", "0", "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"HatchFilling", "[", 
+       RowBox[{"Pi", "/", "2"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"HatchFilling", "[", 
+       RowBox[{"Pi", "/", "4"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"HatchFilling", "[", 
+       RowBox[{
+        RowBox[{"-", "Pi"}], "/", "4"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"HatchFilling", "[", 
+       RowBox[{
+        RowBox[{"Pi", "/", "8"}], ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"HatchFilling", "[", 
+       RowBox[{
+        RowBox[{"Pi", "/", "3"}], ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"HatchFilling", "[", 
+       RowBox[{"0", ",", "2"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"HatchFilling", "[", 
+       RowBox[{
+        RowBox[{"Pi", "/", "2"}], ",", "2"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"HatchFilling", "[", 
+         RowBox[{
+          RowBox[{"Pi", "/", "4"}], ",", "2"}], "]"}], ",", 
+        RowBox[{"HatchFilling", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "Pi"}], "/", "4"}], ",", "2"}], "]"}]}], "}"}]}], 
+     "}"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"r", " ", "=", " ", 
+   RowBox[{"RegionPlot", "[", 
+    RowBox[{"inequalities", ",", 
+     RowBox[{"{", 
+      RowBox[{"a", ",", "0", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\[Gamma]", ",", "0", ",", "1"}], "}"}], ",", 
+     RowBox[{"PlotStyle", "->", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Opacity", "[", 
+           RowBox[{"0.6", ",", 
+            RowBox[{"colors", "[", 
+             RowBox[{"[", "i", "]"}], "]"}]}], "]"}], ",", 
+          RowBox[{"textures", "[", 
+           RowBox[{"[", "i", "]"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "1", ",", "numRegions"}], "}"}]}], "]"}]}], ",", 
+     RowBox[{"FrameLabel", "->", 
+      RowBox[{"{", 
+       RowBox[{"\"\<a\>\"", ",", "\"\<\[Gamma]\>\""}], "}"}]}], ",", 
+     RowBox[{"ImageSize", "->", "Large"}], ",", 
+     RowBox[{"MaxRecursion", "->", "6"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9665976452582264`*^9, 3.9665976452582264`*^9}, {
+   3.966598148839548*^9, 3.966598219456764*^9}, {3.9666016398613033`*^9, 
+   3.9666016427300777`*^9}, {3.9666036362870846`*^9, 3.966603685311363*^9}, 
+   3.966605539551506*^9, 3.966605570351202*^9},
+ CellLabel->
+  "In[565]:=",ExpressionUUID->"a9a2b32f-f428-c148-84b6-e022d466b283"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Grid", "[", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{"r", ",", 
+       RowBox[{
+        RowBox[{"DeleteCases", "[", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"eq", "/.", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"a", "->", 
+               RowBox[{"pt", "[", 
+                RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+              RowBox[{"\[Gamma]", "->", 
+               RowBox[{"pt", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}], ")"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"_", ",", "_", ",", "False"}], "}"}]}], "]"}], "//", 
+        "MatrixForm"}]}], "}"}], "}"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"pt", ",", 
+       RowBox[{"{", 
+        RowBox[{"0.5", ",", "0.25"}], "}"}]}], "}"}], ",", "Locator"}], 
+    "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.9666021663652153`*^9, 3.96660218168351*^9}, {
+  3.9666022276992855`*^9, 3.9666022524531612`*^9}, {3.966602311431095*^9, 
+  3.9666023140309906`*^9}, {3.9666023708115997`*^9, 3.9666024102864895`*^9}, {
+  3.966602829103239*^9, 3.966602920219639*^9}, {3.9666036913929405`*^9, 
+  3.9666036961988583`*^9}, {3.9666038949718018`*^9, 3.966603906215061*^9}},
+ CellLabel->
+  "In[441]:=",ExpressionUUID->"3467add9-3179-d444-92fa-eec0250dd8fb"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`pt$$ = {0.522, 0.309}, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`pt$$], {0.5, 0.25}}, Automatic, ControlType -> 
+      Locator}}, Typeset`size$$ = {
+    724.2411503410339, {254.88137200723867`, 260.0401123677613}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`pt$$ = {0.5, 0.25}}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Grid[{{$CellContext`r, 
+          MatrixForm[
+           DeleteCases[
+            
+            ReplaceAll[$CellContext`eq, {$CellContext`a -> 
+              Part[$CellContext`pt$$, 1], $CellContext`\[Gamma] -> 
+              Part[$CellContext`pt$$, 2]}], {
+             Blank[], 
+             Blank[], False}]]}}], 
+      "Specifications" :> {{{$CellContext`pt$$, {0.5, 0.25}}, Automatic, 
+         ControlType -> Locator}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{774., {286.9206298197387, 292.0793701802613}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.9666039067197*^9},
+ CellLabel->
+  "Out[441]=",ExpressionUUID->"48ee7dc7-8efb-cf4b-996f-1c466b206b6b"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Reduce", "ivar", 
+   "\"\\!\\(\\*RowBox[{\\\"0.638`\\\"}]\\) is not a valid variable.\"", 2, 
+   536, 123, 33110397198064177675, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9666053225866394`*^9},
+ CellLabel->"",ExpressionUUID->"87017e83-1b89-7a46-8526-ebdb8aee8fe8"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Reduce", "ivar", 
+   "\"\\!\\(\\*RowBox[{\\\"0.638`\\\"}]\\) is not a valid variable.\"", 2, 
+   536, 124, 33110397198064177675, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.966605322712557*^9},
+ CellLabel->"",ExpressionUUID->"c9840ab8-662f-1f4f-b1b8-f8c74bee51bd"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Reduce", "ivar", 
+   "\"\\!\\(\\*RowBox[{\\\"0.638`\\\"}]\\) is not a valid variable.\"", 2, 
+   536, 125, 33110397198064177675, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9666053228067913`*^9},
+ CellLabel->"",ExpressionUUID->"a890610b-5083-4845-8772-535d0b215e59"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General", "stop", 
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"Reduce\\\", \\\"::\\\", \
+\\\"ivar\\\"}], \\\"MessageName\\\"]\\) will be suppressed during this \
+calculation.\"", 2, 536, 126, 33110397198064177675, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.966605322978613*^9},
+ CellLabel->"",ExpressionUUID->"154428c3-e349-0b48-b8f4-e0ac4dc414b2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"aliceHighestScoreForEachEQ", " ", "=", " ", 
+  RowBox[{"N", "[", 
+   RowBox[{
+    RowBox[{"Table", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"m", " ", "=", " ", 
+        RowBox[{"Maximize", "[", 
+         RowBox[{
+          RowBox[{"N", "[", 
+           RowBox[{"e", ",", "100"}], "]"}], ",", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"a", ",", "\[Gamma]"}], "}"}], "\[Element]", " ", 
+           RowBox[{"Rectangle", "[", "]"}]}], ",", 
+          RowBox[{"WorkingPrecision", "->", "100"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "m"}], "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"e", ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", 
+            RowBox[{"#", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "}"}], "&"}], "/@", 
+         RowBox[{"eq", "[", 
+          RowBox[{"[", 
+           RowBox[{";;", ",", 
+            RowBox[{"{", 
+             RowBox[{"2", ",", "3"}], "}"}]}], "]"}], "]"}]}]}], "}"}]}], 
+     "]"}], ",", "3"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.966533945308983*^9, 3.9665339572644215`*^9}, {
+  3.966603729015234*^9, 3.966603750636383*^9}, {3.966603813389124*^9, 
+  3.9666038442098103`*^9}},
+ CellLabel->
+  "In[439]:=",ExpressionUUID->"80cb7cd0-5069-ef4d-85ae-78cd2893d998"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"2.4095766610729816748`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.6300756617312403911`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.118955414593757349`3."}]}], "}"}]}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.8990096728652196873`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.5034096288628258658`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.1414947057941169078`3."}]}], "}"}]}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.98427231142030745`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.1771637734629069038`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.4750367968075103023`3."}]}], "}"}]}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.465322084715053827`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.2235554892854740795`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.0837077530931476283`3."}]}], "}"}]}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.9209437638373015649`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.1525662583023809389`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.3333333333333333333`3."}]}], "}"}]}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.6666666666666666667`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.9786810237137124337`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.3333333333333333333`3."}]}], "}"}]}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.2235554892854740795`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.0837077530931476283`3."}]}], "}"}]}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.6666666666666666667`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.1525662583023809389`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.3333333333333333333`3."}]}], "}"}]}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.`3.", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "\[Rule]", "0.5`3."}], ",", 
+       RowBox[{"\[Gamma]", "\[Rule]", "0.0714285714285714286`3."}]}], "}"}]}],
+     "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.9665339051442566`*^9, 3.9665339255781*^9}, 
+   3.966533978369478*^9, {3.966603734641508*^9, 3.9666037512500057`*^9}, 
+   3.9666038269313602`*^9, 3.966603858941391*^9},
+ CellLabel->
+  "Out[439]=",ExpressionUUID->"5c9f7de8-8aee-204d-b82d-c4a3bf4cf19b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"Evaluate", "[", 
+     RowBox[{"eq", "//", "MatrixForm"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "a", ",", 
+        "0.1771637734629069037872365068881509376459327735652799020108141906182\
+300341570367902376076020408690752736953578972955`99.52287874528034"}], "}"}], 
+      ",", "0", ",", "1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "\[Gamma]", ",", 
+        "0.4750367968075103022720274369003039199210403971157468117624266944527\
+899377331193676162323658656207888533799118770242`100."}], "}"}], ",", "0", 
+      ",", "1"}], "}"}]}], "]"}], "//", "N"}]], "Input",
+ CellChangeTimes->{{3.966516785412329*^9, 3.9665168278350105`*^9}, {
+  3.966518528395691*^9, 3.966518578891037*^9}, {3.966518726142725*^9, 
+  3.966518738219059*^9}, {3.966520044932516*^9, 3.9665200555551176`*^9}, {
+  3.966520145217537*^9, 3.966520155077477*^9}},
+ CellLabel->
+  "In[546]:=",ExpressionUUID->"6596b2fa-15fe-624e-bc0b-6a6c3959eb28"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 0.152566, $CellContext`\[Gamma]$$ = 
+    Rational[1, 3], Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`a$$], 0.1771637734629069}, 0., 1., ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`\[Gamma]$$], 0.4750367968075103}, 0., 1., 
+      ControlType -> Manipulator}}, Typeset`size$$ = {
+    233.3247238445282, {63.16057725858876, 68.3193176191114}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 
+        0.1771637734629069, $CellContext`\[Gamma]$$ = 0.4750367968075103}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      MatrixForm[{{{2., 8.}, {
+          5. - 5. $CellContext`\[Gamma]$$ + $CellContext`a$$ (-4. + 
+             7. $CellContext`\[Gamma]$$), $CellContext`a$$ + 
+           5. $CellContext`\[Gamma]$$ - 
+           3. $CellContext`a$$ $CellContext`\[Gamma]$$}, 
+          Or[
+           
+           And[$CellContext`a$$ == 
+            0.6300756617312404, $CellContext`\[Gamma]$$ == (-1. + \
+$CellContext`a$$)/(-5. + 3. $CellContext`a$$)], 
+           And[
+            Inequality[
+            0.6300756617312404, Less, $CellContext`a$$, LessEqual, 
+             0.7049464812615678], 
+            
+            Inequality[(-1. + $CellContext`a$$)/(-5. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, 
+             LessEqual, (-5. + 7. $CellContext`a$$)^(-2) (
+               10. $CellContext`a$$ - 1. $CellContext`a$$^2 - 
+               11. $CellContext`a$$^3) - 6. 
+             1.4142135623730951` ((-5. + 7. $CellContext`a$$)^(-4) (
+                5. $CellContext`a$$^3 - 10. $CellContext`a$$^4 + 
+                4. $CellContext`a$$^5 + $CellContext`a$$^6))^Rational[1, 2]]], 
+           And[
+            Inequality[
+            0.7049464812615678, Less, $CellContext`a$$, LessEqual, 
+             0.9786810237137125], 
+            
+            Inequality[(-1. + $CellContext`a$$)/(-5. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, 
+             LessEqual, (-8. + 7. $CellContext`a$$)^(-2) (32. - 
+               60. $CellContext`a$$ + 68. $CellContext`a$$^2 - 
+               39. $CellContext`a$$^3) - 
+             8. ((-8. + 7. $CellContext`a$$)^(-4) (32. $CellContext`a$$^2 - 
+                92. $CellContext`a$$^3 + 112. $CellContext`a$$^4 - 
+                75. $CellContext`a$$^5 + 23. $CellContext`a$$^6))^
+              Rational[1, 2]]], 
+           And[
+            Inequality[0.9786810237137125, Less, $CellContext`a$$, Less, 1.], 
+            
+            Inequality[(-1. + $CellContext`a$$)/(-5. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+             0.3333333333333333]]]}, {{5., 5.}, {
+          1. + 2. $CellContext`\[Gamma]$$ - 
+           0.25 $CellContext`a$$ ($CellContext`a$$ + 
+            8. $CellContext`\[Gamma]$$ - 
+            2. (3. + ($CellContext`\[Gamma]$$ - 
+               1. $CellContext`a$$ $CellContext`\[Gamma]$$)^Rational[1, 2])), 
+           1. + 2. $CellContext`\[Gamma]$$ - 
+           0.25 $CellContext`a$$ ($CellContext`a$$ + 
+            8. $CellContext`\[Gamma]$$ - 
+            2. (3. + ($CellContext`\[Gamma]$$ - 
+               1. $CellContext`a$$ $CellContext`\[Gamma]$$)^Rational[1, 2]))}, 
+          Or[
+           And[
+            Inequality[
+            0., Less, $CellContext`a$$, LessEqual, 0.4771175305465824], 
+            Inequality[
+            0.5 (2. + 3. $CellContext`a$$)^(-2) (4. $CellContext`a$$ + 
+               9. $CellContext`a$$^2 + 2. $CellContext`a$$^3) - 
+             0.5 ((2. + 3. $CellContext`a$$)^(-4) (8. $CellContext`a$$^3 + 
+                9. $CellContext`a$$^4 - 12. $CellContext`a$$^5 - 
+                5. $CellContext`a$$^6))^Rational[1, 2], 
+             LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+             0.013888888888888888` (-1. + $CellContext`a$$)^(-1) (-24. + 
+               12. $CellContext`a$$ - 13. $CellContext`a$$^2) - 
+             0.06944444444444445 ((-1. + $CellContext`a$$)^(-2) (
+                48. $CellContext`a$$^2 - 
+                24. $CellContext`a$$^3 + $CellContext`a$$^4))^
+              Rational[1, 2]]], 
+           And[
+            Inequality[
+            0.4771175305465824, Less, $CellContext`a$$, Less, 
+             0.5034096288628259], 
+            Inequality[
+            0.5 (2. + 3. $CellContext`a$$)^(-2) (4. $CellContext`a$$ + 
+               9. $CellContext`a$$^2 + 2. $CellContext`a$$^3) - 
+             0.5 ((2. + 3. $CellContext`a$$)^(-4) (8. $CellContext`a$$^3 + 
+                9. $CellContext`a$$^4 - 12. $CellContext`a$$^5 - 
+                5. $CellContext`a$$^6))^Rational[1, 2], 
+             LessEqual, $CellContext`\[Gamma]$$, 
+             LessEqual, (1. + $CellContext`a$$)^(-2) (2. + $CellContext`a$$^2 - 
+               6. $CellContext`a$$^3) - 
+             1.5 ((1. + $CellContext`a$$)^(-4) (8. $CellContext`a$$^2 - 
+                8. $CellContext`a$$^3 - 5. $CellContext`a$$^4 - 
+                10. $CellContext`a$$^5 + 15. $CellContext`a$$^6))^
+              Rational[1, 2]]], 
+           
+           And[$CellContext`a$$ == 
+            0.5034096288628259, $CellContext`\[Gamma]$$ == (
+                1. + $CellContext`a$$)^(-2) (2. + $CellContext`a$$^2 - 
+               6. $CellContext`a$$^3) - 
+             1.5 ((1. + $CellContext`a$$)^(-4) (8. $CellContext`a$$^2 - 
+                8. $CellContext`a$$^3 - 5. $CellContext`a$$^4 - 
+                10. $CellContext`a$$^5 + 15. $CellContext`a$$^6))^
+              Rational[1, 2]]]}, {{6., 6.}, {
+          1. + 2. $CellContext`\[Gamma]$$ - 
+           0.25 $CellContext`a$$ (-6. + $CellContext`a$$ + 
+            8. $CellContext`\[Gamma]$$ + 
+            2. ($CellContext`\[Gamma]$$ - 
+               1. $CellContext`a$$ $CellContext`\[Gamma]$$)^Rational[1, 2]), 
+           1. + 2. $CellContext`\[Gamma]$$ - 
+           0.25 $CellContext`a$$ (-6. + $CellContext`a$$ + 
+            8. $CellContext`\[Gamma]$$ + 
+            2. ($CellContext`\[Gamma]$$ - 
+               1. $CellContext`a$$ $CellContext`\[Gamma]$$)^Rational[1, 2])}, 
+          Or[
+           And[
+            Inequality[
+            0., Less, $CellContext`a$$, LessEqual, 
+             0.045454545454545456` (49. - 1. 45.2658811910251)], 
+            Inequality[
+            0.5 (2. + 3. $CellContext`a$$)^(-2) (4. $CellContext`a$$ + 
+               9. $CellContext`a$$^2 + 2. $CellContext`a$$^3) + 
+             0.5 ((2. + 3. $CellContext`a$$)^(-4) (8. $CellContext`a$$^3 + 
+                 9. $CellContext`a$$^4 - 12. $CellContext`a$$^5 - 
+                 5. $CellContext`a$$^6))^Rational[1, 2], 
+             LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+             0.013888888888888888` (-1. + $CellContext`a$$)^(-1) (-24. + 
+               12. $CellContext`a$$ - 13. $CellContext`a$$^2) + 
+             0.06944444444444445 ((-1. + $CellContext`a$$)^(-2) (
+                 48. $CellContext`a$$^2 - 
+                 24. $CellContext`a$$^3 + $CellContext`a$$^4))^
+               Rational[1, 2]]], 
+           And[
+            Inequality[
+            0.045454545454545456` (49. - 1. 45.2658811910251), 
+             Less, $CellContext`a$$, Less, 0.1771637734629069], 
+            Or[
+             Inequality[
+             0.5 (2. + 3. $CellContext`a$$)^(-2) (4. $CellContext`a$$ + 
+                9. $CellContext`a$$^2 + 2. $CellContext`a$$^3) + 
+              0.5 ((2. + 3. $CellContext`a$$)^(-4) (8. $CellContext`a$$^3 + 
+                  9. $CellContext`a$$^4 - 12. $CellContext`a$$^5 - 
+                  5. $CellContext`a$$^6))^Rational[1, 2], 
+              LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+              0.5 (-2. + 7. $CellContext`a$$)^(-2) ((-4.) $CellContext`a$$ + 
+                37. $CellContext`a$$^2 - 18. $CellContext`a$$^3) - 
+              2.5 ((-2. + 7. $CellContext`a$$)^(-4) ((-8.) $CellContext`a$$^3 + 
+                 57. $CellContext`a$$^4 - 60. $CellContext`a$$^5 + 
+                 11. $CellContext`a$$^6))^Rational[1, 2]], 
+             Inequality[
+             0.5 (-2. + 7. $CellContext`a$$)^(-2) ((-4.) $CellContext`a$$ + 
+                37. $CellContext`a$$^2 - 18. $CellContext`a$$^3) + 
+              2.5 ((-2. + 7. $CellContext`a$$)^(-4) ((-8.) $CellContext`a$$^3 + 
+                  57. $CellContext`a$$^4 - 60. $CellContext`a$$^5 + 
+                  11. $CellContext`a$$^6))^Rational[1, 2], 
+              LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+              0.013888888888888888` (-1. + $CellContext`a$$)^(-1) (-24. + 
+                12. $CellContext`a$$ - 13. $CellContext`a$$^2) + 
+              0.06944444444444445 ((-1. + $CellContext`a$$)^(-2) (
+                  48. $CellContext`a$$^2 - 
+                  24. $CellContext`a$$^3 + $CellContext`a$$^4))^
+                Rational[1, 2]]]], 
+           And[$CellContext`a$$ == 0.1771637734629069, 
+            Or[
+             Inequality[
+             0.5 (2. + 3. $CellContext`a$$)^(-2) (4. $CellContext`a$$ + 
+                9. $CellContext`a$$^2 + 2. $CellContext`a$$^3) + 
+              0.5 ((2. + 3. $CellContext`a$$)^(-4) (8. $CellContext`a$$^3 + 
+                  9. $CellContext`a$$^4 - 12. $CellContext`a$$^5 - 
+                  5. $CellContext`a$$^6))^Rational[1, 2], 
+              LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+              0.5 (-2. + 7. $CellContext`a$$)^(-2) ((-4.) $CellContext`a$$ + 
+                37. $CellContext`a$$^2 - 18. $CellContext`a$$^3) - 
+              2.5 ((-2. + 7. $CellContext`a$$)^(-4) ((-8.) $CellContext`a$$^3 + 
+                 57. $CellContext`a$$^4 - 60. $CellContext`a$$^5 + 
+                 11. $CellContext`a$$^6))^
+               Rational[1, 2]], $CellContext`\[Gamma]$$ == 
+             0.013888888888888888` (-1. + $CellContext`a$$)^(-1) (-24. + 
+                12. $CellContext`a$$ - 13. $CellContext`a$$^2) + 
+              0.06944444444444445 ((-1. + $CellContext`a$$)^(-2) (
+                  48. $CellContext`a$$^2 - 
+                  24. $CellContext`a$$^3 + $CellContext`a$$^4))^
+                Rational[1, 2]]], 
+           And[
+            Inequality[
+            0.1771637734629069, Less, $CellContext`a$$, Less, 
+             0.02857142857142857 (-7. + 3. 4.58257569495584)], 
+            Inequality[
+            0.5 (2. + 3. $CellContext`a$$)^(-2) (4. $CellContext`a$$ + 
+               9. $CellContext`a$$^2 + 2. $CellContext`a$$^3) + 
+             0.5 ((2. + 3. $CellContext`a$$)^(-4) (8. $CellContext`a$$^3 + 
+                 9. $CellContext`a$$^4 - 12. $CellContext`a$$^5 - 
+                 5. $CellContext`a$$^6))^Rational[1, 2], 
+             LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+             0.5 (-2. + 7. $CellContext`a$$)^(-2) ((-4.) $CellContext`a$$ + 
+               37. $CellContext`a$$^2 - 18. $CellContext`a$$^3) - 
+             2.5 ((-2. + 7. $CellContext`a$$)^(-4) ((-8.) $CellContext`a$$^3 + 
+                57. $CellContext`a$$^4 - 60. $CellContext`a$$^5 + 
+                11. $CellContext`a$$^6))^Rational[1, 2]]], 
+           
+           And[$CellContext`a$$ == 
+            0.02857142857142857 (-7. + 
+              3. 4.58257569495584), $CellContext`\[Gamma]$$ == 
+            0.5 0.15042059262237278` (
+               0.11428571428571428` (-7. + 3. 4.58257569495584) + 
+               0.007346938775510204 45.53182081185472 + 
+               0.00004664723032069971 307.23630051548673`) + 
+             0.5 0.15042059262237278` 0.25750277894412693`]]}, {{6., 8.}, {
+          1. + $CellContext`a$$ (2. - 
+             3.5 $CellContext`\[Gamma]$$) + $CellContext`\[Gamma]$$, 
+           1. + $CellContext`\[Gamma]$$ + 
+           0.5 $CellContext`a$$ (-1. + 3. $CellContext`\[Gamma]$$)}, 
+          And[
+           Inequality[
+           0., Less, $CellContext`a$$, LessEqual, 
+            0.22355548928547408`], $CellContext`\[Gamma]$$ == \
+$CellContext`a$$/(2. + 3. $CellContext`a$$)]}, {{7., 8.}, {
+          1. + $CellContext`a$$ (4. - 7. $CellContext`\[Gamma]$$) + 
+           2. $CellContext`\[Gamma]$$, 1. + 
+           2. $CellContext`\[Gamma]$$ + $CellContext`a$$ (-1. + 
+             3. $CellContext`\[Gamma]$$)}, 
+          Or[
+           And[
+            Inequality[
+            0., Less, $CellContext`a$$, LessEqual, 
+             0.5 (7. - 3. 2.23606797749979)], 
+            
+            Inequality[$CellContext`a$$/(2. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+             0.3333333333333333]], 
+           And[
+            Inequality[
+            0.5 (7. - 3. 2.23606797749979), Less, $CellContext`a$$, Less, 
+             0.15256625830238094`], 
+            Or[
+             
+             Inequality[$CellContext`a$$/(2. + 3. $CellContext`a$$), 
+              LessEqual, $CellContext`\[Gamma]$$, 
+              LessEqual, (-2. + 
+                 7. $CellContext`a$$)^(-2) ((-2.) $CellContext`a$$ + 
+                23. $CellContext`a$$^2 - 11. $CellContext`a$$^3) - 6. 
+              1.4142135623730951` ((-2. + 
+                  7. $CellContext`a$$)^(-4) (-$CellContext`a$$^3 + 
+                 8. $CellContext`a$$^4 - 
+                 8. $CellContext`a$$^5 + $CellContext`a$$^6))^Rational[1, 2]], 
+             
+             Inequality[(-2. + 
+                 7. $CellContext`a$$)^(-2) ((-2.) $CellContext`a$$ + 
+                23. $CellContext`a$$^2 - 11. $CellContext`a$$^3) + 
+              6. 1.4142135623730951` ((-2. + 
+                   7. $CellContext`a$$)^(-4) (-$CellContext`a$$^3 + 
+                  8. $CellContext`a$$^4 - 
+                  8. $CellContext`a$$^5 + $CellContext`a$$^6))^Rational[1, 2],
+               LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+              0.3333333333333333]]], 
+           And[$CellContext`a$$ == 0.15256625830238094`, 
+            Or[
+             
+             Inequality[$CellContext`a$$/(2. + 3. $CellContext`a$$), 
+              LessEqual, $CellContext`\[Gamma]$$, 
+              LessEqual, (-2. + 
+                 7. $CellContext`a$$)^(-2) ((-2.) $CellContext`a$$ + 
+                23. $CellContext`a$$^2 - 11. $CellContext`a$$^3) - 6. 
+              1.4142135623730951` ((-2. + 
+                  7. $CellContext`a$$)^(-4) (-$CellContext`a$$^3 + 
+                 8. $CellContext`a$$^4 - 
+                 8. $CellContext`a$$^5 + $CellContext`a$$^6))^
+               Rational[1, 2]], $CellContext`\[Gamma]$$ == 
+             0.3333333333333333]], 
+           And[
+            Inequality[
+            0.15256625830238094`, Less, $CellContext`a$$, Less, 
+             0.18579886337475993`], 
+            
+            Inequality[$CellContext`a$$/(2. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, 
+             LessEqual, (-2. + 
+                7. $CellContext`a$$)^(-2) ((-2.) $CellContext`a$$ + 
+               23. $CellContext`a$$^2 - 11. $CellContext`a$$^3) - 6. 
+             1.4142135623730951` ((-2. + 
+                 7. $CellContext`a$$)^(-4) (-$CellContext`a$$^3 + 
+                8. $CellContext`a$$^4 - 
+                8. $CellContext`a$$^5 + $CellContext`a$$^6))^Rational[1, 2]]], 
+           
+           And[$CellContext`a$$ == 
+            0.18579886337475993`, $CellContext`\[Gamma]$$ == \
+$CellContext`a$$/(2. + 3. $CellContext`a$$)]]}, {{8., 
+          2.}, {$CellContext`a$$ + 5. $CellContext`\[Gamma]$$ - 
+           3. $CellContext`a$$ $CellContext`\[Gamma]$$, 5. - 
+           5. $CellContext`\[Gamma]$$ + $CellContext`a$$ (-4. + 
+             7. $CellContext`\[Gamma]$$)}, 
+          Or[
+           
+           And[$CellContext`a$$ == 
+            0.6300756617312404, $CellContext`\[Gamma]$$ == (-1. + \
+$CellContext`a$$)/(-5. + 3. $CellContext`a$$)], 
+           And[
+            Inequality[
+            0.6300756617312404, Less, $CellContext`a$$, LessEqual, 
+             0.7049464812615678], 
+            
+            Inequality[(-1. + $CellContext`a$$)/(-5. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, 
+             LessEqual, (-5. + 7. $CellContext`a$$)^(-2) (
+               10. $CellContext`a$$ - 1. $CellContext`a$$^2 - 
+               11. $CellContext`a$$^3) - 6. 
+             1.4142135623730951` ((-5. + 7. $CellContext`a$$)^(-4) (
+                5. $CellContext`a$$^3 - 10. $CellContext`a$$^4 + 
+                4. $CellContext`a$$^5 + $CellContext`a$$^6))^Rational[1, 2]]], 
+           And[
+            Inequality[
+            0.7049464812615678, Less, $CellContext`a$$, LessEqual, 
+             0.9786810237137125], 
+            
+            Inequality[(-1. + $CellContext`a$$)/(-5. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, 
+             LessEqual, (-8. + 7. $CellContext`a$$)^(-2) (32. - 
+               60. $CellContext`a$$ + 68. $CellContext`a$$^2 - 
+               39. $CellContext`a$$^3) - 
+             8. ((-8. + 7. $CellContext`a$$)^(-4) (32. $CellContext`a$$^2 - 
+                92. $CellContext`a$$^3 + 112. $CellContext`a$$^4 - 
+                75. $CellContext`a$$^5 + 23. $CellContext`a$$^6))^
+              Rational[1, 2]]], 
+           And[
+            Inequality[0.9786810237137125, Less, $CellContext`a$$, Less, 1.], 
+            
+            Inequality[(-1. + $CellContext`a$$)/(-5. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+             0.3333333333333333]]]}, {{8., 6.}, {
+          1. + $CellContext`\[Gamma]$$ + 
+           0.5 $CellContext`a$$ (-1. + 3. $CellContext`\[Gamma]$$), 
+           1. + $CellContext`a$$ (2. - 
+             3.5 $CellContext`\[Gamma]$$) + $CellContext`\[Gamma]$$}, 
+          And[
+           Inequality[
+           0., Less, $CellContext`a$$, LessEqual, 
+            0.22355548928547408`], $CellContext`\[Gamma]$$ == \
+$CellContext`a$$/(2. + 3. $CellContext`a$$)]}, {{8., 7.}, {
+          1. + 2. $CellContext`\[Gamma]$$ + $CellContext`a$$ (-1. + 
+             3. $CellContext`\[Gamma]$$), 
+           1. + $CellContext`a$$ (4. - 7. $CellContext`\[Gamma]$$) + 
+           2. $CellContext`\[Gamma]$$}, 
+          Or[
+           And[
+            Inequality[
+            0., Less, $CellContext`a$$, LessEqual, 
+             0.5 (7. - 3. 2.23606797749979)], 
+            
+            Inequality[$CellContext`a$$/(2. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+             0.3333333333333333]], 
+           And[
+            Inequality[
+            0.5 (7. - 3. 2.23606797749979), Less, $CellContext`a$$, Less, 
+             0.15256625830238094`], 
+            Or[
+             
+             Inequality[$CellContext`a$$/(2. + 3. $CellContext`a$$), 
+              LessEqual, $CellContext`\[Gamma]$$, 
+              LessEqual, (-2. + 
+                 7. $CellContext`a$$)^(-2) ((-2.) $CellContext`a$$ + 
+                23. $CellContext`a$$^2 - 11. $CellContext`a$$^3) - 6. 
+              1.4142135623730951` ((-2. + 
+                  7. $CellContext`a$$)^(-4) (-$CellContext`a$$^3 + 
+                 8. $CellContext`a$$^4 - 
+                 8. $CellContext`a$$^5 + $CellContext`a$$^6))^Rational[1, 2]], 
+             
+             Inequality[(-2. + 
+                 7. $CellContext`a$$)^(-2) ((-2.) $CellContext`a$$ + 
+                23. $CellContext`a$$^2 - 11. $CellContext`a$$^3) + 
+              6. 1.4142135623730951` ((-2. + 
+                   7. $CellContext`a$$)^(-4) (-$CellContext`a$$^3 + 
+                  8. $CellContext`a$$^4 - 
+                  8. $CellContext`a$$^5 + $CellContext`a$$^6))^Rational[1, 2],
+               LessEqual, $CellContext`\[Gamma]$$, LessEqual, 
+              0.3333333333333333]]], 
+           And[$CellContext`a$$ == 0.15256625830238094`, 
+            Or[
+             
+             Inequality[$CellContext`a$$/(2. + 3. $CellContext`a$$), 
+              LessEqual, $CellContext`\[Gamma]$$, 
+              LessEqual, (-2. + 
+                 7. $CellContext`a$$)^(-2) ((-2.) $CellContext`a$$ + 
+                23. $CellContext`a$$^2 - 11. $CellContext`a$$^3) - 6. 
+              1.4142135623730951` ((-2. + 
+                  7. $CellContext`a$$)^(-4) (-$CellContext`a$$^3 + 
+                 8. $CellContext`a$$^4 - 
+                 8. $CellContext`a$$^5 + $CellContext`a$$^6))^
+               Rational[1, 2]], $CellContext`\[Gamma]$$ == 
+             0.3333333333333333]], 
+           And[
+            Inequality[
+            0.15256625830238094`, Less, $CellContext`a$$, Less, 
+             0.18579886337475993`], 
+            
+            Inequality[$CellContext`a$$/(2. + 3. $CellContext`a$$), 
+             LessEqual, $CellContext`\[Gamma]$$, 
+             LessEqual, (-2. + 
+                7. $CellContext`a$$)^(-2) ((-2.) $CellContext`a$$ + 
+               23. $CellContext`a$$^2 - 11. $CellContext`a$$^3) - 6. 
+             1.4142135623730951` ((-2. + 
+                 7. $CellContext`a$$)^(-4) (-$CellContext`a$$^3 + 
+                8. $CellContext`a$$^4 - 
+                8. $CellContext`a$$^5 + $CellContext`a$$^6))^Rational[1, 2]]], 
+           
+           And[$CellContext`a$$ == 
+            0.18579886337475993`, $CellContext`\[Gamma]$$ == \
+$CellContext`a$$/(2. + 3. $CellContext`a$$)]]}, {{8., 8.}, {1., 1.}, 
+          Or[
+           And[
+            Inequality[0., Less, $CellContext`a$$, LessEqual, 0.5], 
+            Inequality[
+            0., Less, $CellContext`\[Gamma]$$, LessEqual, $CellContext`a$$/(
+             2. + 3. $CellContext`a$$)]], 
+           And[
+            Inequality[0.5, Less, $CellContext`a$$, Less, 1.], 
+            Inequality[
+            0., Less, $CellContext`\[Gamma]$$, 
+             LessEqual, (-1. + $CellContext`a$$)/(-5. + 
+             3. $CellContext`a$$)]]]}}], 
+      "Specifications" :> {{{$CellContext`a$$, 0.1771637734629069}, 0., 
+         1.}, {{$CellContext`\[Gamma]$$, 0.4750367968075103}, 0., 1.}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{277., {130.92062981973868`, 136.07937018026132`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.9665167857524357`*^9, {3.966516817345896*^9, 3.9665168282963467`*^9}, 
+   3.9665184735650215`*^9, {3.966518562100256*^9, 3.9665185796211586`*^9}, 
+   3.966520056192194*^9, 3.966520155672537*^9, 3.966520722460682*^9},
+ CellLabel->
+  "Out[546]=",ExpressionUUID->"dcf3e855-a7c5-6148-82f3-d9731b4ccb64"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.9665327545438976`*^9, 
+  3.9665327597287807`*^9}},ExpressionUUID->"0affb132-d40b-fc49-8343-\
+623399f94ea7"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"{", 
+       RowBox[{"2", ",", "8"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"5", "-", 
+         RowBox[{"5", " ", "\[Gamma]"}], "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "4"}], "+", 
+            RowBox[{"7", " ", "\[Gamma]"}]}], ")"}]}]}], ",", 
+        RowBox[{"a", "+", 
+         RowBox[{"5", " ", "\[Gamma]"}], "-", 
+         RowBox[{"3", " ", "a", " ", "\[Gamma]"}]}]}], "}"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.630\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.63007566173124041064568245928967371583`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"25", "-", 
+                    RowBox[{"220", " ", "#1"}], "+", 
+                    RowBox[{"484", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"354", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"60", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "6"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.6300756617312404},
+            "NumericalApproximation"],
+           Root[25 - 220 # + 484 #^2 - 354 #^3 + 60 #^4 + 9 #^6& , 2, 0]]}], "&&", 
+         RowBox[{"\[Gamma]", "\[Equal]", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.630\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.63007566173124041064568245928967371583`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"25", "-", 
+                    RowBox[{"220", " ", "#1"}], "+", 
+                    RowBox[{"484", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"354", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"60", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "6"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.6300756617312404},
+            "NumericalApproximation"],
+           Root[25 - 220 # + 484 #^2 - 354 #^3 + 60 #^4 + 9 #^6& , 2, 0]], 
+          "<", "a", "\[LessEqual]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.705\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.70494648126156778111806033848552033305`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "200"}], "+", 
+                    RowBox[{"1180", " ", "#1"}], "-", 
+                    RowBox[{"2462", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"2481", " ", 
+                    SuperscriptBox["#1", "3"]}], "-", 
+                    RowBox[{"1400", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"392", " ", 
+                    SuperscriptBox["#1", "5"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.7049464812615678},
+            "NumericalApproximation"],
+           
+           Root[-200 + 1180 # - 2462 #^2 + 2481 #^3 - 1400 #^4 + 392 #^5& , 2,
+             0]]}], "&&", 
+         RowBox[{
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{"10", " ", "a"}], "-", 
+             SuperscriptBox["a", "2"], "-", 
+             RowBox[{"11", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "5"}], "+", 
+               RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+           RowBox[{"6", " ", 
+            SqrtBox["2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"5", " ", 
+                SuperscriptBox["a", "3"]}], "-", 
+               RowBox[{"10", " ", 
+                SuperscriptBox["a", "4"]}], "+", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               SuperscriptBox["a", "6"]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "5"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.705\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.70494648126156778111806033848552033305`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "200"}], "+", 
+                    RowBox[{"1180", " ", "#1"}], "-", 
+                    RowBox[{"2462", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"2481", " ", 
+                    SuperscriptBox["#1", "3"]}], "-", 
+                    RowBox[{"1400", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"392", " ", 
+                    SuperscriptBox["#1", "5"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.7049464812615678},
+            "NumericalApproximation"],
+           
+           Root[-200 + 1180 # - 2462 #^2 + 2481 #^3 - 1400 #^4 + 392 #^5& , 2,
+             0]], "<", "a", "\[LessEqual]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.979\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.97868102371371246128717302781296893954`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"16", "-", 
+                    RowBox[{"40", " ", "#1"}], "-", 
+                    RowBox[{"143", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"162", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "4"}], "]"}], 
+              Short[#, 7]& ], 0.9786810237137125},
+            "NumericalApproximation"],
+           Root[16 - 40 # - 143 #^2 + 162 #^3 + 9 #^4& , 4, 0]]}], "&&", 
+         RowBox[{
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{"32", "-", 
+             RowBox[{"60", " ", "a"}], "+", 
+             RowBox[{"68", " ", 
+              SuperscriptBox["a", "2"]}], "-", 
+             RowBox[{"39", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "8"}], "+", 
+               RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+           RowBox[{"8", " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"32", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"92", " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"112", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"75", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               RowBox[{"23", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "8"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.979\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.97868102371371246128717302781296893954`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"16", "-", 
+                    RowBox[{"40", " ", "#1"}], "-", 
+                    RowBox[{"143", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"162", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "4"}], "]"}], 
+              Short[#, 7]& ], 0.9786810237137125},
+            "NumericalApproximation"],
+           Root[16 - 40 # - 143 #^2 + 162 #^3 + 9 #^4& , 4, 0]], "<", "a", 
+          "<", "1"}], "&&", 
+         RowBox[{
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          FractionBox["1", "3"]}]}], ")"}]}]},
+     {
+      RowBox[{"{", 
+       RowBox[{"5", ",", "5"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"1", "+", 
+         RowBox[{"2", " ", "\[Gamma]"}], "-", 
+         RowBox[{
+          FractionBox["1", "4"], " ", "a", " ", 
+          RowBox[{"(", 
+           RowBox[{"a", "+", 
+            RowBox[{"8", " ", "\[Gamma]"}], "-", 
+            RowBox[{"2", " ", 
+             RowBox[{"(", 
+              RowBox[{"3", "+", 
+               SqrtBox[
+                RowBox[{"\[Gamma]", "-", 
+                 RowBox[{"a", " ", "\[Gamma]"}]}]]}], ")"}]}]}], ")"}]}]}], 
+        ",", 
+        RowBox[{"1", "+", 
+         RowBox[{"2", " ", "\[Gamma]"}], "-", 
+         RowBox[{
+          FractionBox["1", "4"], " ", "a", " ", 
+          RowBox[{"(", 
+           RowBox[{"a", "+", 
+            RowBox[{"8", " ", "\[Gamma]"}], "-", 
+            RowBox[{"2", " ", 
+             RowBox[{"(", 
+              RowBox[{"3", "+", 
+               SqrtBox[
+                RowBox[{"\[Gamma]", "-", 
+                 RowBox[{"a", " ", "\[Gamma]"}]}]]}], ")"}]}]}], ")"}]}]}]}], 
+       "}"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"0", "<", "a", "\[LessEqual]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.477\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.47711753054658240236207689122238662094`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"100", "-", 
+                    RowBox[{"450", " ", "#1"}], "+", 
+                    RowBox[{"602", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"209", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"7", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "1"}], "]"}], 
+              Short[#, 7]& ], 0.4771175305465824},
+            "NumericalApproximation"],
+           Root[100 - 450 # + 602 #^2 - 209 #^3 + 7 #^4& , 1, 0]]}], "&&", 
+         RowBox[{
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{"4", " ", "a"}], "+", 
+             RowBox[{"9", " ", 
+              SuperscriptBox["a", "2"]}], "+", 
+             RowBox[{"2", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            RowBox[{"2", " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"2", "+", 
+                RowBox[{"3", " ", "a"}]}], ")"}], "2"]}]], "-", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"9", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"12", " ", 
+                SuperscriptBox["a", "5"]}], "-", 
+               RowBox[{"5", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{"2", "+", 
+                 RowBox[{"3", " ", "a"}]}], ")"}], "4"]]]}]}], "\[LessEqual]",
+           "\[Gamma]", "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{"-", "24"}], "+", 
+             RowBox[{"12", " ", "a"}], "-", 
+             RowBox[{"13", " ", 
+              SuperscriptBox["a", "2"]}]}], 
+            RowBox[{"72", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", "a"}], ")"}]}]], "-", 
+           RowBox[{
+            FractionBox["5", "72"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"48", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"24", " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               SuperscriptBox["a", "4"]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "1"}], "+", "a"}], ")"}], "2"]]]}]}]}]}], ")"}],
+        "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.477\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.47711753054658240236207689122238662094`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"100", "-", 
+                    RowBox[{"450", " ", "#1"}], "+", 
+                    RowBox[{"602", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"209", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"7", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "1"}], "]"}], 
+              Short[#, 7]& ], 0.4771175305465824},
+            "NumericalApproximation"],
+           Root[100 - 450 # + 602 #^2 - 209 #^3 + 7 #^4& , 1, 0]], "<", "a", 
+          "<", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.503\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.50340962886282591970399380443268455565`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"32", "-", 
+                    RowBox[{"146", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"87", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"152", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"196", " ", 
+                    SuperscriptBox["#1", "5"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.5034096288628259},
+            "NumericalApproximation"],
+           Root[32 - 146 #^2 - 87 #^3 + 152 #^4 + 196 #^5& , 2, 0]]}], "&&", 
+         RowBox[{
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{"4", " ", "a"}], "+", 
+             RowBox[{"9", " ", 
+              SuperscriptBox["a", "2"]}], "+", 
+             RowBox[{"2", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            RowBox[{"2", " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"2", "+", 
+                RowBox[{"3", " ", "a"}]}], ")"}], "2"]}]], "-", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"9", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"12", " ", 
+                SuperscriptBox["a", "5"]}], "-", 
+               RowBox[{"5", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{"2", "+", 
+                 RowBox[{"3", " ", "a"}]}], ")"}], "4"]]]}]}], "\[LessEqual]",
+           "\[Gamma]", "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{"2", "+", 
+             SuperscriptBox["a", "2"], "-", 
+             RowBox[{"6", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"1", "+", "a"}], ")"}], "2"]], "-", 
+           RowBox[{
+            FractionBox["3", "2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "3"]}], "-", 
+               RowBox[{"5", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"10", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               RowBox[{"15", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{"1", "+", "a"}], ")"}], "4"]]]}]}]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.503\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.50340962886282591970399380443268455565`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"32", "-", 
+                    RowBox[{"146", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"87", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"152", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"196", " ", 
+                    SuperscriptBox["#1", "5"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.5034096288628259},
+            "NumericalApproximation"],
+           Root[32 - 146 #^2 - 87 #^3 + 152 #^4 + 196 #^5& , 2, 0]]}], "&&", 
+         RowBox[{"\[Gamma]", "\[Equal]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{"2", "+", 
+             SuperscriptBox["a", "2"], "-", 
+             RowBox[{"6", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"1", "+", "a"}], ")"}], "2"]], "-", 
+           RowBox[{
+            FractionBox["3", "2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "3"]}], "-", 
+               RowBox[{"5", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"10", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               RowBox[{"15", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{"1", "+", "a"}], ")"}], "4"]]]}]}]}]}], ")"}]}]},
+     {
+      RowBox[{"{", 
+       RowBox[{"6", ",", "6"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"1", "+", 
+         RowBox[{"2", " ", "\[Gamma]"}], "-", 
+         RowBox[{
+          FractionBox["1", "4"], " ", "a", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "6"}], "+", "a", "+", 
+            RowBox[{"8", " ", "\[Gamma]"}], "+", 
+            RowBox[{"2", " ", 
+             SqrtBox[
+              RowBox[{"\[Gamma]", "-", 
+               RowBox[{"a", " ", "\[Gamma]"}]}]]}]}], ")"}]}]}], ",", 
+        RowBox[{"1", "+", 
+         RowBox[{"2", " ", "\[Gamma]"}], "-", 
+         RowBox[{
+          FractionBox["1", "4"], " ", "a", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "6"}], "+", "a", "+", 
+            RowBox[{"8", " ", "\[Gamma]"}], "+", 
+            RowBox[{"2", " ", 
+             SqrtBox[
+              RowBox[{"\[Gamma]", "-", 
+               RowBox[{"a", " ", "\[Gamma]"}]}]]}]}], ")"}]}]}]}], "}"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"0", "<", "a", "\[LessEqual]", 
+          RowBox[{
+           FractionBox["1", "22"], " ", 
+           RowBox[{"(", 
+            RowBox[{"49", "-", 
+             SqrtBox["2049"]}], ")"}]}]}], "&&", 
+         RowBox[{
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{"4", " ", "a"}], "+", 
+             RowBox[{"9", " ", 
+              SuperscriptBox["a", "2"]}], "+", 
+             RowBox[{"2", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            RowBox[{"2", " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"2", "+", 
+                RowBox[{"3", " ", "a"}]}], ")"}], "2"]}]], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"9", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"12", " ", 
+                SuperscriptBox["a", "5"]}], "-", 
+               RowBox[{"5", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{"2", "+", 
+                 RowBox[{"3", " ", "a"}]}], ")"}], "4"]]]}]}], "\[LessEqual]",
+           "\[Gamma]", "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{"-", "24"}], "+", 
+             RowBox[{"12", " ", "a"}], "-", 
+             RowBox[{"13", " ", 
+              SuperscriptBox["a", "2"]}]}], 
+            RowBox[{"72", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "1"}], "+", "a"}], ")"}]}]], "+", 
+           RowBox[{
+            FractionBox["5", "72"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"48", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"24", " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               SuperscriptBox["a", "4"]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "1"}], "+", "a"}], ")"}], "2"]]]}]}]}]}], ")"}],
+        "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           FractionBox["1", "22"], " ", 
+           RowBox[{"(", 
+            RowBox[{"49", "-", 
+             SqrtBox["2049"]}], ")"}]}], "<", "a", "<", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.177\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.17716377346290690386609867346123792231`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "16"}], "+", 
+                    RowBox[{"72", " ", "#1"}], "+", 
+                    RowBox[{"112", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"50", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"7", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.1771637734629069},
+            "NumericalApproximation"],
+           Root[-16 + 72 # + 112 #^2 - 50 #^3 + 7 #^4& , 2, 0]]}], "&&", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{"4", " ", "a"}], "+", 
+               RowBox[{"9", " ", 
+                SuperscriptBox["a", "2"]}], "+", 
+               RowBox[{"2", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              RowBox[{"2", " ", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{"2", "+", 
+                  RowBox[{"3", " ", "a"}]}], ")"}], "2"]}]], "+", 
+             RowBox[{
+              FractionBox["1", "2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"9", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"12", " ", 
+                  SuperscriptBox["a", "5"]}], "-", 
+                 RowBox[{"5", " ", 
+                  SuperscriptBox["a", "6"]}]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{"2", "+", 
+                   RowBox[{"3", " ", "a"}]}], ")"}], "4"]]]}]}], 
+            "\[LessEqual]", "\[Gamma]", "\[LessEqual]", 
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "4"}], " ", "a"}], "+", 
+               RowBox[{"37", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"18", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              RowBox[{"2", " ", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "2"}], "+", 
+                  RowBox[{"7", " ", "a"}]}], ")"}], "2"]}]], "-", 
+             RowBox[{
+              FractionBox["5", "2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "8"}], " ", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"57", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"60", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 RowBox[{"11", " ", 
+                  SuperscriptBox["a", "6"]}]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}], "||", 
+           RowBox[{
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "4"}], " ", "a"}], "+", 
+               RowBox[{"37", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"18", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              RowBox[{"2", " ", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "2"}], "+", 
+                  RowBox[{"7", " ", "a"}]}], ")"}], "2"]}]], "+", 
+             RowBox[{
+              FractionBox["5", "2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "8"}], " ", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"57", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"60", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 RowBox[{"11", " ", 
+                  SuperscriptBox["a", "6"]}]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}], 
+            "\[LessEqual]", "\[Gamma]", "\[LessEqual]", 
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{"-", "24"}], "+", 
+               RowBox[{"12", " ", "a"}], "-", 
+               RowBox[{"13", " ", 
+                SuperscriptBox["a", "2"]}]}], 
+              RowBox[{"72", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "1"}], "+", "a"}], ")"}]}]], "+", 
+             RowBox[{
+              FractionBox["5", "72"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"48", " ", 
+                  SuperscriptBox["a", "2"]}], "-", 
+                 RowBox[{"24", " ", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 SuperscriptBox["a", "4"]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "1"}], "+", "a"}], ")"}], "2"]]]}]}]}]}], 
+          ")"}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.177\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.17716377346290690386609867346123792231`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "16"}], "+", 
+                    RowBox[{"72", " ", "#1"}], "+", 
+                    RowBox[{"112", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"50", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"7", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.1771637734629069},
+            "NumericalApproximation"],
+           Root[-16 + 72 # + 112 #^2 - 50 #^3 + 7 #^4& , 2, 0]]}], "&&", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{"4", " ", "a"}], "+", 
+               RowBox[{"9", " ", 
+                SuperscriptBox["a", "2"]}], "+", 
+               RowBox[{"2", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              RowBox[{"2", " ", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{"2", "+", 
+                  RowBox[{"3", " ", "a"}]}], ")"}], "2"]}]], "+", 
+             RowBox[{
+              FractionBox["1", "2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"9", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"12", " ", 
+                  SuperscriptBox["a", "5"]}], "-", 
+                 RowBox[{"5", " ", 
+                  SuperscriptBox["a", "6"]}]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{"2", "+", 
+                   RowBox[{"3", " ", "a"}]}], ")"}], "4"]]]}]}], 
+            "\[LessEqual]", "\[Gamma]", "\[LessEqual]", 
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "4"}], " ", "a"}], "+", 
+               RowBox[{"37", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"18", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              RowBox[{"2", " ", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "2"}], "+", 
+                  RowBox[{"7", " ", "a"}]}], ")"}], "2"]}]], "-", 
+             RowBox[{
+              FractionBox["5", "2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "8"}], " ", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"57", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"60", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 RowBox[{"11", " ", 
+                  SuperscriptBox["a", "6"]}]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}], "||", 
+           RowBox[{"\[Gamma]", "\[Equal]", 
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{"-", "24"}], "+", 
+               RowBox[{"12", " ", "a"}], "-", 
+               RowBox[{"13", " ", 
+                SuperscriptBox["a", "2"]}]}], 
+              RowBox[{"72", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "1"}], "+", "a"}], ")"}]}]], "+", 
+             RowBox[{
+              FractionBox["5", "72"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"48", " ", 
+                  SuperscriptBox["a", "2"]}], "-", 
+                 RowBox[{"24", " ", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 SuperscriptBox["a", "4"]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "1"}], "+", "a"}], ")"}], "2"]]]}]}]}]}], 
+          ")"}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.177\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.17716377346290690386609867346123792231`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "16"}], "+", 
+                    RowBox[{"72", " ", "#1"}], "+", 
+                    RowBox[{"112", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"50", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"7", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.1771637734629069},
+            "NumericalApproximation"],
+           Root[-16 + 72 # + 112 #^2 - 50 #^3 + 7 #^4& , 2, 0]], "<", "a", 
+          "<", 
+          RowBox[{
+           FractionBox["1", "35"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "7"}], "+", 
+             RowBox[{"3", " ", 
+              SqrtBox["21"]}]}], ")"}]}]}], "&&", 
+         RowBox[{
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{"4", " ", "a"}], "+", 
+             RowBox[{"9", " ", 
+              SuperscriptBox["a", "2"]}], "+", 
+             RowBox[{"2", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            RowBox[{"2", " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"2", "+", 
+                RowBox[{"3", " ", "a"}]}], ")"}], "2"]}]], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"9", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"12", " ", 
+                SuperscriptBox["a", "5"]}], "-", 
+               RowBox[{"5", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{"2", "+", 
+                 RowBox[{"3", " ", "a"}]}], ")"}], "4"]]]}]}], "\[LessEqual]",
+           "\[Gamma]", "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4"}], " ", "a"}], "+", 
+             RowBox[{"37", " ", 
+              SuperscriptBox["a", "2"]}], "-", 
+             RowBox[{"18", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            RowBox[{"2", " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"-", "2"}], "+", 
+                RowBox[{"7", " ", "a"}]}], ")"}], "2"]}]], "-", 
+           RowBox[{
+            FractionBox["5", "2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "8"}], " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"57", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"60", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               RowBox[{"11", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          RowBox[{
+           FractionBox["1", "35"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "7"}], "+", 
+             RowBox[{"3", " ", 
+              SqrtBox["21"]}]}], ")"}]}]}], "&&", 
+         RowBox[{"\[Gamma]", "\[Equal]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{
+              FractionBox["4", "35"], " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"-", "7"}], "+", 
+                RowBox[{"3", " ", 
+                 SqrtBox["21"]}]}], ")"}]}], "+", 
+             FractionBox[
+              RowBox[{"9", " ", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "7"}], "+", 
+                  RowBox[{"3", " ", 
+                   SqrtBox["21"]}]}], ")"}], "2"]}], "1225"], "+", 
+             FractionBox[
+              RowBox[{"2", " ", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "7"}], "+", 
+                  RowBox[{"3", " ", 
+                   SqrtBox["21"]}]}], ")"}], "3"]}], "42875"]}], 
+            RowBox[{"2", " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"2", "+", 
+                RowBox[{
+                 FractionBox["3", "35"], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "7"}], "+", 
+                   RowBox[{"3", " ", 
+                    SqrtBox["21"]}]}], ")"}]}]}], ")"}], "2"]}]], "+", 
+           FractionBox[
+            SqrtBox[
+             RowBox[{
+              FractionBox[
+               RowBox[{"8", " ", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "7"}], "+", 
+                   RowBox[{"3", " ", 
+                    SqrtBox["21"]}]}], ")"}], "3"]}], "42875"], "+", 
+              FractionBox[
+               RowBox[{"9", " ", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "7"}], "+", 
+                   RowBox[{"3", " ", 
+                    SqrtBox["21"]}]}], ")"}], "4"]}], "1500625"], "-", 
+              FractionBox[
+               RowBox[{"12", " ", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "7"}], "+", 
+                   RowBox[{"3", " ", 
+                    SqrtBox["21"]}]}], ")"}], "5"]}], "52521875"], "-", 
+              FractionBox[
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"-", "7"}], "+", 
+                  RowBox[{"3", " ", 
+                   SqrtBox["21"]}]}], ")"}], "6"], "367653125"]}]], 
+            RowBox[{"2", " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"2", "+", 
+                RowBox[{
+                 FractionBox["3", "35"], " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "7"}], "+", 
+                   RowBox[{"3", " ", 
+                    SqrtBox["21"]}]}], ")"}]}]}], ")"}], "2"]}]]}]}]}], 
+        ")"}]}]},
+     {
+      RowBox[{"{", 
+       RowBox[{"6", ",", "8"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"1", "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"(", 
+           RowBox[{"2", "-", 
+            FractionBox[
+             RowBox[{"7", " ", "\[Gamma]"}], "2"]}], ")"}]}], "+", 
+         "\[Gamma]"}], ",", 
+        RowBox[{"1", "+", "\[Gamma]", "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", "a", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"3", " ", "\[Gamma]"}]}], ")"}]}]}]}], "}"}], 
+      RowBox[{
+       RowBox[{"0", "<", "a", "\[LessEqual]", 
+        InterpretationBox[
+         TemplateBox[{"Root", 
+           InterpretationBox[
+            StyleBox[
+             TemplateBox[{"\"0.224\"", 
+               DynamicBox[
+                FEPrivate`FrontEndResource[
+                "FEExpressions", "NumericalApproximationElider"]]}, 
+              "RowDefault"], ShowStringCharacters -> False], 
+            0.22355548928547408493727743916679173708`15.954589770191003, 
+            Editable -> False], 
+           TagBox[
+            RowBox[{"Root", "[", 
+              RowBox[{
+                RowBox[{
+                  RowBox[{"64", "-", 
+                    RowBox[{"296", " ", "#1"}], "-", 
+                    RowBox[{"16", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"264", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+            Short[#, 7]& ], 0.22355548928547408`},
+          "NumericalApproximation"],
+         Root[64 - 296 # - 16 #^2 + 264 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+       RowBox[{"\[Gamma]", "\[Equal]", 
+        FractionBox["a", 
+         RowBox[{"2", "+", 
+          RowBox[{"3", " ", "a"}]}]]}]}]},
+     {
+      RowBox[{"{", 
+       RowBox[{"7", ",", "8"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"1", "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"(", 
+           RowBox[{"4", "-", 
+            RowBox[{"7", " ", "\[Gamma]"}]}], ")"}]}], "+", 
+         RowBox[{"2", " ", "\[Gamma]"}]}], ",", 
+        RowBox[{"1", "+", 
+         RowBox[{"2", " ", "\[Gamma]"}], "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"3", " ", "\[Gamma]"}]}], ")"}]}]}]}], "}"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"0", "<", "a", "\[LessEqual]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{"7", "-", 
+             RowBox[{"3", " ", 
+              SqrtBox["5"]}]}], ")"}]}]}], "&&", 
+         RowBox[{
+          FractionBox["a", 
+           RowBox[{"2", "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          FractionBox["1", "3"]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{"7", "-", 
+             RowBox[{"3", " ", 
+              SqrtBox["5"]}]}], ")"}]}], "<", "a", "<", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.153\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.15256625830238093599611204354005167261`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"4", "-", 
+                    RowBox[{"16", " ", "#1"}], "-", 
+                    RowBox[{"80", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"84", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.15256625830238094`},
+            "NumericalApproximation"],
+           Root[4 - 16 # - 80 #^2 + 84 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            FractionBox["a", 
+             RowBox[{"2", "+", 
+              RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+            "\[LessEqual]", 
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "2"}], " ", "a"}], "+", 
+               RowBox[{"23", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"11", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+             RowBox[{"6", " ", 
+              SqrtBox["2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"-", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 SuperscriptBox["a", "6"]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}], "||", 
+           RowBox[{
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "2"}], " ", "a"}], "+", 
+               RowBox[{"23", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"11", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "+", 
+             RowBox[{"6", " ", 
+              SqrtBox["2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"-", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 SuperscriptBox["a", "6"]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}], 
+            "\[LessEqual]", "\[Gamma]", "\[LessEqual]", 
+            FractionBox["1", "3"]}]}], ")"}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.153\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.15256625830238093599611204354005167261`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"4", "-", 
+                    RowBox[{"16", " ", "#1"}], "-", 
+                    RowBox[{"80", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"84", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.15256625830238094`},
+            "NumericalApproximation"],
+           Root[4 - 16 # - 80 #^2 + 84 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            FractionBox["a", 
+             RowBox[{"2", "+", 
+              RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+            "\[LessEqual]", 
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "2"}], " ", "a"}], "+", 
+               RowBox[{"23", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"11", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+             RowBox[{"6", " ", 
+              SqrtBox["2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"-", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 SuperscriptBox["a", "6"]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}], "||", 
+           RowBox[{"\[Gamma]", "\[Equal]", 
+            FractionBox["1", "3"]}]}], ")"}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.153\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.15256625830238093599611204354005167261`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"4", "-", 
+                    RowBox[{"16", " ", "#1"}], "-", 
+                    RowBox[{"80", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"84", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.15256625830238094`},
+            "NumericalApproximation"],
+           Root[4 - 16 # - 80 #^2 + 84 #^3 + 9 #^4& , 3, 0]], "<", "a", "<", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.186\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.18579886337475992608148089857422746718`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"16", "-", 
+                    RowBox[{"88", " ", "#1"}], "-", 
+                    RowBox[{"8", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"96", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.18579886337475993`},
+            "NumericalApproximation"],
+           Root[16 - 88 # - 8 #^2 + 96 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+         RowBox[{
+          FractionBox["a", 
+           RowBox[{"2", "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "2"}], " ", "a"}], "+", 
+             RowBox[{"23", " ", 
+              SuperscriptBox["a", "2"]}], "-", 
+             RowBox[{"11", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "2"}], "+", 
+               RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+           RowBox[{"6", " ", 
+            SqrtBox["2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"-", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               SuperscriptBox["a", "6"]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.186\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.18579886337475992608148089857422746718`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"16", "-", 
+                    RowBox[{"88", " ", "#1"}], "-", 
+                    RowBox[{"8", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"96", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.18579886337475993`},
+            "NumericalApproximation"],
+           Root[16 - 88 # - 8 #^2 + 96 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+         RowBox[{"\[Gamma]", "\[Equal]", 
+          FractionBox["a", 
+           RowBox[{"2", "+", 
+            RowBox[{"3", " ", "a"}]}]]}]}], ")"}]}]},
+     {
+      RowBox[{"{", 
+       RowBox[{"8", ",", "2"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"a", "+", 
+         RowBox[{"5", " ", "\[Gamma]"}], "-", 
+         RowBox[{"3", " ", "a", " ", "\[Gamma]"}]}], ",", 
+        RowBox[{"5", "-", 
+         RowBox[{"5", " ", "\[Gamma]"}], "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "4"}], "+", 
+            RowBox[{"7", " ", "\[Gamma]"}]}], ")"}]}]}]}], "}"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.630\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.63007566173124041064568245928967371583`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"25", "-", 
+                    RowBox[{"220", " ", "#1"}], "+", 
+                    RowBox[{"484", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"354", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"60", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "6"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.6300756617312404},
+            "NumericalApproximation"],
+           Root[25 - 220 # + 484 #^2 - 354 #^3 + 60 #^4 + 9 #^6& , 2, 0]]}], "&&", 
+         RowBox[{"\[Gamma]", "\[Equal]", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.630\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.63007566173124041064568245928967371583`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"25", "-", 
+                    RowBox[{"220", " ", "#1"}], "+", 
+                    RowBox[{"484", " ", 
+                    SuperscriptBox["#1", "2"]}], "-", 
+                    RowBox[{"354", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"60", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "6"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.6300756617312404},
+            "NumericalApproximation"],
+           Root[25 - 220 # + 484 #^2 - 354 #^3 + 60 #^4 + 9 #^6& , 2, 0]], 
+          "<", "a", "\[LessEqual]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.705\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.70494648126156778111806033848552033305`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "200"}], "+", 
+                    RowBox[{"1180", " ", "#1"}], "-", 
+                    RowBox[{"2462", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"2481", " ", 
+                    SuperscriptBox["#1", "3"]}], "-", 
+                    RowBox[{"1400", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"392", " ", 
+                    SuperscriptBox["#1", "5"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.7049464812615678},
+            "NumericalApproximation"],
+           
+           Root[-200 + 1180 # - 2462 #^2 + 2481 #^3 - 1400 #^4 + 392 #^5& , 2,
+             0]]}], "&&", 
+         RowBox[{
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{"10", " ", "a"}], "-", 
+             SuperscriptBox["a", "2"], "-", 
+             RowBox[{"11", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "5"}], "+", 
+               RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+           RowBox[{"6", " ", 
+            SqrtBox["2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"5", " ", 
+                SuperscriptBox["a", "3"]}], "-", 
+               RowBox[{"10", " ", 
+                SuperscriptBox["a", "4"]}], "+", 
+               RowBox[{"4", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               SuperscriptBox["a", "6"]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "5"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.705\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.70494648126156778111806033848552033305`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{
+                    RowBox[{"-", "200"}], "+", 
+                    RowBox[{"1180", " ", "#1"}], "-", 
+                    RowBox[{"2462", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"2481", " ", 
+                    SuperscriptBox["#1", "3"]}], "-", 
+                    RowBox[{"1400", " ", 
+                    SuperscriptBox["#1", "4"]}], "+", 
+                    RowBox[{"392", " ", 
+                    SuperscriptBox["#1", "5"]}]}], "&"}], ",", "2"}], "]"}], 
+              Short[#, 7]& ], 0.7049464812615678},
+            "NumericalApproximation"],
+           
+           Root[-200 + 1180 # - 2462 #^2 + 2481 #^3 - 1400 #^4 + 392 #^5& , 2,
+             0]], "<", "a", "\[LessEqual]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.979\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.97868102371371246128717302781296893954`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"16", "-", 
+                    RowBox[{"40", " ", "#1"}], "-", 
+                    RowBox[{"143", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"162", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "4"}], "]"}], 
+              Short[#, 7]& ], 0.9786810237137125},
+            "NumericalApproximation"],
+           Root[16 - 40 # - 143 #^2 + 162 #^3 + 9 #^4& , 4, 0]]}], "&&", 
+         RowBox[{
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{"32", "-", 
+             RowBox[{"60", " ", "a"}], "+", 
+             RowBox[{"68", " ", 
+              SuperscriptBox["a", "2"]}], "-", 
+             RowBox[{"39", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "8"}], "+", 
+               RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+           RowBox[{"8", " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"32", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"92", " ", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"112", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"75", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               RowBox[{"23", " ", 
+                SuperscriptBox["a", "6"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "8"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.979\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.97868102371371246128717302781296893954`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"16", "-", 
+                    RowBox[{"40", " ", "#1"}], "-", 
+                    RowBox[{"143", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"162", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "4"}], "]"}], 
+              Short[#, 7]& ], 0.9786810237137125},
+            "NumericalApproximation"],
+           Root[16 - 40 # - 143 #^2 + 162 #^3 + 9 #^4& , 4, 0]], "<", "a", 
+          "<", "1"}], "&&", 
+         RowBox[{
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          FractionBox["1", "3"]}]}], ")"}]}]},
+     {
+      RowBox[{"{", 
+       RowBox[{"8", ",", "6"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"1", "+", "\[Gamma]", "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", "a", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"3", " ", "\[Gamma]"}]}], ")"}]}]}], ",", 
+        RowBox[{"1", "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"(", 
+           RowBox[{"2", "-", 
+            FractionBox[
+             RowBox[{"7", " ", "\[Gamma]"}], "2"]}], ")"}]}], "+", 
+         "\[Gamma]"}]}], "}"}], 
+      RowBox[{
+       RowBox[{"0", "<", "a", "\[LessEqual]", 
+        InterpretationBox[
+         TemplateBox[{"Root", 
+           InterpretationBox[
+            StyleBox[
+             TemplateBox[{"\"0.224\"", 
+               DynamicBox[
+                FEPrivate`FrontEndResource[
+                "FEExpressions", "NumericalApproximationElider"]]}, 
+              "RowDefault"], ShowStringCharacters -> False], 
+            0.22355548928547408493727743916679173708`15.954589770191003, 
+            Editable -> False], 
+           TagBox[
+            RowBox[{"Root", "[", 
+              RowBox[{
+                RowBox[{
+                  RowBox[{"64", "-", 
+                    RowBox[{"296", " ", "#1"}], "-", 
+                    RowBox[{"16", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"264", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+            Short[#, 7]& ], 0.22355548928547408`},
+          "NumericalApproximation"],
+         Root[64 - 296 # - 16 #^2 + 264 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+       RowBox[{"\[Gamma]", "\[Equal]", 
+        FractionBox["a", 
+         RowBox[{"2", "+", 
+          RowBox[{"3", " ", "a"}]}]]}]}]},
+     {
+      RowBox[{"{", 
+       RowBox[{"8", ",", "7"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"1", "+", 
+         RowBox[{"2", " ", "\[Gamma]"}], "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "1"}], "+", 
+            RowBox[{"3", " ", "\[Gamma]"}]}], ")"}]}]}], ",", 
+        RowBox[{"1", "+", 
+         RowBox[{"a", " ", 
+          RowBox[{"(", 
+           RowBox[{"4", "-", 
+            RowBox[{"7", " ", "\[Gamma]"}]}], ")"}]}], "+", 
+         RowBox[{"2", " ", "\[Gamma]"}]}]}], "}"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"0", "<", "a", "\[LessEqual]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{"7", "-", 
+             RowBox[{"3", " ", 
+              SqrtBox["5"]}]}], ")"}]}]}], "&&", 
+         RowBox[{
+          FractionBox["a", 
+           RowBox[{"2", "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          FractionBox["1", "3"]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{"7", "-", 
+             RowBox[{"3", " ", 
+              SqrtBox["5"]}]}], ")"}]}], "<", "a", "<", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.153\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.15256625830238093599611204354005167261`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"4", "-", 
+                    RowBox[{"16", " ", "#1"}], "-", 
+                    RowBox[{"80", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"84", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.15256625830238094`},
+            "NumericalApproximation"],
+           Root[4 - 16 # - 80 #^2 + 84 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            FractionBox["a", 
+             RowBox[{"2", "+", 
+              RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+            "\[LessEqual]", 
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "2"}], " ", "a"}], "+", 
+               RowBox[{"23", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"11", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+             RowBox[{"6", " ", 
+              SqrtBox["2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"-", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 SuperscriptBox["a", "6"]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}], "||", 
+           RowBox[{
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "2"}], " ", "a"}], "+", 
+               RowBox[{"23", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"11", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "+", 
+             RowBox[{"6", " ", 
+              SqrtBox["2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"-", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 SuperscriptBox["a", "6"]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}], 
+            "\[LessEqual]", "\[Gamma]", "\[LessEqual]", 
+            FractionBox["1", "3"]}]}], ")"}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.153\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.15256625830238093599611204354005167261`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"4", "-", 
+                    RowBox[{"16", " ", "#1"}], "-", 
+                    RowBox[{"80", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"84", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.15256625830238094`},
+            "NumericalApproximation"],
+           Root[4 - 16 # - 80 #^2 + 84 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            FractionBox["a", 
+             RowBox[{"2", "+", 
+              RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+            "\[LessEqual]", 
+            RowBox[{
+             FractionBox[
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "2"}], " ", "a"}], "+", 
+               RowBox[{"23", " ", 
+                SuperscriptBox["a", "2"]}], "-", 
+               RowBox[{"11", " ", 
+                SuperscriptBox["a", "3"]}]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+             RowBox[{"6", " ", 
+              SqrtBox["2"], " ", 
+              SqrtBox[
+               FractionBox[
+                RowBox[{
+                 RowBox[{"-", 
+                  SuperscriptBox["a", "3"]}], "+", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "4"]}], "-", 
+                 RowBox[{"8", " ", 
+                  SuperscriptBox["a", "5"]}], "+", 
+                 SuperscriptBox["a", "6"]}], 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], "+", 
+                   RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}], "||", 
+           RowBox[{"\[Gamma]", "\[Equal]", 
+            FractionBox["1", "3"]}]}], ")"}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.153\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.15256625830238093599611204354005167261`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"4", "-", 
+                    RowBox[{"16", " ", "#1"}], "-", 
+                    RowBox[{"80", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"84", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.15256625830238094`},
+            "NumericalApproximation"],
+           Root[4 - 16 # - 80 #^2 + 84 #^3 + 9 #^4& , 3, 0]], "<", "a", "<", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.186\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.18579886337475992608148089857422746718`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"16", "-", 
+                    RowBox[{"88", " ", "#1"}], "-", 
+                    RowBox[{"8", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"96", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.18579886337475993`},
+            "NumericalApproximation"],
+           Root[16 - 88 # - 8 #^2 + 96 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+         RowBox[{
+          FractionBox["a", 
+           RowBox[{"2", "+", 
+            RowBox[{"3", " ", "a"}]}]], "\[LessEqual]", "\[Gamma]", 
+          "\[LessEqual]", 
+          RowBox[{
+           FractionBox[
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "2"}], " ", "a"}], "+", 
+             RowBox[{"23", " ", 
+              SuperscriptBox["a", "2"]}], "-", 
+             RowBox[{"11", " ", 
+              SuperscriptBox["a", "3"]}]}], 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "2"}], "+", 
+               RowBox[{"7", " ", "a"}]}], ")"}], "2"]], "-", 
+           RowBox[{"6", " ", 
+            SqrtBox["2"], " ", 
+            SqrtBox[
+             FractionBox[
+              RowBox[{
+               RowBox[{"-", 
+                SuperscriptBox["a", "3"]}], "+", 
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "4"]}], "-", 
+               RowBox[{"8", " ", 
+                SuperscriptBox["a", "5"]}], "+", 
+               SuperscriptBox["a", "6"]}], 
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "2"}], "+", 
+                 RowBox[{"7", " ", "a"}]}], ")"}], "4"]]]}]}]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a", "\[Equal]", 
+          InterpretationBox[
+           TemplateBox[{"Root", 
+             InterpretationBox[
+              StyleBox[
+               TemplateBox[{"\"0.186\"", 
+                 DynamicBox[
+                  FEPrivate`FrontEndResource[
+                  "FEExpressions", "NumericalApproximationElider"]]}, 
+                "RowDefault"], ShowStringCharacters -> False], 
+              0.18579886337475992608148089857422746718`15.954589770191003, 
+              Editable -> False], 
+             TagBox[
+              RowBox[{"Root", "[", 
+                RowBox[{
+                  RowBox[{
+                    RowBox[{"16", "-", 
+                    RowBox[{"88", " ", "#1"}], "-", 
+                    RowBox[{"8", " ", 
+                    SuperscriptBox["#1", "2"]}], "+", 
+                    RowBox[{"96", " ", 
+                    SuperscriptBox["#1", "3"]}], "+", 
+                    RowBox[{"9", " ", 
+                    SuperscriptBox["#1", "4"]}]}], "&"}], ",", "3"}], "]"}], 
+              Short[#, 7]& ], 0.18579886337475993`},
+            "NumericalApproximation"],
+           Root[16 - 88 # - 8 #^2 + 96 #^3 + 9 #^4& , 3, 0]]}], "&&", 
+         RowBox[{"\[Gamma]", "\[Equal]", 
+          FractionBox["a", 
+           RowBox[{"2", "+", 
+            RowBox[{"3", " ", "a"}]}]]}]}], ")"}]}]},
+     {
+      RowBox[{"{", 
+       RowBox[{"8", ",", "8"}], "}"}], 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "1"}], "}"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"0", "<", "a", "\[LessEqual]", 
+          FractionBox["1", "2"]}], "&&", 
+         RowBox[{"0", "<", "\[Gamma]", "\[LessEqual]", 
+          FractionBox["a", 
+           RowBox[{"2", "+", 
+            RowBox[{"3", " ", "a"}]}]]}]}], ")"}], "||", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          FractionBox["1", "2"], "<", "a", "<", "1"}], "&&", 
+         RowBox[{"0", "<", "\[Gamma]", "\[LessEqual]", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "1"}], "+", "a"}], 
+           RowBox[{
+            RowBox[{"-", "5"}], "+", 
+            RowBox[{"3", " ", "a"}]}]]}]}], ")"}]}]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{{3.966532752575543*^9, 3.966532757001276*^9}},
+ CellLabel->
+  "Out[568]//MatrixForm=",ExpressionUUID->"60083cac-198e-d24c-b5c1-\
+50e62ea335c1"]
+}, Open  ]]
+},
+WindowSize->{718.5, 825},
+WindowMargins->{{Automatic, -5.25}, {Automatic, 0}},
+Magnification:>0.9 Inherited,
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"6120a895-708a-2445-bd12-a06e79f2c74f"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 929, 15, 112, "Input",ExpressionUUID->"6f45211f-9b98-5445-a58e-73a53925e335"],
+Cell[1490, 37, 1510, 36, 78, "Input",ExpressionUUID->"66d33f37-b4d4-084a-9834-251dc0d216e8"],
+Cell[3003, 75, 1382, 26, 38, "Input",ExpressionUUID->"faf1e126-6d46-8048-9b26-b1b4967e3181"],
+Cell[4388, 103, 1163, 29, 80, "Input",ExpressionUUID->"3b58efe6-68bc-ca46-8e8b-001a3a91e267"],
+Cell[CellGroupData[{
+Cell[5576, 136, 262, 6, 25, "Input",ExpressionUUID->"0acb8a95-cdd4-824a-b3a5-5f4877996680"],
+Cell[5841, 144, 2170, 67, 78, "Output",ExpressionUUID->"d731725b-be3c-054b-86dc-993d7b06a700"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8048, 216, 874, 24, 94, "Input",ExpressionUUID->"3a4471eb-e075-3142-8c5b-a711f4c450f1"],
+Cell[8925, 242, 210, 4, 28, "Output",ExpressionUUID->"d5e3d579-8597-ab4a-a285-24e282369582"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9172, 251, 709, 20, 54, "Input",ExpressionUUID->"41efd7b2-bc83-3441-b880-2436d135a218"],
+Cell[9884, 273, 441, 12, 32, "Output",ExpressionUUID->"e2c311d0-abc3-604f-9a80-8157c5183bd6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10362, 290, 645, 16, 41, "Input",ExpressionUUID->"c232d35a-c632-ae4e-a6e4-fc0df4511d3c"],
+Cell[11010, 308, 319, 6, 28, "Output",ExpressionUUID->"55a1fdbe-71d9-0543-b287-2aed1316339a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11366, 319, 1018, 28, 69, "Input",ExpressionUUID->"6c4252b8-d62d-4c40-8d3f-3a11de9ddf9d"],
+Cell[12387, 349, 239, 5, 28, "Output",ExpressionUUID->"4428c858-cfc0-0549-9633-49a7e0ccb4f5"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12663, 359, 2230, 55, 166, "Input",ExpressionUUID->"ecb2abca-cde3-bd40-af73-b51fab64630c"],
+Cell[14896, 416, 160, 3, 28, "Output",ExpressionUUID->"f44ced47-7eef-5f47-b7c4-f14daaca63ae"],
+Cell[15059, 421, 162, 3, 28, "Output",ExpressionUUID->"6e9d2fac-f621-9f4a-adf8-0b9ae931a087"]
+}, Open  ]],
+Cell[15236, 427, 825, 20, 29, "Text",ExpressionUUID->"d376d8d8-b010-4e42-910a-b87d3167cb49"],
+Cell[16064, 449, 701, 14, 25, "Input",ExpressionUUID->"6d047f06-9918-ed4e-a1be-7da5eb021ea9"],
+Cell[CellGroupData[{
+Cell[16790, 467, 253, 6, 25, "Input",ExpressionUUID->"b1c1e826-bdc2-214b-b2e8-47caabaa18e4"],
+Cell[17046, 475, 700, 14, 73, "Output",ExpressionUUID->"0fdb0df6-1c8e-9a49-9567-698f1b17f9f2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17783, 494, 398, 10, 25, "Input",ExpressionUUID->"381d2e89-5c11-9b42-bfae-022c398cb648"],
+Cell[18184, 506, 1720, 34, 420, "Output",ExpressionUUID->"0ac56bf7-e895-734e-a4c6-fcfe56fdbb85"]
+}, Open  ]],
+Cell[19919, 543, 674, 18, 62, "Input",ExpressionUUID->"b6da4c75-288c-5646-81bc-63ff6991d99b"],
+Cell[20596, 563, 3558, 96, 317, "Input",ExpressionUUID->"a9a2b32f-f428-c148-84b6-e022d466b283"],
+Cell[CellGroupData[{
+Cell[24179, 663, 1393, 36, 43, "Input",ExpressionUUID->"3467add9-3179-d444-92fa-eec0250dd8fb"],
+Cell[25575, 701, 2028, 42, 596, "Output",ExpressionUUID->"48ee7dc7-8efb-cf4b-996f-1c466b206b6b"],
+Cell[27606, 745, 326, 7, 26, "Message",ExpressionUUID->"87017e83-1b89-7a46-8526-ebdb8aee8fe8"],
+Cell[27935, 754, 324, 7, 26, "Message",ExpressionUUID->"c9840ab8-662f-1f4f-b1b8-f8c74bee51bd"],
+Cell[28262, 763, 326, 7, 26, "Message",ExpressionUUID->"a890610b-5083-4845-8772-535d0b215e59"],
+Cell[28591, 772, 419, 8, 26, "Message",ExpressionUUID->"154428c3-e349-0b48-b8f4-e0ac4dc414b2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29047, 785, 1471, 39, 77, "Input",ExpressionUUID->"80cb7cd0-5069-ef4d-85ae-78cd2893d998"],
+Cell[30521, 826, 2615, 70, 47, "Output",ExpressionUUID->"5c9f7de8-8aee-204d-b82d-c4a3bf4cf19b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33173, 901, 1087, 27, 43, "Input",ExpressionUUID->"6596b2fa-15fe-624e-bc0b-6a6c3959eb28"],
+Cell[34263, 930, 23081, 454, 284, "Output",ExpressionUUID->"dcf3e855-a7c5-6148-82f3-d9731b4ccb64"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[57381, 1389, 156, 3, 22, "Input",ExpressionUUID->"0affb132-d40b-fc49-8343-623399f94ea7"],
+Cell[57540, 1394, 87278, 2277, 339, "Output",ExpressionUUID->"60083cac-198e-d24c-b5c1-50e62ea335c1"]
+}, Open  ]]
+}
+]
+*)
+

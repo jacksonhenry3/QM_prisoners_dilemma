@@ -1,0 +1,1430 @@
+%% AMS-LaTeX Created with the Wolfram Language : www.wolfram.com
+
+\documentclass{article}
+\usepackage{amsmath, amssymb, graphics, setspace}
+
+\newcommand{\mathsym}[1]{{}}
+\newcommand{\unicode}[1]{{}}
+
+\newcounter{mathematicapage}
+\begin{document}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Import}[}\\
+\pmb{\text{$\texttt{"}$C:$\backslash \backslash $Users$\backslash \backslash $jhenry1$\backslash \backslash $Documents$\backslash \backslash $GitHub$\backslash
+\backslash $QM$\_$prisoners$\_$dilemma$\backslash \backslash $}}\\
+\pmb{\text{Mathematica$\backslash \backslash $StrategySpaces.wl$\texttt{"}$}]}\\
+\pmb{\text{Import}[}\\
+\pmb{\text{$\texttt{"}$C:$\backslash \backslash $Users$\backslash \backslash $jhenry1$\backslash \backslash $Documents$\backslash \backslash $GitHub$\backslash
+\backslash $QM$\_$prisoners$\_$dilemma$\backslash \backslash $}}\\
+\pmb{\text{Mathematica$\backslash \backslash $QPD$\_$dynamics.wl$\texttt{"}$}]}\\
+\pmb{\text{Import}[}\\
+\pmb{\text{$\texttt{"}$C:$\backslash \backslash $Users$\backslash \backslash $jhenry1$\backslash \backslash $Documents$\backslash \backslash $GitHub$\backslash
+\backslash $QM$\_$prisoners$\_$dilemma$\backslash \backslash $}}\\
+\pmb{\text{Mathematica$\backslash \backslash $DiscreteNashEqulibrium.wl$\texttt{"}$}]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{$\sigma $0}= \left(
+\begin{array}{cc}
+ 1 & 0 \\
+ 0 & 1 \\
+\end{array}
+\right);}\\
+\pmb{\text{$\sigma $1} = \left(
+\begin{array}{cc}
+ 0 & 1 \\
+ 1 & 0 \\
+\end{array}
+\right);}\\
+\pmb{\text{$\sigma $2} = \left(
+\begin{array}{cc}
+ 0 & 1 \\
+ -1 & 0 \\
+\end{array}
+\right);}\\
+\pmb{\text{$\sigma $3} = \left(
+\begin{array}{cc}
+ 1 & 0 \\
+ 0 & -1 \\
+\end{array}
+\right);}\\
+\pmb{s =\text{  }\left(
+\begin{array}{cc}
+ 1 & 0 \\
+ 0 & I \\
+\end{array}
+\right);}\\
+\pmb{\text{D4} = \{\text{$\sigma $0},\text{$\sigma $3},s,s.\text{$\sigma $3},s.\text{$\sigma $1},s.\text{$\sigma $2},\text{$\sigma $1},\text{$\sigma
+$2}\};}\\
+\pmb{\text{D4} = \{\text{$\sigma $0},\text{$\sigma $3},s,s.\text{$\sigma $3},s.\text{$\sigma $1},s.\text{$\sigma $2},\text{$\sigma $1},\text{$\sigma
+$2}\};}\\
+\pmb{\text{D4Sym} = \left\{\texttt{"}\sigma _0\texttt{"},\texttt{"}\sigma _z\texttt{"},\text{S},\texttt{"}\text{S$\sigma $}_z\texttt{"},\texttt{"}\text{S$\sigma
+$}_x\texttt{"},\texttt{"}\text{S$\sigma $}_y\texttt{"},\texttt{"}\sigma _x\texttt{"},\texttt{"}\sigma _y\texttt{"}\right\};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{MatrixForm}\text{/@}\text{D4}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left\{\left(
+\begin{array}{cc}
+ 1 & 0 \\
+ 0 & 1 \\
+\end{array}
+\right),\left(
+\begin{array}{cc}
+ 1 & 0 \\
+ 0 & -1 \\
+\end{array}
+\right),\left(
+\begin{array}{cc}
+ 1 & 0 \\
+ 0 & i \\
+\end{array}
+\right),\left(
+\begin{array}{cc}
+ 1 & 0 \\
+ 0 & -i \\
+\end{array}
+\right),\left(
+\begin{array}{cc}
+ 0 & 1 \\
+ i & 0 \\
+\end{array}
+\right),\left(
+\begin{array}{cc}
+ 0 & 1 \\
+ -i & 0 \\
+\end{array}
+\right),\left(
+\begin{array}{cc}
+ 0 & 1 \\
+ 1 & 0 \\
+\end{array}
+\right),\left(
+\begin{array}{cc}
+ 0 & 1 \\
+ -1 & 0 \\
+\end{array}
+\right)\right\}\)
+\end{doublespace}
+
+\section*{a=b=0}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{symmetricJ} = \text{FullSimplify}[(J[0,0,\gamma ]\text{//}\text{FullSimplify}),}\\
+\pmb{\left.\text{Assumptions}\text{-$>$}0<\gamma <\frac{\pi }{2}\right];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{finalStates} = }\\
+\pmb{\text{FullSimplify}[\text{Table}[\text{play}[\text{symmetricJ},\text{D4}[[i]],\text{D4}[[j]]],\{i,8\},\{j,8\}]\text{/.}}\\
+\pmb{\text{Conjugate}\text{-$>$}\text{MyConj}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{alicesScores} = }\\
+\pmb{\text{FullSimplify}[}\\
+\pmb{(\text{Map}[\text{alicesScore},\text{finalStates},\{2\}]\text{/.}\text{Conjugate}\text{-$>$}\text{MyConj})\text{//}}\\
+\pmb{\text{Simplify}];}\\
+\pmb{\text{bobsScores} = }\\
+\pmb{\text{FullSimplify}[}\\
+\pmb{(\text{Map}[\text{bobsScore},\text{finalStates},\{2\}]\text{/.}\text{Conjugate}\text{-$>$}\text{MyConj})\text{//}}\\
+\pmb{\text{Simplify}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{alicesScores}\text{//}\text{MatrixForm}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left(
+\begin{array}{cccccccc}
+ 5 & 5 \text{Cos}[\gamma ]^2 & \frac{5}{4} (3+\text{Cos}[2 \gamma ]) & \frac{5}{4} (3+\text{Cos}[2 \gamma ]) & \frac{1}{2} (3-\text{Cos}[2 \gamma
+]) & \frac{1}{2} (3-\text{Cos}[2 \gamma ]) & 2-\text{Cos}[2 \gamma ] & 1 \\
+ 5 \text{Cos}[\gamma ]^2 & 5 & \frac{5}{4} (3+\text{Cos}[2 \gamma ]) & \frac{5}{4} (3+\text{Cos}[2 \gamma ]) & \frac{1}{2} (3-\text{Cos}[2 \gamma
+]) & \frac{1}{2} (3-\text{Cos}[2 \gamma ]) & 1 & 2-\text{Cos}[2 \gamma ] \\
+ \frac{5}{4} (3+\text{Cos}[2 \gamma ]) & \frac{5}{4} (3+\text{Cos}[2 \gamma ]) & 5 \text{Cos}[\gamma ]^2 & 5 & 2-\text{Cos}[2 \gamma ] & 1 & \frac{1}{2}
+(3-\text{Cos}[2 \gamma ]) & \frac{1}{2} (3-\text{Cos}[2 \gamma ]) \\
+ \frac{5}{4} (3+\text{Cos}[2 \gamma ]) & \frac{5}{4} (3+\text{Cos}[2 \gamma ]) & 5 & 5 \text{Cos}[\gamma ]^2 & 1 & 2-\text{Cos}[2 \gamma ] & \frac{1}{2}
+(3-\text{Cos}[2 \gamma ]) & \frac{1}{2} (3-\text{Cos}[2 \gamma ]) \\
+ \frac{1}{2} (5+\text{Cos}[2 \gamma ]) & \frac{1}{2} (5+\text{Cos}[2 \gamma ]) & 2+\text{Cos}[2 \gamma ] & 3 & 5 \text{Sin}[\gamma ]^2 & 0 & \frac{5
+\text{Sin}[\gamma ]^2}{2} & \frac{5 \text{Sin}[\gamma ]^2}{2} \\
+ \frac{1}{2} (5+\text{Cos}[2 \gamma ]) & \frac{1}{2} (5+\text{Cos}[2 \gamma ]) & 3 & 2+\text{Cos}[2 \gamma ] & 0 & 5 \text{Sin}[\gamma ]^2 & \frac{5
+\text{Sin}[\gamma ]^2}{2} & \frac{5 \text{Sin}[\gamma ]^2}{2} \\
+ 2+\text{Cos}[2 \gamma ] & 3 & \frac{1}{2} (5+\text{Cos}[2 \gamma ]) & \frac{1}{2} (5+\text{Cos}[2 \gamma ]) & \frac{5 \text{Sin}[\gamma ]^2}{2}
+& \frac{5 \text{Sin}[\gamma ]^2}{2} & 0 & 5 \text{Sin}[\gamma ]^2 \\
+ 3 & 2+\text{Cos}[2 \gamma ] & \frac{1}{2} (5+\text{Cos}[2 \gamma ]) & \frac{1}{2} (5+\text{Cos}[2 \gamma ]) & \frac{5 \text{Sin}[\gamma ]^2}{2}
+& \frac{5 \text{Sin}[\gamma ]^2}{2} & 5 \text{Sin}[\gamma ]^2 & 0 \\
+\end{array}
+\right)\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{eq} = \text{DiscreteNashEquilibria}\left[(\text{alicesScores}),(\text{bobsScores}),0<\gamma <\frac{\text{Pi}}{2}\right];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{eq}\text{//}\text{MatrixForm}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left(
+\begin{array}{ccc}
+ \{1,7\} & \{2-\text{Cos}[2 \gamma ],2-\text{Cos}[2 \gamma ]\} & 0<\gamma \leq 2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right] \\
+ \{2,8\} & \{2-\text{Cos}[2 \gamma ],2-\text{Cos}[2 \gamma ]\} & 0<\gamma \leq 2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right] \\
+ \{3,5\} & \{2-\text{Cos}[2 \gamma ],2-\text{Cos}[2 \gamma ]\} & 0<\gamma \leq 2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right] \\
+ \{4,6\} & \{2-\text{Cos}[2 \gamma ],2-\text{Cos}[2 \gamma ]\} & 0<\gamma \leq 2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right] \\
+\end{array}
+\right)\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{simplifiedEQ}= }\\
+\pmb{(\text{FullSimplify}[\{\#[[1]],\#[[2]],\text{Reduce}[\#[[3]]]\},}\\
+\pmb{\left.\left.\text{Assumptions}\text{-$>$}0<\gamma <\frac{\pi }{2}\right]\&\text{/@}\text{eq}\right);}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Manipulate}[\text{MatrixPlot}[\text{alicesScores}\text{/.}\gamma \text{-$>$}g],}\\
+\pmb{\left.\left\{\left\{g,2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right]\right\},0,\frac{\text{Pi}}{2}\right\}\right]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\fbox{$$}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{simplifiedEQ}\text{//}\text{MatrixForm}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left(
+\begin{array}{ccc}
+ \{5,5\} & \{2-\text{Cos}[2 \gamma ],2-\text{Cos}[2 \gamma ]\} & \gamma \leq 2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right] \\
+ \{6,6\} & \{2-\text{Cos}[2 \gamma ],2-\text{Cos}[2 \gamma ]\} & \gamma \leq 2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right] \\
+ \{7,8\} & \{2-\text{Cos}[2 \gamma ],2-\text{Cos}[2 \gamma ]\} & \gamma \leq 2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right] \\
+ \{8,7\} & \{2-\text{Cos}[2 \gamma ],2-\text{Cos}[2 \gamma ]\} & \gamma \leq 2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right] \\
+\end{array}
+\right)\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Plot}\left[2-\text{Cos}[2 \gamma ],\left\{\gamma ,0,2 \text{ArcTan}\left[\sqrt{5-2 \sqrt{6}}\right]\right\}\right]}\)
+\end{doublespace}
+
+\includegraphics{D4_gr1.eps}
+
+\subsection*{(a=b) != 0 { }}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{assumptions} = 0<\gamma <\frac{\pi }{2}\&\&-\text{Infinity}<a<\text{Infinity};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{symmetricJ} = \text{FullSimplify}[(J[a,a,\gamma ]\text{//}\text{FullSimplify}),}\\
+\pmb{\text{Assumptions}\text{-$>$}\text{assumptions}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{finalStates} = }\\
+\pmb{\text{FullSimplify}[\text{Table}[\text{play}[\text{symmetricJ},\text{D4}[[i]],\text{D4}[[j]]],\{i,8\},\{j,8\}]\text{/.}}\\
+\pmb{\text{Conjugate}\text{-$>$}\text{MyConj},\text{Assumptions}\text{-$>$}\text{assumptions}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{alicesScores} = }\\
+\pmb{\text{FullSimplify}[(\text{ParallelMap}[\text{alicesScore},\text{finalStates},\{2\}])\text{//}}\\
+\pmb{\text{Simplify}];}\\
+\pmb{\text{bobsScores} = }\\
+\pmb{\text{FullSimplify}[(\text{ParallelMap}[\text{bobsScore},\text{finalStates},\{2\}])\text{//}}\\
+\pmb{\text{Simplify}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{alicesScores}\text{//}\text{MatrixForm}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left(
+\begin{array}{cccccccc}
+ 3 & 3 \text{Cos}[\gamma ]^2 \text{Cos}[a \gamma ]^2+(3-2 \text{Cos}[2 a \gamma ]) \text{Sin}[\gamma ]^2 & \frac{1}{8} (21-\text{Cos}[2 a \gamma
+]+\text{Cos}[2 \gamma ] (-3+7 \text{Cos}[2 a \gamma ])) & \frac{1}{8} (21-\text{Cos}[2 a \gamma ]+\text{Cos}[2 \gamma ] (-3+7 \text{Cos}[2 a \gamma
+])) & \frac{1}{2} \left(5 \text{Cos}[a \gamma ]^2 \text{Sin}[\gamma ]^2+(2+\text{Cos}[2 \gamma ]) \text{Sin}[a \gamma ]^2\right) & \frac{1}{2} \left(5
+\text{Cos}[a \gamma ]^2 \text{Sin}[\gamma ]^2+(2+\text{Cos}[2 \gamma ]) \text{Sin}[a \gamma ]^2\right) & 5 \text{Cos}[a \gamma ]^2 \text{Sin}[\gamma
+]^2+(2+\text{Cos}[2 \gamma ]) \text{Sin}[a \gamma ]^2 & 0 \\
+ -\text{Cos}[\gamma ]^2 (-4+\text{Cos}[2 a \gamma ])+\text{Cos}[a \gamma ]^2 \text{Sin}[\gamma ]^2 & \frac{17}{8}+\text{Cos}[2 a \gamma ]-\frac{1}{8}
+\text{Cos}[4 a \gamma ] & \frac{1}{16} \left(35+14 \text{Cos}[2 \gamma ]-\text{Cos}[4 a \gamma ]+12 \text{Cos}[2 a \gamma ] \text{Sin}[\gamma ]^2+8
+\text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]\right) & \frac{1}{16} (35+14 \text{Cos}[2 \gamma ]-\text{Cos}[4 a \gamma ]+4 \text{Sin}[\gamma
+] (-\text{Cos}[a \gamma ]+\text{Cos}[3 a \gamma ]+3 \text{Cos}[2 a \gamma ] \text{Sin}[\gamma ])) & \frac{1}{16} (37-18 \text{Cos}[2 a \gamma ]-2
+\text{Cos}[2 \gamma ] (7+3 \text{Cos}[2 a \gamma ])+\text{Cos}[4 a \gamma ]+16 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ])
+& \frac{1}{16} (37-18 \text{Cos}[2 a \gamma ]-2 \text{Cos}[2 \gamma ] (7+3 \text{Cos}[2 a \gamma ])+\text{Cos}[4 a \gamma ]-16 \text{Sin}[\gamma
+] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & 5 \text{Sin}[a \gamma ]^4+\text{Sin}[2 a \gamma ]^2 & 5 \text{Cos}[a \gamma ]^2 \text{Sin}[\gamma
+]^2-(-2+\text{Cos}[2 \gamma ]) \text{Sin}[a \gamma ]^2 \\
+ \frac{7}{8} (3+\text{Cos}[2 \gamma ])-\frac{1}{8} (1+3 \text{Cos}[2 \gamma ]) \text{Cos}[2 a \gamma ] & \frac{1}{16} (35+6 \text{Cos}[2 a \gamma
+]+2 \text{Cos}[2 \gamma ] (-3+7 \text{Cos}[2 a \gamma ])-\text{Cos}[4 a \gamma ]-32 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma
+]) & \frac{1}{32} (69+16 \text{Cos}[2 \gamma ]+8 \text{Cos}[2 (-1+a) \gamma ]-4 \text{Cos}[2 a \gamma ]-\text{Cos}[4 a \gamma ]+8 \text{Cos}[2 (1+a)
+\gamma ]-24 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{32} (85+12 \text{Cos}[2 a \gamma ]-\text{Cos}[4 a \gamma
+]-40 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{32} (75-40 \text{Cos}[2 \gamma ]-20 \text{Cos}[2 (-1+a) \gamma
+]+4 \text{Cos}[2 a \gamma ]+\text{Cos}[4 a \gamma ]-20 \text{Cos}[2 (1+a) \gamma ]+48 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma
+]) & -\frac{1}{8} (-17+\text{Cos}[2 a \gamma ]-8 \text{Cos}[a \gamma ] \text{Sin}[\gamma ]) \text{Sin}[a \gamma ]^2 & \frac{1}{16} (37-18 \text{Cos}[2
+a \gamma ]-2 \text{Cos}[2 \gamma ] (3+7 \text{Cos}[2 a \gamma ])+\text{Cos}[4 a \gamma ]+32 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2
+a \gamma ]) & \frac{1}{2} \left(5 \text{Cos}[a \gamma ]^2 \text{Sin}[\gamma ]^2-(-2+\text{Cos}[2 \gamma ]) \text{Sin}[a \gamma ]^2\right) \\
+ \frac{7}{8} (3+\text{Cos}[2 \gamma ])-\frac{1}{8} (1+3 \text{Cos}[2 \gamma ]) \text{Cos}[2 a \gamma ] & \frac{1}{8} \left(6 \text{Cos}[a \gamma
+]^2 (2+\text{Cos}[2 \gamma ]+\text{Cos}[2 a \gamma ])+(-1+\text{Cos}[2 a \gamma ]+2 \text{Cos}[a \gamma ] \text{Sin}[\gamma ])^2+20 (\text{Cos}[a
+\gamma ]+\text{Sin}[\gamma ])^2 \text{Sin}[a \gamma ]^2\right) & \frac{1}{32} (85+12 \text{Cos}[2 a \gamma ]-\text{Cos}[4 a \gamma ]+40 \text{Sin}[\gamma
+] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{32} (69+16 \text{Cos}[2 \gamma ]+8 \text{Cos}[2 (-1+a) \gamma ]-4 \text{Cos}[2 a \gamma
+]-\text{Cos}[4 a \gamma ]+8 \text{Cos}[2 (1+a) \gamma ]+24 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & -\frac{1}{8} (-17+\text{Cos}[2
+a \gamma ]+8 \text{Cos}[a \gamma ] \text{Sin}[\gamma ]) \text{Sin}[a \gamma ]^2 & \frac{1}{32} (75-40 \text{Cos}[2 \gamma ]-20 \text{Cos}[2 (-1+a)
+\gamma ]+4 \text{Cos}[2 a \gamma ]+\text{Cos}[4 a \gamma ]-20 \text{Cos}[2 (1+a) \gamma ]-48 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2
+a \gamma ]) & \frac{1}{8} \left(5 (-1+\text{Cos}[2 a \gamma ]+2 \text{Cos}[a \gamma ] \text{Sin}[\gamma ])^2+6 (2+\text{Cos}[2 \gamma ]+\text{Cos}[2
+a \gamma ]) \text{Sin}[a \gamma ]^2+4 (\text{Cos}[a \gamma ]+\text{Sin}[\gamma ])^2 \text{Sin}[a \gamma ]^2\right) & \frac{1}{2} \left(5 \text{Cos}[a
+\gamma ]^2 \text{Sin}[\gamma ]^2-(-2+\text{Cos}[2 \gamma ]) \text{Sin}[a \gamma ]^2\right) \\
+ \frac{1}{2} \left(5+\text{Cos}[\gamma ]^2 (4+\text{Cos}[2 a \gamma ])+\text{Sin}[\gamma ]^2 \text{Sin}[a \gamma ]^2\right) & \frac{1}{2} \left(5
+\text{Cos}[a \gamma ]^4+\text{Cos}[\gamma ]^2 (3+2 \text{Cos}[2 a \gamma ])+3 \text{Sin}[\gamma ]^2 \text{Sin}[a \gamma ]^2-3 \text{Sin}[\gamma ]
+\text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]+\text{Sin}[2 a \gamma ]^2\right) & \frac{1}{32} \left(75+80 \text{Cos}[2 \gamma ] \text{Cos}[a \gamma
+]^2+4 \text{Cos}[2 a \gamma ]+\text{Cos}[4 a \gamma ]-32 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]\right) & \frac{1}{32}
+(115+44 \text{Cos}[2 a \gamma ]+\text{Cos}[4 a \gamma ]-16 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{32} (69-16
+\text{Cos}[2 \gamma ]-8 \text{Cos}[2 (-1+a) \gamma ]-4 \text{Cos}[2 a \gamma ]-\text{Cos}[4 a \gamma ]-8 \text{Cos}[2 (1+a) \gamma ]+8 \text{Sin}[\gamma
+] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{32} (53-20 \text{Cos}[2 a \gamma ]-\text{Cos}[4 a \gamma ]+40 \text{Sin}[\gamma ] \text{Sin}[a
+\gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{16} (35+\text{Cos}[2 \gamma ] (6-14 \text{Cos}[2 a \gamma ])-10 \text{Cos}[2 a \gamma ]-\text{Cos}[4
+a \gamma ]+24 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{8} (13-7 \text{Cos}[2 \gamma ]+(-1+3 \text{Cos}[2 \gamma
+]) \text{Cos}[2 a \gamma ]) \\
+ \frac{1}{2} \left(5+\text{Cos}[\gamma ]^2 (4+\text{Cos}[2 a \gamma ])+\text{Sin}[\gamma ]^2 \text{Sin}[a \gamma ]^2\right) & \frac{1}{2} \left(5
+\text{Cos}[a \gamma ]^4+\text{Cos}[\gamma ]^2 (3+2 \text{Cos}[2 a \gamma ])+3 \text{Sin}[\gamma ]^2 \text{Sin}[a \gamma ]^2+3 \text{Sin}[\gamma ]
+\text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]+\text{Sin}[2 a \gamma ]^2\right) & \frac{1}{32} (115+44 \text{Cos}[2 a \gamma ]+\text{Cos}[4 a \gamma
+]+16 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{32} \left(75+80 \text{Cos}[2 \gamma ] \text{Cos}[a \gamma ]^2+4
+\text{Cos}[2 a \gamma ]+\text{Cos}[4 a \gamma ]\right)+\text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ] & \frac{1}{32} (53-20 \text{Cos}[2
+a \gamma ]-\text{Cos}[4 a \gamma ]-40 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{32} \left(69-32 \text{Cos}[2
+\gamma ] \text{Cos}[a \gamma ]^2-4 \text{Cos}[2 a \gamma ]-\text{Cos}[4 a \gamma ]-8 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma
+]\right) & \frac{1}{16} (35+\text{Cos}[2 \gamma ] (6-14 \text{Cos}[2 a \gamma ])-10 \text{Cos}[2 a \gamma ]-\text{Cos}[4 a \gamma ]-24 \text{Sin}[\gamma
+] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]) & \frac{1}{8} (13-7 \text{Cos}[2 \gamma ]+(-1+3 \text{Cos}[2 \gamma ]) \text{Cos}[2 a \gamma ])
+\\
+ \text{Cos}[\gamma ]^2 (4+\text{Cos}[2 a \gamma ])+\text{Sin}[\gamma ]^2 \text{Sin}[a \gamma ]^2 & 5 \text{Cos}[a \gamma ]^4+\text{Sin}[2 a \gamma
+]^2 & \frac{1}{2} \left(5 \text{Cos}[a \gamma ]^4+\text{Cos}[\gamma ]^2 (4+\text{Cos}[2 a \gamma ])+\text{Sin}[\gamma ]^2 \text{Sin}[a \gamma ]^2-\text{Sin}[\gamma
+] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]+\text{Sin}[2 a \gamma ]^2\right) & \frac{1}{2} \left(5 \text{Cos}[a \gamma ]^4+\text{Cos}[\gamma
+]^2 (4+\text{Cos}[2 a \gamma ])+\text{Sin}[\gamma ]^2 \text{Sin}[a \gamma ]^2+\text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]+\text{Sin}[2
+a \gamma ]^2\right) & \frac{1}{8} \left(\frac{35}{2}-5 \text{Cos}[2 a \gamma ]+\text{Cos}[2 \gamma ] (-7+3 \text{Cos}[2 a \gamma ])-\frac{1}{2} \text{Cos}[4
+a \gamma ]-8 \text{Sin}[\gamma ] \text{Sin}[a \gamma ] \text{Sin}[2 a \gamma ]\right) & \frac{1}{8} \left(2 \text{Cos}[a \gamma ]^2 (2+\text{Cos}[2
+\gamma ]+\text{Cos}[2 a \gamma ])+3 (-1+\text{Cos}[2 a \gamma ]+2 \text{Cos}[a \gamma ] \text{Sin}[\gamma ])^2+20 (\text{Cos}[a \gamma ]+\text{Sin}[\gamma
+])^2 \text{Sin}[a \gamma ]^2\right) & \frac{1}{8} (17-8 \text{Cos}[2 a \gamma ]-\text{Cos}[4 a \gamma ]) & \text{Cos}[\gamma ]^2 \text{Cos}[a \gamma
+]^2-(-4+\text{Cos}[2 a \gamma ]) \text{Sin}[\gamma ]^2 \\
+ 5 & \text{Cos}[\gamma ]^2 (3+2 \text{Cos}[2 a \gamma ])+3 \text{Sin}[\gamma ]^2 \text{Sin}[a \gamma ]^2 & \frac{1}{8} (29+\text{Cos}[2 a \gamma
+]+\text{Cos}[2 \gamma ] (3+7 \text{Cos}[2 a \gamma ])) & \frac{1}{8} (29+\text{Cos}[2 a \gamma ]+\text{Cos}[2 \gamma ] (3+7 \text{Cos}[2 a \gamma
+])) & \frac{1}{8} (13+3 \text{Cos}[2 \gamma ]-(1+7 \text{Cos}[2 \gamma ]) \text{Cos}[2 a \gamma ]) & \frac{1}{8} (13+3 \text{Cos}[2 \gamma ]-(1+7
+\text{Cos}[2 \gamma ]) \text{Cos}[2 a \gamma ]) & \text{Cos}[\gamma ]^2 (3-2 \text{Cos}[2 a \gamma ])+3 \text{Cos}[a \gamma ]^2 \text{Sin}[\gamma
+]^2 & 1 \\
+\end{array}
+\right)\)
+\end{doublespace}
+
+\(\text{Convert} \text{to} \gamma \prime  \text{==} \text{Sin}[\gamma ]^2\text{  }\text{a$\prime $} = \text{Sin}[\gamma  a]^2\text{  }\text{for}
+\text{simplification}\)
+
+\begin{doublespace}
+\noindent\(\pmb{\text{alicesScores} = }\\
+\pmb{\left(\left(\left(\text{alicesScores}\text{/.}a\text{-$>$}\frac{\text{ArcSin}[\text{Sqrt}[\text{a$\prime $}]]}{\gamma }\right)\text{/.}\gamma
+\text{-$>$}\text{ArcSin}[\text{Sqrt}[\gamma \prime ]]\right)\right)\text{//}}\\
+\pmb{\text{TrigExpand}\text{//}\text{FullSimplify};}\\
+\pmb{\text{bobsScores} = }\\
+\pmb{\left(\left(\left(\text{bobsScores}\text{/.}a\text{-$>$}\frac{\text{ArcSin}[\text{Sqrt}[\text{a$\prime $}]]}{\gamma }\right)\text{/.}\gamma
+\text{-$>$}\text{ArcSin}[\text{Sqrt}[\gamma \prime ]]\right)\right)\text{//}}\\
+\pmb{\text{TrigExpand}\text{//}\text{FullSimplify};}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{assumptions$\prime $} = 0<\gamma \prime <1\&\&0<\text{a$\prime $}<1;}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{eq} = \text{DiscreteNashEquilibria}[(\text{alicesScores}),(\text{bobsScores}),}\\
+\pmb{\text{assumptions$\prime $}];}\\
+\pmb{\text{eq} = \text{DeleteCases}[\text{eq},\{\_,\_,\text{False}\}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{eq} = }\\
+\pmb{((\#[[\{1,2\}]]\sim \text{Join}\sim }\\
+\pmb{\{\text{Simplify}[\text{Reduce}[\text{Simplify}[\#[[3]],\text{assumptions$\prime $}]]]\}\&\text{/@}\text{eq})\text{/.}}\\
+\pmb{\text{Reduce}\text{-$>$}\text{Identity});}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{eq} = \text{DeleteCases}[\text{eq},\{\_,\_,\text{False}\}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{$\gamma $Orig}[\gamma \_]\text{:=}\text{ArcSin}[\text{Sqrt}[\gamma ]];}\\
+\pmb{\text{aOrig}[\gamma \_,\text{a$\_$}]\text{:=}\frac{\text{ArcSin}[\text{Sqrt}[a]]}{\text{ArcSin}[\text{Sqrt}[\gamma ]]}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{eq}\text{//}\text{MatrixForm}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left(
+\begin{array}{ccc}
+ \{2,8\} & \{5-5 \gamma \prime +\text{a$\prime $} (-4+7 \gamma \prime ),\text{a$\prime $}+5 \gamma \prime -3 \text{a$\prime $} \gamma \prime \} &
+\left(\text{a$\prime $}==\text{Root}\left[9 \text{$\#$1}^6+60 \text{$\#$1}^4-354 \text{$\#$1}^3+484 \text{$\#$1}^2-220 \text{$\#$1}+25\&,2,0\right]\&\&\gamma
+\prime ==\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\right)\left\|\left(\text{Root}\left[9 \text{$\#$1}^6+60 \text{$\#$1}^4-354 \text{$\#$1}^3+484
+\text{$\#$1}^2-220 \text{$\#$1}+25\&,2,0\right]<\text{a$\prime $}\leq \text{Root}\left[392 \text{$\#$1}^5-1400 \text{$\#$1}^4+2481 \text{$\#$1}^3-2462
+\text{$\#$1}^2+1180 \text{$\#$1}-200\&,2,0\right]\&\&\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{10 \text{a$\prime
+$}-\text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-5+7 \text{a$\prime $})^2}-6 \sqrt{2} \sqrt{\frac{5 \text{a$\prime $}^3-10 \text{a$\prime $}^4+4
+\text{a$\prime $}^5+\text{a$\prime $}^6}{(-5+7 \text{a$\prime $})^4}}\right)\right\|\left(\text{Root}\left[392 \text{$\#$1}^5-1400 \text{$\#$1}^4+2481
+\text{$\#$1}^3-2462 \text{$\#$1}^2+1180 \text{$\#$1}-200\&,2,0\right]<\text{a$\prime $}\leq \text{Root}\left[9 \text{$\#$1}^4+162 \text{$\#$1}^3-143
+\text{$\#$1}^2-40 \text{$\#$1}+16\&,4,0\right]\&\&\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{32-60 \text{a$\prime
+$}+68 \text{a$\prime $}^2-39 \text{a$\prime $}^3}{(-8+7 \text{a$\prime $})^2}-8 \sqrt{\frac{32 \text{a$\prime $}^2-92 \text{a$\prime $}^3+112 \text{a$\prime
+$}^4-75 \text{a$\prime $}^5+23 \text{a$\prime $}^6}{(-8+7 \text{a$\prime $})^4}}\right)\|\left(\text{Root}\left[9 \text{$\#$1}^4+162 \text{$\#$1}^3-143
+\text{$\#$1}^2-40 \text{$\#$1}+16\&,4,0\right]<\text{a$\prime $}<1\&\&\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\leq \gamma \prime \leq
+\frac{1}{3}\right) \\
+ \{3,5\} & \left\{5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5
+(-1+\text{a$\prime $}) \gamma \prime ,\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5
+\gamma \prime \right)+5 \gamma \prime \right\} & 5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime
+$} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\gamma \prime +\frac{1}{2} \text{a$\prime $} (-3+7 \gamma \prime )\&\&5+\frac{1}{4}
+(-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime
+\geq \frac{1}{2} \left(6+\text{a$\prime $}-\text{a$\prime $}^2+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }-2 \gamma \prime
+-3 \text{a$\prime $} \gamma \prime \right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime
+$} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\frac{1}{4} \text{a$\prime $} (2+\text{a$\prime $})-\frac{3}{2} \sqrt{1-\text{a$\prime
+$}} \text{a$\prime $} \sqrt{\gamma \prime }+2 (-1+\text{a$\prime $}) \gamma \prime \&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2
+\sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\frac{1}{4} \text{a$\prime $} \left(2+\text{a$\prime
+$}-10 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime
+$}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 5+\frac{1}{4} \text{a$\prime $} \left(-12+\text{a$\prime
+$}+4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime
+$}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq \frac{1}{2} \left(10+\text{a$\prime $}^2-5 \gamma \prime
++\text{a$\prime $} \left(-8-2 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }+3 \gamma \prime \right)\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime
+$}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 5-2 \text{a$\prime
+$}+\frac{1}{2} (-5+7 \text{a$\prime $}) \gamma \prime \&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma
+\prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{2} (\text{a$\prime $} (3-7 \gamma \prime )+5 \gamma \prime )\&\&\frac{\text{a$\prime
+$}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{2} \left(\text{a$\prime
+$}^2+\text{a$\prime $} \left(5+4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-3 \gamma \prime \right)+5 \gamma \prime \right)\&\&\frac{\text{a$\prime
+$}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{4} \text{a$\prime
+$} \left(8+\text{a$\prime $}-4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3
+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{4} \left(4-\text{a$\prime $}^2+2 \text{a$\prime
+$} \left(3+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-4 \gamma \prime \right)+8 \gamma \prime \right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime
+$} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1-\frac{1}{4} \text{a$\prime $} \left(-6+\text{a$\prime
+$}+10 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1+\text{a$\prime $}-\frac{\text{a$\prime $}^2}{2}-2 \sqrt{1-\text{a$\prime
+$}} \text{a$\prime $} \sqrt{\gamma \prime }+\gamma \prime +\frac{3 \text{a$\prime $} \gamma \prime }{2}\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime
+$} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1+\text{a$\prime $} \left(2-\frac{7 \gamma
+\prime }{2}\right)+\gamma \prime  \\
+ \{4,6\} & \left\{5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5
+(-1+\text{a$\prime $}) \gamma \prime ,\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5
+\gamma \prime \right)+5 \gamma \prime \right\} & 5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime
+$} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\gamma \prime +\frac{1}{2} \text{a$\prime $} (-3+7 \gamma \prime )\&\&5+\frac{1}{4}
+(-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime
+\geq \frac{1}{2} \left(6+\text{a$\prime $}-\text{a$\prime $}^2-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }-2 \gamma \prime
+-3 \text{a$\prime $} \gamma \prime \right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime
+$} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\frac{1}{4} \text{a$\prime $} \left(2+\text{a$\prime $}+10 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma
+\prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\frac{1}{4} \text{a$\prime $} (2+\text{a$\prime $})+\frac{3}{2} \sqrt{1-\text{a$\prime $}}
+\text{a$\prime $} \sqrt{\gamma \prime }+2 (-1+\text{a$\prime $}) \gamma \prime \&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime
+$}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 5+\frac{1}{4} \text{a$\prime $} \left(\text{a$\prime $}-4
+\left(3+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime
+$}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq \frac{1}{2} \left(10+\text{a$\prime $}^2-5 \gamma \prime
++\text{a$\prime $} \left(-8+2 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }+3 \gamma \prime \right)\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime
+$}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 5-2 \text{a$\prime
+$}+\frac{1}{2} (-5+7 \text{a$\prime $}) \gamma \prime \&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma
+\prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{2} (\text{a$\prime $} (3-7 \gamma \prime )+5 \gamma \prime )\&\&\frac{\text{a$\prime
+$}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{2} \left(\text{a$\prime
+$}^2+\text{a$\prime $} \left(5-4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-3 \gamma \prime \right)+5 \gamma \prime \right)\&\&\frac{\text{a$\prime
+$}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{4} \text{a$\prime
+$} \left(8+\text{a$\prime $}+4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3
+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1-\frac{1}{4} \text{a$\prime $} \left(-6+\text{a$\prime
+$}-10 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{4} \left(4-\text{a$\prime $}^2+8 \gamma \prime -2 \text{a$\prime
+$} \left(-3+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }+4 \gamma \prime \right)\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3
+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1+\text{a$\prime $}-\frac{\text{a$\prime $}^2}{2}+2
+\sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+\gamma \prime +\frac{3 \text{a$\prime $} \gamma \prime }{2}\&\&\frac{\text{a$\prime
+$}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1+\text{a$\prime
+$} \left(2-\frac{7 \gamma \prime }{2}\right)+\gamma \prime  \\
+ \{5,3\} & \left\{\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5
+\gamma \prime ,5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime
+$}) \gamma \prime \right\} & \frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma
+\prime \right)+5 \gamma \prime \geq \frac{1}{2} (\text{a$\prime $} (3-7 \gamma \prime )+5 \gamma \prime )\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime
+$} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{2} \left(\text{a$\prime $}^2+\text{a$\prime
+$} \left(5+4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-3 \gamma \prime \right)+5 \gamma \prime \right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime
+$} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{4} \text{a$\prime $} \left(8+\text{a$\prime
+$}-4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{4} \left(4-\text{a$\prime $}^2+2 \text{a$\prime $} \left(3+\sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }-4 \gamma \prime \right)+8 \gamma \prime \right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1-\frac{1}{4} \text{a$\prime $} \left(-6+\text{a$\prime $}+10 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5
+\gamma \prime \right)+5 \gamma \prime \geq 1+\text{a$\prime $}-\frac{\text{a$\prime $}^2}{2}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma
+\prime }+\gamma \prime +\frac{3 \text{a$\prime $} \gamma \prime }{2}\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2+3 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1+\text{a$\prime $} \left(2-\frac{7 \gamma \prime }{2}\right)+\gamma \prime
+\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime
+$}) \gamma \prime \geq 3-\gamma \prime +\frac{1}{2} \text{a$\prime $} (-3+7 \gamma \prime )\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime
+$}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq \frac{1}{2} \left(6+\text{a$\prime
+$}-\text{a$\prime $}^2+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }-2 \gamma \prime -3 \text{a$\prime $} \gamma \prime \right)\&\&5+\frac{1}{4}
+(-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime
+\geq 3-\frac{1}{4} \text{a$\prime $} (2+\text{a$\prime $})-\frac{3}{2} \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+2 (-1+\text{a$\prime
+$}) \gamma \prime \&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime
+}+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\frac{1}{4} \text{a$\prime $} \left(2+\text{a$\prime $}-10 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma
+\prime }\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5
+(-1+\text{a$\prime $}) \gamma \prime \geq 5+\frac{1}{4} \text{a$\prime $} \left(-12+\text{a$\prime $}+4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime
+}\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime
+$}) \gamma \prime \geq \frac{1}{2} \left(10+\text{a$\prime $}^2-5 \gamma \prime +\text{a$\prime $} \left(-8-2 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma
+\prime }+3 \gamma \prime \right)\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $}
+\sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 5-2 \text{a$\prime $}+\frac{1}{2} (-5+7 \text{a$\prime $}) \gamma \prime  \\
+ \{5,5\} & \left\{\frac{1}{4} \left(4-\text{a$\prime $}^2+2 \text{a$\prime $} \left(3+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-4 \gamma \prime
+\right)+8 \gamma \prime \right),\frac{1}{4} \left(4-\text{a$\prime $}^2+2 \text{a$\prime $} \left(3+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime
+}-4 \gamma \prime \right)+8 \gamma \prime \right)\right\} & \left(0<\text{a$\prime $}\leq \text{Root}\left[7 \text{$\#$1}^4-209 \text{$\#$1}^3+602
+\text{$\#$1}^2-450 \text{$\#$1}+100\&,1,0\right]\&\&\frac{4 \text{a$\prime $}+9 \text{a$\prime $}^2+2 \text{a$\prime $}^3}{2 (2+3 \text{a$\prime
+$})^2}-\frac{1}{2} \sqrt{\frac{8 \text{a$\prime $}^3+9 \text{a$\prime $}^4-12 \text{a$\prime $}^5-5 \text{a$\prime $}^6}{(2+3 \text{a$\prime $})^4}}\leq
+\gamma \prime \leq \frac{-24+12 \text{a$\prime $}-13 \text{a$\prime $}^2}{72 (-1+\text{a$\prime $})}-\frac{5}{72} \sqrt{\frac{48 \text{a$\prime $}^2-24
+\text{a$\prime $}^3+\text{a$\prime $}^4}{(-1+\text{a$\prime $})^2}}\right)\left\|\left(\text{Root}\left[7 \text{$\#$1}^4-209 \text{$\#$1}^3+602 \text{$\#$1}^2-450
+\text{$\#$1}+100\&,1,0\right]<\text{a$\prime $}<\text{Root}\left[196 \text{$\#$1}^5+152 \text{$\#$1}^4-87 \text{$\#$1}^3-146 \text{$\#$1}^2+32\&,2,0\right]\&\&\frac{4
+\text{a$\prime $}+9 \text{a$\prime $}^2+2 \text{a$\prime $}^3}{2 (2+3 \text{a$\prime $})^2}-\frac{1}{2} \sqrt{\frac{8 \text{a$\prime $}^3+9 \text{a$\prime
+$}^4-12 \text{a$\prime $}^5-5 \text{a$\prime $}^6}{(2+3 \text{a$\prime $})^4}}\leq \gamma \prime \leq \frac{2+\text{a$\prime $}^2-6 \text{a$\prime
+$}^3}{(1+\text{a$\prime $})^2}-\frac{3}{2} \sqrt{\frac{8 \text{a$\prime $}^2-8 \text{a$\prime $}^3-5 \text{a$\prime $}^4-10 \text{a$\prime $}^5+15
+\text{a$\prime $}^6}{(1+\text{a$\prime $})^4}}\right)\right\|\left(\text{a$\prime $}==\text{Root}\left[196 \text{$\#$1}^5+152 \text{$\#$1}^4-87 \text{$\#$1}^3-146
+\text{$\#$1}^2+32\&,2,0\right]\&\&\gamma \prime ==\frac{2+\text{a$\prime $}^2-6 \text{a$\prime $}^3}{(1+\text{a$\prime $})^2}-\frac{3}{2} \sqrt{\frac{8
+\text{a$\prime $}^2-8 \text{a$\prime $}^3-5 \text{a$\prime $}^4-10 \text{a$\prime $}^5+15 \text{a$\prime $}^6}{(1+\text{a$\prime $})^4}}\right) \\
+ \{6,4\} & \left\{\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5
+\gamma \prime ,5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime
+$}) \gamma \prime \right\} & \frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma
+\prime \right)+5 \gamma \prime \geq \frac{1}{2} (\text{a$\prime $} (3-7 \gamma \prime )+5 \gamma \prime )\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime
+$} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{2} \left(\text{a$\prime $}^2+\text{a$\prime
+$} \left(5-4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-3 \gamma \prime \right)+5 \gamma \prime \right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime
+$} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq \frac{1}{4} \text{a$\prime $} \left(8+\text{a$\prime
+$}+4 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1-\frac{1}{4} \text{a$\prime $} \left(-6+\text{a$\prime $}-10 \sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5
+\gamma \prime \right)+5 \gamma \prime \geq \frac{1}{4} \left(4-\text{a$\prime $}^2+8 \gamma \prime -2 \text{a$\prime $} \left(-3+\sqrt{1-\text{a$\prime
+$}} \sqrt{\gamma \prime }+4 \gamma \prime \right)\right)\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime $} \left(2-3 \sqrt{1-\text{a$\prime $}}
+\sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1+\text{a$\prime $}-\frac{\text{a$\prime $}^2}{2}+2 \sqrt{1-\text{a$\prime $}}
+\text{a$\prime $} \sqrt{\gamma \prime }+\gamma \prime +\frac{3 \text{a$\prime $} \gamma \prime }{2}\&\&\frac{\text{a$\prime $}^2}{4}+\text{a$\prime
+$} \left(2-3 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }-5 \gamma \prime \right)+5 \gamma \prime \geq 1+\text{a$\prime $} \left(2-\frac{7 \gamma
+\prime }{2}\right)+\gamma \prime \&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma
+\prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\gamma \prime +\frac{1}{2} \text{a$\prime $} (-3+7 \gamma \prime )\&\&5+\frac{1}{4} (-12+\text{a$\prime
+$}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq \frac{1}{2}
+\left(6+\text{a$\prime $}-\text{a$\prime $}^2-2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }-2 \gamma \prime -3 \text{a$\prime
+$} \gamma \prime \right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime
+}+5 (-1+\text{a$\prime $}) \gamma \prime \geq 3-\frac{1}{4} \text{a$\prime $} \left(2+\text{a$\prime $}+10 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma
+\prime }\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5
+(-1+\text{a$\prime $}) \gamma \prime \geq 3-\frac{1}{4} \text{a$\prime $} (2+\text{a$\prime $})+\frac{3}{2} \sqrt{1-\text{a$\prime $}} \text{a$\prime
+$} \sqrt{\gamma \prime }+2 (-1+\text{a$\prime $}) \gamma \prime \&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime
+$}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 5+\frac{1}{4} \text{a$\prime $} \left(\text{a$\prime $}-4
+\left(3+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }\right)\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime $}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime
+$}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq \frac{1}{2} \left(10+\text{a$\prime $}^2-5 \gamma \prime
++\text{a$\prime $} \left(-8+2 \sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime }+3 \gamma \prime \right)\right)\&\&5+\frac{1}{4} (-12+\text{a$\prime
+$}) \text{a$\prime $}+2 \sqrt{1-\text{a$\prime $}} \text{a$\prime $} \sqrt{\gamma \prime }+5 (-1+\text{a$\prime $}) \gamma \prime \geq 5-2 \text{a$\prime
+$}+\frac{1}{2} (-5+7 \text{a$\prime $}) \gamma \prime  \\
+ \{6,6\} & \left\{\frac{1}{4} \left(4-\text{a$\prime $}^2+8 \gamma \prime -2 \text{a$\prime $} \left(-3+\sqrt{1-\text{a$\prime $}} \sqrt{\gamma \prime
+}+4 \gamma \prime \right)\right),\frac{1}{4} \left(4-\text{a$\prime $}^2+8 \gamma \prime -2 \text{a$\prime $} \left(-3+\sqrt{1-\text{a$\prime $}}
+\sqrt{\gamma \prime }+4 \gamma \prime \right)\right)\right\} & \left(0<\text{a$\prime $}\leq \frac{1}{22} \left(49-\sqrt{2049}\right)\&\&\frac{4
+\text{a$\prime $}+9 \text{a$\prime $}^2+2 \text{a$\prime $}^3}{2 (2+3 \text{a$\prime $})^2}+\frac{1}{2} \sqrt{\frac{8 \text{a$\prime $}^3+9 \text{a$\prime
+$}^4-12 \text{a$\prime $}^5-5 \text{a$\prime $}^6}{(2+3 \text{a$\prime $})^4}}\leq \gamma \prime \leq \frac{-24+12 \text{a$\prime $}-13 \text{a$\prime
+$}^2}{72 (-1+\text{a$\prime $})}+\frac{5}{72} \sqrt{\frac{48 \text{a$\prime $}^2-24 \text{a$\prime $}^3+\text{a$\prime $}^4}{(-1+\text{a$\prime $})^2}}\right)\left\|\left(\frac{1}{22}
+\left(49-\sqrt{2049}\right)<\text{a$\prime $}<\text{Root}\left[7 \text{$\#$1}^4-50 \text{$\#$1}^3+112 \text{$\#$1}^2+72 \text{$\#$1}-16\&,2,0\right]\&\&\left(\frac{4
+\text{a$\prime $}+9 \text{a$\prime $}^2+2 \text{a$\prime $}^3}{2 (2+3 \text{a$\prime $})^2}+\frac{1}{2} \sqrt{\frac{8 \text{a$\prime $}^3+9 \text{a$\prime
+$}^4-12 \text{a$\prime $}^5-5 \text{a$\prime $}^6}{(2+3 \text{a$\prime $})^4}}\leq \gamma \prime \leq \frac{-4 \text{a$\prime $}+37 \text{a$\prime
+$}^2-18 \text{a$\prime $}^3}{2 (-2+7 \text{a$\prime $})^2}-\frac{5}{2} \sqrt{\frac{-8 \text{a$\prime $}^3+57 \text{a$\prime $}^4-60 \text{a$\prime
+$}^5+11 \text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\|\frac{-4 \text{a$\prime $}+37 \text{a$\prime $}^2-18 \text{a$\prime $}^3}{2 (-2+7 \text{a$\prime
+$})^2}+\frac{5}{2} \sqrt{\frac{-8 \text{a$\prime $}^3+57 \text{a$\prime $}^4-60 \text{a$\prime $}^5+11 \text{a$\prime $}^6}{(-2+7 \text{a$\prime
+$})^4}}\leq \gamma \prime \leq \frac{-24+12 \text{a$\prime $}-13 \text{a$\prime $}^2}{72 (-1+\text{a$\prime $})}+\frac{5}{72} \sqrt{\frac{48 \text{a$\prime
+$}^2-24 \text{a$\prime $}^3+\text{a$\prime $}^4}{(-1+\text{a$\prime $})^2}}\right)\right)\right\|\left(\text{a$\prime $}==\text{Root}\left[7 \text{$\#$1}^4-50
+\text{$\#$1}^3+112 \text{$\#$1}^2+72 \text{$\#$1}-16\&,2,0\right]\&\&\left(\frac{4 \text{a$\prime $}+9 \text{a$\prime $}^2+2 \text{a$\prime $}^3}{2
+(2+3 \text{a$\prime $})^2}+\frac{1}{2} \sqrt{\frac{8 \text{a$\prime $}^3+9 \text{a$\prime $}^4-12 \text{a$\prime $}^5-5 \text{a$\prime $}^6}{(2+3
+\text{a$\prime $})^4}}\leq \gamma \prime \leq \frac{-4 \text{a$\prime $}+37 \text{a$\prime $}^2-18 \text{a$\prime $}^3}{2 (-2+7 \text{a$\prime $})^2}-\frac{5}{2}
+\sqrt{\frac{-8 \text{a$\prime $}^3+57 \text{a$\prime $}^4-60 \text{a$\prime $}^5+11 \text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\|\gamma \prime
+==\frac{-24+12 \text{a$\prime $}-13 \text{a$\prime $}^2}{72 (-1+\text{a$\prime $})}+\frac{5}{72} \sqrt{\frac{48 \text{a$\prime $}^2-24 \text{a$\prime
+$}^3+\text{a$\prime $}^4}{(-1+\text{a$\prime $})^2}}\right)\right)\|\left(\text{Root}\left[7 \text{$\#$1}^4-50 \text{$\#$1}^3+112 \text{$\#$1}^2+72
+\text{$\#$1}-16\&,2,0\right]<\text{a$\prime $}<\frac{1}{35} \left(-7+3 \sqrt{21}\right)\&\&\frac{4 \text{a$\prime $}+9 \text{a$\prime $}^2+2 \text{a$\prime
+$}^3}{2 (2+3 \text{a$\prime $})^2}+\frac{1}{2} \sqrt{\frac{8 \text{a$\prime $}^3+9 \text{a$\prime $}^4-12 \text{a$\prime $}^5-5 \text{a$\prime $}^6}{(2+3
+\text{a$\prime $})^4}}\leq \gamma \prime \leq \frac{-4 \text{a$\prime $}+37 \text{a$\prime $}^2-18 \text{a$\prime $}^3}{2 (-2+7 \text{a$\prime $})^2}-\frac{5}{2}
+\sqrt{\frac{-8 \text{a$\prime $}^3+57 \text{a$\prime $}^4-60 \text{a$\prime $}^5+11 \text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\right)\|\left(\text{a$\prime
+$}==\frac{1}{35} \left(-7+3 \sqrt{21}\right)\&\&\gamma \prime ==\frac{\frac{4}{35} \left(-7+3 \sqrt{21}\right)+\frac{9 \left(-7+3 \sqrt{21}\right)^2}{1225}+\frac{2
+\left(-7+3 \sqrt{21}\right)^3}{42875}}{2 \left(2+\frac{3}{35} \left(-7+3 \sqrt{21}\right)\right)^2}+\frac{\sqrt{\frac{8 \left(-7+3 \sqrt{21}\right)^3}{42875}+\frac{9
+\left(-7+3 \sqrt{21}\right)^4}{1500625}-\frac{12 \left(-7+3 \sqrt{21}\right)^5}{52521875}-\frac{\left(-7+3 \sqrt{21}\right)^6}{367653125}}}{2 \left(2+\frac{3}{35}
+\left(-7+3 \sqrt{21}\right)\right)^2}\right) \\
+ \{6,8\} & \left\{1+\text{a$\prime $} \left(2-\frac{7 \gamma \prime }{2}\right)+\gamma \prime ,1+\gamma \prime +\frac{1}{2} \text{a$\prime $} (-1+3
+\gamma \prime )\right\} & 0<\text{a$\prime $}\leq \text{Root}\left[9 \text{$\#$1}^4+264 \text{$\#$1}^3-16 \text{$\#$1}^2-296 \text{$\#$1}+64\&,3,0\right]\&\&\gamma
+\prime ==\frac{\text{a$\prime $}}{2+3 \text{a$\prime $}} \\
+ \{7,8\} & \{1+\text{a$\prime $} (4-7 \gamma \prime )+2 \gamma \prime ,1+2 \gamma \prime +\text{a$\prime $} (-1+3 \gamma \prime )\} & \left(0<\text{a$\prime
+$}\leq \frac{1}{2} \left(7-3 \sqrt{5}\right)\&\&\frac{\text{a$\prime $}}{2+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{1}{3}\right)\left\|\left(\frac{1}{2}
+\left(7-3 \sqrt{5}\right)<\text{a$\prime $}<\text{Root}\left[9 \text{$\#$1}^4+84 \text{$\#$1}^3-80 \text{$\#$1}^2-16 \text{$\#$1}+4\&,3,0\right]\&\&\left(\frac{\text{a$\prime
+$}}{2+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{-2 \text{a$\prime $}+23 \text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-2+7 \text{a$\prime
+$})^2}-6 \sqrt{2} \sqrt{\frac{-\text{a$\prime $}^3+8 \text{a$\prime $}^4-8 \text{a$\prime $}^5+\text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\|\frac{-2
+\text{a$\prime $}+23 \text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-2+7 \text{a$\prime $})^2}+6 \sqrt{2} \sqrt{\frac{-\text{a$\prime $}^3+8 \text{a$\prime
+$}^4-8 \text{a$\prime $}^5+\text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\leq \gamma \prime \leq \frac{1}{3}\right)\right)\right\|\left(\text{a$\prime
+$}==\text{Root}\left[9 \text{$\#$1}^4+84 \text{$\#$1}^3-80 \text{$\#$1}^2-16 \text{$\#$1}+4\&,3,0\right]\&\&\left(\frac{\text{a$\prime $}}{2+3 \text{a$\prime
+$}}\leq \gamma \prime \leq \frac{-2 \text{a$\prime $}+23 \text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-2+7 \text{a$\prime $})^2}-6 \sqrt{2} \sqrt{\frac{-\text{a$\prime
+$}^3+8 \text{a$\prime $}^4-8 \text{a$\prime $}^5+\text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\|\gamma \prime ==\frac{1}{3}\right)\right)\|\left(\text{Root}\left[9
+\text{$\#$1}^4+84 \text{$\#$1}^3-80 \text{$\#$1}^2-16 \text{$\#$1}+4\&,3,0\right]<\text{a$\prime $}<\text{Root}\left[9 \text{$\#$1}^4+96 \text{$\#$1}^3-8
+\text{$\#$1}^2-88 \text{$\#$1}+16\&,3,0\right]\&\&\frac{\text{a$\prime $}}{2+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{-2 \text{a$\prime
+$}+23 \text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-2+7 \text{a$\prime $})^2}-6 \sqrt{2} \sqrt{\frac{-\text{a$\prime $}^3+8 \text{a$\prime $}^4-8
+\text{a$\prime $}^5+\text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\right)\|\left(\text{a$\prime $}==\text{Root}\left[9 \text{$\#$1}^4+96 \text{$\#$1}^3-8
+\text{$\#$1}^2-88 \text{$\#$1}+16\&,3,0\right]\&\&\gamma \prime ==\frac{\text{a$\prime $}}{2+3 \text{a$\prime $}}\right) \\
+ \{8,2\} & \{\text{a$\prime $}+5 \gamma \prime -3 \text{a$\prime $} \gamma \prime ,5-5 \gamma \prime +\text{a$\prime $} (-4+7 \gamma \prime )\} &
+\left(\text{a$\prime $}==\text{Root}\left[9 \text{$\#$1}^6+60 \text{$\#$1}^4-354 \text{$\#$1}^3+484 \text{$\#$1}^2-220 \text{$\#$1}+25\&,2,0\right]\&\&\gamma
+\prime ==\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\right)\left\|\left(\text{Root}\left[9 \text{$\#$1}^6+60 \text{$\#$1}^4-354 \text{$\#$1}^3+484
+\text{$\#$1}^2-220 \text{$\#$1}+25\&,2,0\right]<\text{a$\prime $}\leq \text{Root}\left[392 \text{$\#$1}^5-1400 \text{$\#$1}^4+2481 \text{$\#$1}^3-2462
+\text{$\#$1}^2+1180 \text{$\#$1}-200\&,2,0\right]\&\&\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{10 \text{a$\prime
+$}-\text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-5+7 \text{a$\prime $})^2}-6 \sqrt{2} \sqrt{\frac{5 \text{a$\prime $}^3-10 \text{a$\prime $}^4+4
+\text{a$\prime $}^5+\text{a$\prime $}^6}{(-5+7 \text{a$\prime $})^4}}\right)\right\|\left(\text{Root}\left[392 \text{$\#$1}^5-1400 \text{$\#$1}^4+2481
+\text{$\#$1}^3-2462 \text{$\#$1}^2+1180 \text{$\#$1}-200\&,2,0\right]<\text{a$\prime $}\leq \text{Root}\left[9 \text{$\#$1}^4+162 \text{$\#$1}^3-143
+\text{$\#$1}^2-40 \text{$\#$1}+16\&,4,0\right]\&\&\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{32-60 \text{a$\prime
+$}+68 \text{a$\prime $}^2-39 \text{a$\prime $}^3}{(-8+7 \text{a$\prime $})^2}-8 \sqrt{\frac{32 \text{a$\prime $}^2-92 \text{a$\prime $}^3+112 \text{a$\prime
+$}^4-75 \text{a$\prime $}^5+23 \text{a$\prime $}^6}{(-8+7 \text{a$\prime $})^4}}\right)\|\left(\text{Root}\left[9 \text{$\#$1}^4+162 \text{$\#$1}^3-143
+\text{$\#$1}^2-40 \text{$\#$1}+16\&,4,0\right]<\text{a$\prime $}<1\&\&\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\leq \gamma \prime \leq
+\frac{1}{3}\right) \\
+ \{8,6\} & \left\{1+\gamma \prime +\frac{1}{2} \text{a$\prime $} (-1+3 \gamma \prime ),1+\text{a$\prime $} \left(2-\frac{7 \gamma \prime }{2}\right)+\gamma
+\prime \right\} & 0<\text{a$\prime $}\leq \text{Root}\left[9 \text{$\#$1}^4+264 \text{$\#$1}^3-16 \text{$\#$1}^2-296 \text{$\#$1}+64\&,3,0\right]\&\&\gamma
+\prime ==\frac{\text{a$\prime $}}{2+3 \text{a$\prime $}} \\
+ \{8,7\} & \{1+2 \gamma \prime +\text{a$\prime $} (-1+3 \gamma \prime ),1+\text{a$\prime $} (4-7 \gamma \prime )+2 \gamma \prime \} & \left(0<\text{a$\prime
+$}\leq \frac{1}{2} \left(7-3 \sqrt{5}\right)\&\&\frac{\text{a$\prime $}}{2+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{1}{3}\right)\left\|\left(\frac{1}{2}
+\left(7-3 \sqrt{5}\right)<\text{a$\prime $}<\text{Root}\left[9 \text{$\#$1}^4+84 \text{$\#$1}^3-80 \text{$\#$1}^2-16 \text{$\#$1}+4\&,3,0\right]\&\&\left(\frac{\text{a$\prime
+$}}{2+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{-2 \text{a$\prime $}+23 \text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-2+7 \text{a$\prime
+$})^2}-6 \sqrt{2} \sqrt{\frac{-\text{a$\prime $}^3+8 \text{a$\prime $}^4-8 \text{a$\prime $}^5+\text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\|\frac{-2
+\text{a$\prime $}+23 \text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-2+7 \text{a$\prime $})^2}+6 \sqrt{2} \sqrt{\frac{-\text{a$\prime $}^3+8 \text{a$\prime
+$}^4-8 \text{a$\prime $}^5+\text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\leq \gamma \prime \leq \frac{1}{3}\right)\right)\right\|\left(\text{a$\prime
+$}==\text{Root}\left[9 \text{$\#$1}^4+84 \text{$\#$1}^3-80 \text{$\#$1}^2-16 \text{$\#$1}+4\&,3,0\right]\&\&\left(\frac{\text{a$\prime $}}{2+3 \text{a$\prime
+$}}\leq \gamma \prime \leq \frac{-2 \text{a$\prime $}+23 \text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-2+7 \text{a$\prime $})^2}-6 \sqrt{2} \sqrt{\frac{-\text{a$\prime
+$}^3+8 \text{a$\prime $}^4-8 \text{a$\prime $}^5+\text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\|\gamma \prime ==\frac{1}{3}\right)\right)\|\left(\text{Root}\left[9
+\text{$\#$1}^4+84 \text{$\#$1}^3-80 \text{$\#$1}^2-16 \text{$\#$1}+4\&,3,0\right]<\text{a$\prime $}<\text{Root}\left[9 \text{$\#$1}^4+96 \text{$\#$1}^3-8
+\text{$\#$1}^2-88 \text{$\#$1}+16\&,3,0\right]\&\&\frac{\text{a$\prime $}}{2+3 \text{a$\prime $}}\leq \gamma \prime \leq \frac{-2 \text{a$\prime
+$}+23 \text{a$\prime $}^2-11 \text{a$\prime $}^3}{(-2+7 \text{a$\prime $})^2}-6 \sqrt{2} \sqrt{\frac{-\text{a$\prime $}^3+8 \text{a$\prime $}^4-8
+\text{a$\prime $}^5+\text{a$\prime $}^6}{(-2+7 \text{a$\prime $})^4}}\right)\|\left(\text{a$\prime $}==\text{Root}\left[9 \text{$\#$1}^4+96 \text{$\#$1}^3-8
+\text{$\#$1}^2-88 \text{$\#$1}+16\&,3,0\right]\&\&\gamma \prime ==\frac{\text{a$\prime $}}{2+3 \text{a$\prime $}}\right) \\
+ \{8,8\} & \{1,1\} & \left(0<\gamma \prime <\frac{1}{7}\&\&-\frac{2 \gamma \prime }{-1+3 \gamma \prime }\leq \text{a$\prime $}\leq \frac{-1+5 \gamma
+\prime }{-1+3 \gamma \prime }\right)\|\left(\gamma \prime ==\frac{1}{7}\&\&\text{a$\prime $}==\frac{1}{2}\right) \\
+\end{array}
+\right)\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{inequalities}=\text{eq}[[\text{;;},3]];}\\
+\pmb{\text{numRegions}=\text{Length}[\text{inequalities}];}\\
+\pmb{\text{colors}=\text{Table}[\text{ColorData}[97,i],\{i,1,\text{numRegions}\}];}\\
+\pmb{\text{labels}=\text{Table}[\text{{``}Region {''}}<>\text{ToString}[i],\{i,1,\text{numRegions}\}];}\\
+\pmb{}\\
+\pmb{\text{textures}=\{\text{HatchFilling}[0],}\\
+\pmb{\text{HatchFilling}[\text{Pi}/2],}\\
+\pmb{\text{HatchFilling}[\text{Pi}/4],}\\
+\pmb{\text{HatchFilling}[-\text{Pi}/4],}\\
+\pmb{\text{HatchFilling}[\text{Pi}/8,2],}\\
+\pmb{\text{HatchFilling}[\text{Pi}/3,2],}\\
+\pmb{\text{HatchFilling}[0,2],}\\
+\pmb{\text{HatchFilling}[\text{Pi}/2,2],}\\
+\pmb{\text{HatchFilling}[\text{Pi}/4,2],\text{HatchFilling}[-\text{Pi}/4,2]\};}\\
+\pmb{}\\
+\pmb{r = \text{RegionPlot}[\text{inequalities},\{\text{a$\prime $},0,1\},\{\gamma \prime ,0,1\},}\\
+\pmb{\text{PlotStyle}\text{-$>$}\text{Table}[\{\text{Opacity}[0.6,\text{colors}[[i]]],\text{textures}[[i]]\},}\\
+\pmb{\{i,1,\text{numRegions}\}],}\\
+\pmb{\text{PlotLegends}\text{-$>$}\text{Table}[\text{ToString}[\text{D4Sym}[[e]],\text{TraditionalForm}],}\\
+\pmb{\{e,\text{eq}[[\text{;;},1]]\}],\text{FrameLabel}\text{-$>$}\{\text{{``}a$\prime ${''}},\text{{``}$\gamma \prime ${''}}\},\text{ImageSize}\text{-$>$}\text{Large},}\\
+\pmb{\text{MaxRecursion}\text{-$>$}6];}\)
+\end{doublespace}
+
+\noindent\(\text{Part}\text{::}\text{partw}: "Part \!\(\*RowBox[{\"11\"}]\) of \!\(\*RowBox[{\"{\", RowBox[{InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`,
+3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0]], RectangleBox[List[0, 0]]], Rule[ImageSize,
+Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[0],
+Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"],
+\"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 2], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"2\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 2], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 2], Pi]], Rule[Selectable, False],
+Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$
+= False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 4], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 4], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"4\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 4], Pi]], Rule[Selectable, False],
+Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$
+= False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[-1, 4], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[-1, 4], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\",
+\"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\",
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]],
+Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize,
+List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3],
+Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[-1,
+4], Pi]], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 8], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"8\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 8], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"8\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[Times[Rational[1, 8], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\",
+InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]},
+TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1,
+3], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"3\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 3], Pi]], Rule[\"Thickness\",
+2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification],
+-1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\",
+\"3\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 3], Pi], 2], Rule[Selectable,
+False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\",
+DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", 0], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\",
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]],
+Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize,
+List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3],
+Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\",
+List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters,
+False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]],
+Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[0, 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 2], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 2], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[Times[Rational[1, 2], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\",
+InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]},
+TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1,
+4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 4], Pi]], Rule[\"Thickness\",
+2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification],
+-1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\",
+\"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 4], Pi], 2], Rule[Selectable,
+False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\",
+DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[-1, 4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[-1,
+4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[-1,
+4], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]]}], \"}\"}]\) does not exist."\)
+
+\noindent\(\text{Part}\text{::}\text{partw}: "Part \!\(\*RowBox[{\"12\"}]\) of \!\(\*RowBox[{\"{\", RowBox[{InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`,
+3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0]], RectangleBox[List[0, 0]]], Rule[ImageSize,
+Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[0],
+Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"],
+\"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 2], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"2\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 2], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 2], Pi]], Rule[Selectable, False],
+Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$
+= False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 4], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 4], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"4\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 4], Pi]], Rule[Selectable, False],
+Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$
+= False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[-1, 4], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[-1, 4], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\",
+\"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\",
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]],
+Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize,
+List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3],
+Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[-1,
+4], Pi]], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 8], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"8\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 8], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"8\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[Times[Rational[1, 8], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\",
+InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]},
+TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1,
+3], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"3\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 3], Pi]], Rule[\"Thickness\",
+2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification],
+-1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\",
+\"3\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 3], Pi], 2], Rule[Selectable,
+False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\",
+DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", 0], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\",
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]],
+Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize,
+List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3],
+Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\",
+List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters,
+False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]],
+Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[0, 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 2], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 2], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[Times[Rational[1, 2], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\",
+InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]},
+TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1,
+4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 4], Pi]], Rule[\"Thickness\",
+2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification],
+-1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\",
+\"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 4], Pi], 2], Rule[Selectable,
+False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\",
+DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[-1, 4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[-1,
+4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[-1,
+4], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]]}], \"}\"}]\) does not exist."\)
+
+\noindent\(\text{Part}\text{::}\text{partw}: "Part \!\(\*RowBox[{\"13\"}]\) of \!\(\*RowBox[{\"{\", RowBox[{InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`,
+3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0]], RectangleBox[List[0, 0]]], Rule[ImageSize,
+Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[0],
+Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"],
+\"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 2], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"2\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 2], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 2], Pi]], Rule[Selectable, False],
+Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$
+= False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 4], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 4], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"4\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 4], Pi]], Rule[Selectable, False],
+Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$
+= False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[-1, 4], Pi]]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"1\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[-1, 4], Pi]]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\",
+\"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"1\",
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]],
+Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize,
+List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3],
+Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[-1,
+4], Pi]], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 8], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"8\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 8], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"8\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[Times[Rational[1, 8], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\",
+InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]},
+TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1,
+3], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"3\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 3], Pi]], Rule[\"Thickness\",
+2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification],
+-1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\",
+\"3\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 3], Pi], 2], Rule[Selectable,
+False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\",
+DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", 0], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"0\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\",
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]],
+Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize,
+List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3],
+Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", 0], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"0\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]],
+Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\",
+List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters,
+False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]],
+Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[0, 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\",
+\"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False,
+GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 2], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0,
+0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]],
+GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"],
+\"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[1, 2], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\", \"2\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues,
+List[]]], \"]\"}], HatchFilling[Times[Rational[1, 2], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\",
+InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\", DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]},
+TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1,
+4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[FractionBox[\"\\[Pi]\", \"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\",
+\"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[1, 4], Pi]], Rule[\"Thickness\",
+2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification],
+-1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[FractionBox[\"\\[Pi]\",
+\"4\"], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]],
+List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment,
+List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\",
+List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1, 1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize,
+Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[1, 4], Pi], 2], Rule[Selectable,
+False], Rule[Editable, False], Rule[SelectWithContents, True]], \",\", InterpretationBox[RowBox[{TagBox[\"HatchFilling\", \"SummaryHead\"], \"[\",
+DynamicModuleBox[{Typeset`open$$ = False, Set[Typeset`embedState$$, \"Ready\"]}, TemplateBox[List[PaneSelectorBox[List[Rule[False, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\",
+Rule[\"Angle\", Times[Rational[-1, 4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`],
+Times[CurrentValue[\"FontCapHeight\"], Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\",
+\"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness:
+\\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings,
+List[Rule[\"Columns\", List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks,
+False], Rule[PrintPrecision, 3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\",
+List[List[Top]]]]], Rule[AutoDelete, False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]],
+Rule[BaselinePosition, List[1, 1]]]], Rule[True, GridBox[List[List[GraphicsBox[List[SurfaceAppearance[\"HatchFilling\", Rule[\"Angle\", Times[Rational[-1,
+4], Pi]], Rule[\"Thickness\", 2]], RectangleBox[List[0, 0]]], Rule[ImageSize, Dynamic[Times[List[5.25`, 3.5`], Times[CurrentValue[\"FontCapHeight\"],
+Power[AbsoluteCurrentValue[Magnification], -1]]]]]], GridBox[List[List[RowBox[List[TagBox[\"\\\"Angle: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[RowBox[List[\"-\", FractionBox[\"\\[Pi]\", \"4\"]]], \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Thickness: \\\"\", \"SummaryItemAnnotation\"],
+\"\\[InvisibleSpace]\", TagBox[\"2\", \"SummaryItem\"]]]], List[RowBox[List[TagBox[\"\\\"Spacing: \\\"\", \"SummaryItemAnnotation\"], \"\\[InvisibleSpace]\",
+TagBox[\"5\", \"SummaryItem\"]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[GridBoxSpacings, List[Rule[\"Columns\",
+List[List[2]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaseStyle, List[Rule[ShowStringCharacters, False], Rule[NumberMarks, False], Rule[PrintPrecision,
+3], Rule[ShowSyntaxStyles, False]]]]]], Rule[GridBoxAlignment, List[Rule[\"Columns\", List[List[Left]]], Rule[\"Rows\", List[List[Top]]]]], Rule[AutoDelete,
+False], Rule[GridBoxItemSize, List[Rule[\"Columns\", List[List[Automatic]]], Rule[\"Rows\", List[List[Automatic]]]]], Rule[BaselinePosition, List[1,
+1]]]]], Dynamic[Typeset`open$$], Rule[ImageSize, Automatic]]], \"SummaryPanel\"], RuleDelayed[DynamicModuleValues, List[]]], \"]\"}], HatchFilling[Times[Rational[-1,
+4], Pi], 2], Rule[Selectable, False], Rule[Editable, False], Rule[SelectWithContents, True]]}], \"}\"}]\) does not exist."\)
+
+\noindent\(\text{General}\text{::}\text{stop}: "Further output of \!\(\*StyleBox[RowBox[{\"Part\", \"::\", \"partw\"}], \"MessageName\"]\) will be
+suppressed during this calculation."\)
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Manipulate}[}\\
+\pmb{\text{Grid}[}\\
+\pmb{\{\{r,\text{DeleteCases}[(\text{eq}\text{/.}\{\text{a$\prime $}\text{-$>$}\text{pt}[[1]],\gamma \prime \text{-$>$}\text{pt}[[2]]\}),\{\_,\_,\text{False}\}]\text{//}}\\
+\pmb{\text{MatrixForm}\}\}],\{\{\text{pt},\{0.5,0.25\}\},\text{Locator}\}]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\fbox{$$}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{bestResult} = \text{MultipleRegionNMaximize}[\text{eq}[[\text{;;},2,1]]+\text{eq}[[\text{;;},2,2]],}\\
+\pmb{\{\text{a$\prime $},\gamma \prime \},\text{eq}[[\text{;;},3]]];}\)
+\end{doublespace}
+
+\noindent\(\text{Found }5\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\text{Found }7\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\text{Found }7\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\text{Found }2\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\text{Found }6\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\text{Found }5\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\text{Found }2\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\text{Found }6\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\text{Found }2\text{ distinct regions to analyze. Running NMaximize on each...}\)
+
+\noindent\(\text{Analysis complete. Returning the best result found.}\)
+
+\noindent\(\{\{3.40958,\{\text{a$\prime $}\to 0.630076,\gamma \prime \to 0.118955\}\},\{3.83973,\{\text{a$\prime $}\to 0.477118,\gamma \prime \to
+0.179741\}\},\{3.96854,\{\text{a$\prime $}\to 0.177164,\gamma \prime \to 0.475037\}\},\{2.46532,\{\text{a$\prime $}\to 0.223556,\gamma \prime \to
+0.0837078\}\},\{3.58761,\{\text{a$\prime $}\to 0.152566,\gamma \prime \to 0.333333\}\},\{3.40958,\{\text{a$\prime $}\to 0.630076,\gamma \prime \to
+0.118955\}\},\{2.46532,\{\text{a$\prime $}\to 0.223556,\gamma \prime \to 0.0837078\}\},\{3.58761,\{\text{a$\prime $}\to 0.152566,\gamma \prime \to
+0.333333\}\},\{2.,\{\text{a$\prime $}\to 0.5,\gamma \prime \to 0.142857\}\}\}\)
+
+\begin{doublespace}
+\noindent\(\pmb{\text{bestResult}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\{3.96854,\{\text{a$\prime $}\to 0.177164,\gamma \prime \to 0.475037\}\}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{eq}\text{/.}\text{bestResult}[[2]]\text{//}\text{MatrixForm}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left(
+\begin{array}{ccc}
+ \{2,8\} & \{2.50528,2.29987\} & \text{False} \\
+ \{5,5\} & \{2.09504,2.09504\} & \text{False} \\
+ \{6,6\} & \{1.98427,1.98427\} & \text{True} \\
+ \{6,8\} & \{1.53481,1.51269\} & \text{False} \\
+ \{7,8\} & \{2.06961,2.02539\} & \text{False} \\
+ \{8,2\} & \{2.29987,2.50528\} & \text{False} \\
+ \{8,6\} & \{1.51269,1.53481\} & \text{False} \\
+ \{8,7\} & \{2.02539,2.06961\} & \text{False} \\
+ \{8,8\} & \{1,1\} & \text{False} \\
+\end{array}
+\right)\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{cnstrt} = \text{eq}[[1,3]];}\\
+\pmb{\text{conds} = \text{If}[\text{Head}[\text{LogicalExpand}[\text{cnstrt}]]\text{===}\text{Or},}\\
+\pmb{\text{List}\text{@@}\text{LogicalExpand}[\text{cnstrt}],\{\text{LogicalExpand}[\text{cnstrt}]\}]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left\{\gamma \prime +\text{AlgebraicNumber}\left[\text{Root}\left[\text{$\#$1}^6+60 \text{$\#$1}^4-1062 \text{$\#$1}^3+4356 \text{$\#$1}^2-5940
+\text{$\#$1}+2025\&,2,0\right],\left\{-\frac{59}{160},\frac{1171}{2400},-\frac{637}{2400},\frac{17}{480},\frac{1}{480},\frac{1}{2400}\right\}\right]==0\&\&\text{AlgebraicNumber}\left[\text{Root}\left[\text{$\#$1}^6+60
+\text{$\#$1}^4-1062 \text{$\#$1}^3+4356 \text{$\#$1}^2-5940 \text{$\#$1}+2025\&,2,0\right],\left\{0,\frac{1}{3},0,0,0,0\right\}\right]==\text{a$\prime
+$},3 \text{a$\prime $}\geq 5\&\&3 \gamma \prime \leq 1,\text{a$\prime $}>\text{Root}\left[9 \text{$\#$1}^4+162 \text{$\#$1}^3-143 \text{$\#$1}^2-40
+\text{$\#$1}+16\&,4,0\right]\&\&3 \gamma \prime \leq 1\&\&1+3 \text{a$\prime $} \gamma \prime \leq \text{a$\prime $}+5 \gamma \prime ,\text{a$\prime
+$}>\text{Root}\left[392 \text{$\#$1}^5-1400 \text{$\#$1}^4+2481 \text{$\#$1}^3-2462 \text{$\#$1}^2+1180 \text{$\#$1}-200\&,2,0\right]\&\&\text{a$\prime
+$}\leq \text{Root}\left[9 \text{$\#$1}^4+162 \text{$\#$1}^3-143 \text{$\#$1}^2-40 \text{$\#$1}+16\&,4,0\right]\&\&\frac{-1+\text{a$\prime $}}{-5+3
+\text{a$\prime $}}\leq \gamma \prime \&\&8 \sqrt{\frac{\text{a$\prime $}^2 \left(32-92 \text{a$\prime $}+112 \text{a$\prime $}^2-75 \text{a$\prime
+$}^3+23 \text{a$\prime $}^4\right)}{(8-7 \text{a$\prime $})^4}}+\gamma \prime \leq \frac{32-60 \text{a$\prime $}+68 \text{a$\prime $}^2-39 \text{a$\prime
+$}^3}{(8-7 \text{a$\prime $})^2},\text{a$\prime $}>\text{Root}\left[9 \text{$\#$1}^6+60 \text{$\#$1}^4-354 \text{$\#$1}^3+484 \text{$\#$1}^2-220
+\text{$\#$1}+25\&,2,0\right]\&\&\text{a$\prime $}\leq \text{Root}\left[392 \text{$\#$1}^5-1400 \text{$\#$1}^4+2481 \text{$\#$1}^3-2462 \text{$\#$1}^2+1180
+\text{$\#$1}-200\&,2,0\right]\&\&\frac{-1+\text{a$\prime $}}{-5+3 \text{a$\prime $}}\leq \gamma \prime \&\&\frac{\text{a$\prime $} \left(-10+\text{a$\prime
+$}+11 \text{a$\prime $}^2\right)}{(5-7 \text{a$\prime $})^2}+6 \sqrt{2} \sqrt{\frac{\text{a$\prime $}^3 \left(5-10 \text{a$\prime $}+4 \text{a$\prime
+$}^2+\text{a$\prime $}^3\right)}{(5-7 \text{a$\prime $})^4}}+\gamma \prime \leq 0\right\}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Select}[\text{conds},\text{RegionDimension}[\text{ImplicitRegion}[\#,\{\text{a$\prime $},\gamma \prime \}]]\text{==}0\&]\text{//}}\\
+\pmb{N\text{//}\text{Simplify}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\{\gamma \prime ==0.118955\&\&\text{a$\prime $}==0.630076\}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\left(\text{a$\prime $}==\text{AlgebraicNumber}\left[\text{Root}\left[\text{$\#$1}^6+60 \text{$\#$1}^4-1062 \text{$\#$1}^3+4356 \text{$\#$1}^2-5940
+\text{$\#$1}+2025\&,2,0\right],\left\{0,\frac{1}{3},0,0,0,0\right\}\right]\&\&\gamma \prime +\text{AlgebraicNumber}\left[\text{Root}\left[\text{$\#$1}^6+60
+\text{$\#$1}^4-1062 \text{$\#$1}^3+4356 \text{$\#$1}^2-5940 \text{$\#$1}+2025\&,2,0\right],\left\{-\frac{59}{160},\frac{1171}{2400},-\frac{637}{2400},\frac{17}{480},\frac{1}{480},\frac{1}{2400}\right\}\right]==0\right)\left\|\left(3
+\gamma \prime \leq 1\&\&\left(3 \text{a$\prime $}\geq 5\left\|\left(\text{a$\prime $}>\text{Root}\left[9 \text{$\#$1}^4+162 \text{$\#$1}^3-143 \text{$\#$1}^2-40
+\text{$\#$1}+16\&,4,0\right]\&\&1+3 \text{a$\prime $} \gamma \prime \leq \text{a$\prime $}+5 \gamma \prime \right)\right.\right)\right)\right\|\left(\frac{-1+\text{a$\prime
+$}}{-5+3 \text{a$\prime $}}\leq \gamma \prime \&\&\left(\left(\text{a$\prime $}>\text{Root}\left[9 \text{$\#$1}^6+60 \text{$\#$1}^4-354 \text{$\#$1}^3+484
+\text{$\#$1}^2-220 \text{$\#$1}+25\&,2,0\right]\&\&\text{a$\prime $}\leq \text{Root}\left[392 \text{$\#$1}^5-1400 \text{$\#$1}^4+2481 \text{$\#$1}^3-2462
+\text{$\#$1}^2+1180 \text{$\#$1}-200\&,2,0\right]\&\&\frac{\text{a$\prime $} \left(-10+\text{a$\prime $}+11 \text{a$\prime $}^2\right)}{(5-7 \text{a$\prime
+$})^2}+6 \sqrt{2} \sqrt{\frac{\text{a$\prime $}^3 \left(5-10 \text{a$\prime $}+4 \text{a$\prime $}^2+\text{a$\prime $}^3\right)}{(5-7 \text{a$\prime
+$})^4}}+\gamma \prime \leq 0\right)\|\left(\text{a$\prime $}>\text{Root}\left[392 \text{$\#$1}^5-1400 \text{$\#$1}^4+2481 \text{$\#$1}^3-2462 \text{$\#$1}^2+1180
+\text{$\#$1}-200\&,2,0\right]\&\&\text{a$\prime $}\leq \text{Root}\left[9 \text{$\#$1}^4+162 \text{$\#$1}^3-143 \text{$\#$1}^2-40 \text{$\#$1}+16\&,4,0\right]\&\&8
+\sqrt{\frac{\text{a$\prime $}^2 \left(32-92 \text{a$\prime $}+112 \text{a$\prime $}^2-75 \text{a$\prime $}^3+23 \text{a$\prime $}^4\right)}{(8-7
+\text{a$\prime $})^4}}+\gamma \prime \leq \frac{32-60 \text{a$\prime $}+68 \text{a$\prime $}^2-39 \text{a$\prime $}^3}{(8-7 \text{a$\prime $})^2}\right)\right)\right)\)
+\end{doublespace}
+
+\end{document}

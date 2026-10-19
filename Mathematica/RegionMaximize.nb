@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     10860,        272]
-NotebookOptionsPosition[     10404,        257]
-NotebookOutlinePosition[     10810,        273]
-CellTagsIndexPosition[     10767,        270]
+NotebookDataLength[     10928,        271]
+NotebookOptionsPosition[     10473,        256]
+NotebookOutlinePosition[     10878,        272]
+CellTagsIndexPosition[     10835,        269]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -52,7 +52,7 @@ Cell[BoxData[
      RowBox[{"RegionMaximize", "::", "usage"}], "=", 
      "\"\<RegionMaximize[objective, {var1, var2, ...}, constraint] splits the \
 constraint by ||, runs NMaximize on each sub-region, and returns the global \
-maximum found.\>\""}], ";"}], "\n", "\[IndentingNewLine]", 
+maximum found.\>\""}], ";"}], "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{
      RowBox[{"RegionMaximize", "[", 
@@ -219,10 +219,9 @@ specified sub-regions.\>\"", ",", "Module"}], "]"}], ",",
              RowBox[{"MaximalBy", "[", 
               RowBox[{"validResults", ",", "First"}], "]"}]}], "]"}]}]}], 
          "]"}]}]}], "]"}]}], ";"}]}]}]], "Input",
- CellChangeTimes->{{3.967624231257349*^9, 3.9676242337169724`*^9}, 
+ CellChangeTimes->{{3.967624231257349*^9, 3.9676242337169733`*^9}, 
    3.9676242940714455`*^9},
- CellLabel->
-  "In[105]:=",ExpressionUUID->"72a7f4d1-63bc-fd45-b96b-2c11e0452d09"],
+ CellLabel->"In[71]:=",ExpressionUUID->"72a7f4d1-63bc-fd45-b96b-2c11e0452d09"],
 
 Cell[BoxData[
  RowBox[{
@@ -250,13 +249,13 @@ Cell[BoxData[
       RowBox[{"MaximalBy", "[", 
        RowBox[{"results", ",", "First"}], "]"}]}]}]}], "\[IndentingNewLine]", 
    "]"}]}]], "Input",
- CellChangeTimes->{{3.967623873135914*^9, 3.9676240076576557`*^9}, {
-  3.9676241175726833`*^9, 3.967624123027529*^9}},
- CellLabel->
-  "In[100]:=",ExpressionUUID->"1ed2404e-ee3d-c444-abaf-6158c9a873de"]
+ CellChangeTimes->{{3.967623873135914*^9, 3.9676240076576567`*^9}, {
+   3.967624117572684*^9, 3.967624123027529*^9}, 3.9677216184271574`*^9, {
+   3.9706494148797035`*^9, 3.9706494152423134`*^9}},
+ CellLabel->"In[75]:=",ExpressionUUID->"1ed2404e-ee3d-c444-abaf-6158c9a873de"]
 },
-WindowSize->{718.5, 825},
-WindowMargins->{{Automatic, -5.25}, {Automatic, 0}},
+WindowSize->{718.5, 819.75},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"0a803bcd-350f-2246-b174-fd2fd8099ad2"
@@ -272,8 +271,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 8642, 204, 866, "Input",ExpressionUUID->"72a7f4d1-63bc-fd45-b96b-2c11e0452d09"],
-Cell[9203, 226, 1197, 29, 124, "Input",ExpressionUUID->"1ed2404e-ee3d-c444-abaf-6158c9a873de"]
+Cell[558, 20, 8638, 203, 866, "Input",ExpressionUUID->"72a7f4d1-63bc-fd45-b96b-2c11e0452d09"],
+Cell[9199, 225, 1270, 29, 124, "Input",ExpressionUUID->"1ed2404e-ee3d-c444-abaf-6158c9a873de"]
 }
 ]
 *)

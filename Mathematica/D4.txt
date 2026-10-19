@@ -1,0 +1,619 @@
+In[1]:= Import["C:\\Users\\jhenry1\\Documents\\GitHub\\QM_prisoners_dilemma\\Mathematica\\StrategySpaces.wl"]
+Import["C:\\Users\\jhenry1\\Documents\\GitHub\\QM_prisoners_dilemma\\Mathematica\\QPD_dynamics.wl"]
+Import["C:\\Users\\jhenry1\\Documents\\GitHub\\QM_prisoners_dilemma\\Mathematica\\DiscreteNashEqulibrium.wl"]
+In[4]:= \[Sigma]0= (1	0
+0	1
+
+);\[Sigma]1 = (0	1
+1	0
+
+);\[Sigma]2 = (0	1
+-1	0
+
+);\[Sigma]3 = (1	0
+0	-1
+
+);s =  (1	0
+0	I
+
+);
+D4 = {\[Sigma]0,\[Sigma]3,s,s.\[Sigma]3,s.\[Sigma]1,s.\[Sigma]2,\[Sigma]1,\[Sigma]2};
+D4 = {\[Sigma]0,\[Sigma]3,s,s.\[Sigma]3,s.\[Sigma]1,s.\[Sigma]2,\[Sigma]1,\[Sigma]2};
+D4Sym = {"Subscript[\[Sigma], 0]","Subscript[\[Sigma], z]","S","Subscript[S\[Sigma], z]","Subscript[S\[Sigma], x]","Subscript[S\[Sigma], y]","Subscript[\[Sigma], x]","Subscript[\[Sigma], y]"};
+a=b=0 \[Gamma]=\[Pi]/2
+In[26]:= strategyGroup = D4;
+symmetricJ = FullSimplify[(J[0,0,Pi/2]//FullSimplify),Assumptions->0<\[Gamma]<\[Pi]/2];
+In[28]:= finalStates = FullSimplify[Table[play[symmetricJ,strategyGroup[[i]],strategyGroup[[j]]],{i,8},{j,8}]/.Conjugate->MyConj];
+In[29]:= alicesScores = FullSimplify[(Map[alicesScore,finalStates,{2}]/.Conjugate->MyConj)//Simplify];
+bobsScores = FullSimplify[(Map[bobsScore,finalStates,{2}]/.Conjugate->MyConj)//Simplify];
+In[34]:= alicesScores//MatrixPlot
+bobsScores//MatrixPlot
+Out[34]= 
+Out[35]= 
+BestResponse[player_,move_,aScores_,bScores_]:=Module[{},
+If player == 1{
+MaxTranspose[aScores][[move]]
+}
+
+]
+In[22]:= alicesScores//FullSimplify//MatrixForm
+Out[22]//MatrixForm= ( \[CenterEllipsis]1\[CenterEllipsis] )
+Full expression not available (original memory size: 299.2 kB)
+
+
+In[36]:= eq = DiscreteNashEquilibria[(alicesScores),(bobsScores),0<\[Gamma]<Pi/2];
+In[37]:= eq//MatrixForm
+Out[37]//MatrixForm= {}
+In[54]:= simplifiedEQ= (FullSimplify[{#[[1]],#[[2]],Reduce[#[[3]]]},Assumptions->0<\[Gamma]<\[Pi]/2]&/@eq);
+MatrixPlot[alicesScores]
+MatrixPlot[bobsScores]
+Out[56]= 
+a=b=0
+In[10]:= strategyGroup = D4
+Out[10]= {{{1,0},{0,1}},{{1,0},{0,-1}},{{1,0},{0,I}},{{1,0},{0,-I}},{{0,1},{I,0}},{{0,1},{-I,0}},{{0,1},{1,0}},{{0,1},{-1,0}}}
+In[8]:= symmetricJ = FullSimplify[(J[0,0,\[Gamma]]//FullSimplify),Assumptions->0<\[Gamma]<\[Pi]/2];
+In[12]:= finalStates = FullSimplify[Table[play[symmetricJ,strategyGroup[[i]],strategyGroup[[j]]],{i,8},{j,8}]/.Conjugate->MyConj];
+In[13]:= alicesScores = FullSimplify[(Map[alicesScore,finalStates,{2}]/.Conjugate->MyConj)//Simplify];
+bobsScores = FullSimplify[(Map[bobsScore,finalStates,{2}]/.Conjugate->MyConj)//Simplify];
+In[15]:= alicesScores//MatrixForm
+Out[15]//MatrixForm= (3	2+Cos[2 \[Gamma]]	1/2 (5+Cos[2 \[Gamma]])	1/2 (5+Cos[2 \[Gamma]])	(5 Sin[\[Gamma]]^2)/2	(5 Sin[\[Gamma]]^2)/2	5 Sin[\[Gamma]]^2	0
+2+Cos[2 \[Gamma]]	3	1/2 (5+Cos[2 \[Gamma]])	1/2 (5+Cos[2 \[Gamma]])	(5 Sin[\[Gamma]]^2)/2	(5 Sin[\[Gamma]]^2)/2	0	5 Sin[\[Gamma]]^2
+1/2 (5+Cos[2 \[Gamma]])	1/2 (5+Cos[2 \[Gamma]])	2+Cos[2 \[Gamma]]	3	5 Sin[\[Gamma]]^2	0	(5 Sin[\[Gamma]]^2)/2	(5 Sin[\[Gamma]]^2)/2
+1/2 (5+Cos[2 \[Gamma]])	1/2 (5+Cos[2 \[Gamma]])	3	2+Cos[2 \[Gamma]]	0	5 Sin[\[Gamma]]^2	(5 Sin[\[Gamma]]^2)/2	(5 Sin[\[Gamma]]^2)/2
+5/4 (3+Cos[2 \[Gamma]])	5/4 (3+Cos[2 \[Gamma]])	5 Cos[\[Gamma]]^2	5	2-Cos[2 \[Gamma]]	1	1/2 (3-Cos[2 \[Gamma]])	1/2 (3-Cos[2 \[Gamma]])
+5/4 (3+Cos[2 \[Gamma]])	5/4 (3+Cos[2 \[Gamma]])	5	5 Cos[\[Gamma]]^2	1	2-Cos[2 \[Gamma]]	1/2 (3-Cos[2 \[Gamma]])	1/2 (3-Cos[2 \[Gamma]])
+5 Cos[\[Gamma]]^2	5	5/4 (3+Cos[2 \[Gamma]])	5/4 (3+Cos[2 \[Gamma]])	1/2 (3-Cos[2 \[Gamma]])	1/2 (3-Cos[2 \[Gamma]])	1	2-Cos[2 \[Gamma]]
+5	5 Cos[\[Gamma]]^2	5/4 (3+Cos[2 \[Gamma]])	5/4 (3+Cos[2 \[Gamma]])	1/2 (3-Cos[2 \[Gamma]])	1/2 (3-Cos[2 \[Gamma]])	2-Cos[2 \[Gamma]]	1
+
+)
+In[16]:= eq = DiscreteNashEquilibria[(alicesScores),(bobsScores),0<\[Gamma]<Pi/2];
+In[17]:= eq//MatrixForm
+Out[17]//MatrixForm= ({5,5}	{2-Cos[2 \[Gamma]],2-Cos[2 \[Gamma]]}	0<\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+{6,6}	{2-Cos[2 \[Gamma]],2-Cos[2 \[Gamma]]}	0<\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+{7,8}	{2-Cos[2 \[Gamma]],2-Cos[2 \[Gamma]]}	0<\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+{8,7}	{2-Cos[2 \[Gamma]],2-Cos[2 \[Gamma]]}	0<\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+
+)
+In[18]:= simplifiedEQ= (FullSimplify[{#[[1]],#[[2]],Reduce[#[[3]]]},Assumptions->0<\[Gamma]<\[Pi]/2]&/@eq);
+In[17]:= Manipulate[MatrixPlot[alicesScores/.\[Gamma]->g],{{g,2 ArcTan[Sqrt[5-2 Sqrt[6]]]},0,Pi/2}]
+Out[17]= Manipulate[MatrixPlot[alicesScores /. \[Gamma] -> g], 
+  {{g, 2*ArcTan[Sqrt[5 - 2*Sqrt[6]]]}, 0, Pi/2}]
+MatrixPlot::mat0: Argument alicesScores at position 1 is not a matrix.
+During evaluation of In[1]:=
+MatrixPlot::mat0: Argument alicesScores at position 1 is not a matrix.
+During evaluation of In[1]:=
+MatrixPlot::mat0: Argument alicesScores at position 1 is not a matrix.
+During evaluation of In[1]:=
+MatrixPlot::mat0: Argument alicesScores at position 1 is not a matrix.
+During evaluation of In[1]:=
+MatrixPlot::mat0: Argument alicesScores at position 1 is not a matrix.
+MatrixPlot::mat0: Argument alicesScores at position 1 is not a matrix.
+In[147]:= simplifiedEQ//MatrixForm
+Out[147]//MatrixForm= ({5,5}	{2-Cos[2 \[Gamma]],2-Cos[2 \[Gamma]]}	\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+{6,6}	{2-Cos[2 \[Gamma]],2-Cos[2 \[Gamma]]}	\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+{7,8}	{2-Cos[2 \[Gamma]],2-Cos[2 \[Gamma]]}	\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+{8,7}	{2-Cos[2 \[Gamma]],2-Cos[2 \[Gamma]]}	\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+
+)
+In[4]:= FullSimplify[2-Cos[2 \[Gamma]]==1+2Sin[\[Gamma]]^2]
+FullSimplify[2 ArcTan[Sqrt[5-2 Sqrt[6]]]==ArcSin[1/3]]
+Out[4]= True
+Out[5]= False
+In[21]:= Plot[Piecewise[{{2-Cos[2 \[Gamma]],\[Gamma]<=2 ArcTan[Sqrt[5-2 Sqrt[6]]]}},1],{\[Gamma],0,Pi/2},PlotRange->{0,2}]
+Out[21]= 
+In[1]:= 2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+Out[1]= 2 ArcTan[Sqrt[5-2 Sqrt[6]]]
+In[38]:= entanglement/.\[Gamma]-> 2 ArcTan[Sqrt[5-2 Sqrt[6]]]//FullSimplify
+Out[38]= (-Sqrt[(2/3)] ArcCosh[5]+Log[12])/Log[4]
+In[65]:= val=2 ArcTan[Sqrt[5-2 Sqrt[6]]];
+
+Plot[Piecewise[{{2-Cos[2 \[Gamma]],\[Gamma]<=val}},-1],{\[Gamma],0,Pi/2},PlotRange->{0,2},AxesLabel->{"\[Gamma]","equilibrium payout"},Ticks->{Range[0,Pi/2,Pi/8],Automatic},Prolog->{{Red,Opacity[0.1],Rectangle[{val,0},{Pi/2,2}]}},Epilog->{(*Horizontal Lines*){Dashed,Thin,Line[{{0,1},{Pi/2,1}}]},{Dashed,Thin,Line[{{0,5/3},{Pi/2,5/3}}]},(*Labels*)Text["classical",{Pi/8,1},{0,-1.5}],Text["5/3",{Pi/8,5/3},{0,-1.5}],Text["no equilibrium",{(val+Pi/2)/2,0.5}],(*Vertical Line and Formula Label*){Red,Dotted,Opacity[0.5],Line[{{val,0},{val,2}}]},Text[Style[HoldForm[2 ArcTan[Sqrt[5-2 Sqrt[6]]]],10],{val,0.2},{1.2,0}]}]
+Out[66]= 
+(a=b) != 0  
+In[39]:= assumptions = 0<\[Gamma]<\[Pi]/2&&-Infinity<a<Infinity;
+In[40]:= symmetricJ = FullSimplify[(J[a,a,\[Gamma]]//FullSimplify),Assumptions->assumptions];
+In[41]:= finalStates = FullSimplify[Table[play[symmetricJ,D4[[i]],D4[[j]]],{i,8},{j,8}]/.Conjugate->MyConj,Assumptions->assumptions];
+In[42]:= alicesScores = FullSimplify[(ParallelMap[alicesScore,finalStates,{2}])//Simplify];
+bobsScores = FullSimplify[(ParallelMap[bobsScore,finalStates,{2}])//Simplify];
+In[19]:= alicesScores//MatrixForm
+Out[19]//MatrixForm= (3	3 Cos[\[Gamma]]^2 Cos[a \[Gamma]]^2+(3-2 Cos[2 a \[Gamma]]) Sin[\[Gamma]]^2	1/8 (21-Cos[2 a \[Gamma]]+Cos[2 \[Gamma]] (-3+7 Cos[2 a \[Gamma]]))	1/8 (21-Cos[2 a \[Gamma]]+Cos[2 \[Gamma]] (-3+7 Cos[2 a \[Gamma]]))	1/2 (5 Cos[a \[Gamma]]^2 Sin[\[Gamma]]^2+(2+Cos[2 \[Gamma]]) Sin[a \[Gamma]]^2)	1/2 (5 Cos[a \[Gamma]]^2 Sin[\[Gamma]]^2+(2+Cos[2 \[Gamma]]) Sin[a \[Gamma]]^2)	5 Cos[a \[Gamma]]^2 Sin[\[Gamma]]^2+(2+Cos[2 \[Gamma]]) Sin[a \[Gamma]]^2	0
+-Cos[\[Gamma]]^2 (-4+Cos[2 a \[Gamma]])+Cos[a \[Gamma]]^2 Sin[\[Gamma]]^2	17/8+Cos[2 a \[Gamma]]-1/8 Cos[4 a \[Gamma]]	1/16 (35+14 Cos[2 \[Gamma]]-Cos[4 a \[Gamma]]+12 Cos[2 a \[Gamma]] Sin[\[Gamma]]^2+8 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/16 (35+14 Cos[2 \[Gamma]]-Cos[4 a \[Gamma]]+4 Sin[\[Gamma]] (-Cos[a \[Gamma]]+Cos[3 a \[Gamma]]+3 Cos[2 a \[Gamma]] Sin[\[Gamma]]))	1/16 (37-18 Cos[2 a \[Gamma]]-2 Cos[2 \[Gamma]] (7+3 Cos[2 a \[Gamma]])+Cos[4 a \[Gamma]]+16 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/16 (37-18 Cos[2 a \[Gamma]]-2 Cos[2 \[Gamma]] (7+3 Cos[2 a \[Gamma]])+Cos[4 a \[Gamma]]-16 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	5 Sin[a \[Gamma]]^4+Sin[2 a \[Gamma]]^2	5 Cos[a \[Gamma]]^2 Sin[\[Gamma]]^2-(-2+Cos[2 \[Gamma]]) Sin[a \[Gamma]]^2
+7/8 (3+Cos[2 \[Gamma]])-1/8 (1+3 Cos[2 \[Gamma]]) Cos[2 a \[Gamma]]	1/16 (35+6 Cos[2 a \[Gamma]]+2 Cos[2 \[Gamma]] (-3+7 Cos[2 a \[Gamma]])-Cos[4 a \[Gamma]]-32 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (69+16 Cos[2 \[Gamma]]+8 Cos[2 (-1+a) \[Gamma]]-4 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]+8 Cos[2 (1+a) \[Gamma]]-24 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (85+12 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]-40 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (75-40 Cos[2 \[Gamma]]-20 Cos[2 (-1+a) \[Gamma]]+4 Cos[2 a \[Gamma]]+Cos[4 a \[Gamma]]-20 Cos[2 (1+a) \[Gamma]]+48 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	-(1/8) (-17+Cos[2 a \[Gamma]]-8 Cos[a \[Gamma]] Sin[\[Gamma]]) Sin[a \[Gamma]]^2	1/16 (37-18 Cos[2 a \[Gamma]]-2 Cos[2 \[Gamma]] (3+7 Cos[2 a \[Gamma]])+Cos[4 a \[Gamma]]+32 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/2 (5 Cos[a \[Gamma]]^2 Sin[\[Gamma]]^2-(-2+Cos[2 \[Gamma]]) Sin[a \[Gamma]]^2)
+7/8 (3+Cos[2 \[Gamma]])-1/8 (1+3 Cos[2 \[Gamma]]) Cos[2 a \[Gamma]]	1/8 (6 Cos[a \[Gamma]]^2 (2+Cos[2 \[Gamma]]+Cos[2 a \[Gamma]])+(-1+Cos[2 a \[Gamma]]+2 Cos[a \[Gamma]] Sin[\[Gamma]])^2+20 (Cos[a \[Gamma]]+Sin[\[Gamma]])^2 Sin[a \[Gamma]]^2)	1/32 (85+12 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]+40 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (69+16 Cos[2 \[Gamma]]+8 Cos[2 (-1+a) \[Gamma]]-4 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]+8 Cos[2 (1+a) \[Gamma]]+24 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	-(1/8) (-17+Cos[2 a \[Gamma]]+8 Cos[a \[Gamma]] Sin[\[Gamma]]) Sin[a \[Gamma]]^2	1/32 (75-40 Cos[2 \[Gamma]]-20 Cos[2 (-1+a) \[Gamma]]+4 Cos[2 a \[Gamma]]+Cos[4 a \[Gamma]]-20 Cos[2 (1+a) \[Gamma]]-48 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/8 (5 (-1+Cos[2 a \[Gamma]]+2 Cos[a \[Gamma]] Sin[\[Gamma]])^2+6 (2+Cos[2 \[Gamma]]+Cos[2 a \[Gamma]]) Sin[a \[Gamma]]^2+4 (Cos[a \[Gamma]]+Sin[\[Gamma]])^2 Sin[a \[Gamma]]^2)	1/2 (5 Cos[a \[Gamma]]^2 Sin[\[Gamma]]^2-(-2+Cos[2 \[Gamma]]) Sin[a \[Gamma]]^2)
+1/2 (5+Cos[\[Gamma]]^2 (4+Cos[2 a \[Gamma]])+Sin[\[Gamma]]^2 Sin[a \[Gamma]]^2)	1/2 (5 Cos[a \[Gamma]]^4+Cos[\[Gamma]]^2 (3+2 Cos[2 a \[Gamma]])+3 Sin[\[Gamma]]^2 Sin[a \[Gamma]]^2-3 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]]+Sin[2 a \[Gamma]]^2)	1/32 (75+80 Cos[2 \[Gamma]] Cos[a \[Gamma]]^2+4 Cos[2 a \[Gamma]]+Cos[4 a \[Gamma]]-32 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (115+44 Cos[2 a \[Gamma]]+Cos[4 a \[Gamma]]-16 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (69-16 Cos[2 \[Gamma]]-8 Cos[2 (-1+a) \[Gamma]]-4 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]-8 Cos[2 (1+a) \[Gamma]]+8 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (53-20 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]+40 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/16 (35+Cos[2 \[Gamma]] (6-14 Cos[2 a \[Gamma]])-10 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]+24 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/8 (13-7 Cos[2 \[Gamma]]+(-1+3 Cos[2 \[Gamma]]) Cos[2 a \[Gamma]])
+1/2 (5+Cos[\[Gamma]]^2 (4+Cos[2 a \[Gamma]])+Sin[\[Gamma]]^2 Sin[a \[Gamma]]^2)	1/2 (5 Cos[a \[Gamma]]^4+Cos[\[Gamma]]^2 (3+2 Cos[2 a \[Gamma]])+3 Sin[\[Gamma]]^2 Sin[a \[Gamma]]^2+3 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]]+Sin[2 a \[Gamma]]^2)	1/32 (115+44 Cos[2 a \[Gamma]]+Cos[4 a \[Gamma]]+16 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (75+80 Cos[2 \[Gamma]] Cos[a \[Gamma]]^2+4 Cos[2 a \[Gamma]]+Cos[4 a \[Gamma]])+Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]]	1/32 (53-20 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]-40 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/32 (69-32 Cos[2 \[Gamma]] Cos[a \[Gamma]]^2-4 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]-8 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/16 (35+Cos[2 \[Gamma]] (6-14 Cos[2 a \[Gamma]])-10 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]]-24 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/8 (13-7 Cos[2 \[Gamma]]+(-1+3 Cos[2 \[Gamma]]) Cos[2 a \[Gamma]])
+Cos[\[Gamma]]^2 (4+Cos[2 a \[Gamma]])+Sin[\[Gamma]]^2 Sin[a \[Gamma]]^2	5 Cos[a \[Gamma]]^4+Sin[2 a \[Gamma]]^2	1/2 (5 Cos[a \[Gamma]]^4+Cos[\[Gamma]]^2 (4+Cos[2 a \[Gamma]])+Sin[\[Gamma]]^2 Sin[a \[Gamma]]^2-Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]]+Sin[2 a \[Gamma]]^2)	1/2 (5 Cos[a \[Gamma]]^4+Cos[\[Gamma]]^2 (4+Cos[2 a \[Gamma]])+Sin[\[Gamma]]^2 Sin[a \[Gamma]]^2+Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]]+Sin[2 a \[Gamma]]^2)	1/8 (35/2-5 Cos[2 a \[Gamma]]+Cos[2 \[Gamma]] (-7+3 Cos[2 a \[Gamma]])-1/2 Cos[4 a \[Gamma]]-8 Sin[\[Gamma]] Sin[a \[Gamma]] Sin[2 a \[Gamma]])	1/8 (2 Cos[a \[Gamma]]^2 (2+Cos[2 \[Gamma]]+Cos[2 a \[Gamma]])+3 (-1+Cos[2 a \[Gamma]]+2 Cos[a \[Gamma]] Sin[\[Gamma]])^2+20 (Cos[a \[Gamma]]+Sin[\[Gamma]])^2 Sin[a \[Gamma]]^2)	1/8 (17-8 Cos[2 a \[Gamma]]-Cos[4 a \[Gamma]])	Cos[\[Gamma]]^2 Cos[a \[Gamma]]^2-(-4+Cos[2 a \[Gamma]]) Sin[\[Gamma]]^2
+5	Cos[\[Gamma]]^2 (3+2 Cos[2 a \[Gamma]])+3 Sin[\[Gamma]]^2 Sin[a \[Gamma]]^2	1/8 (29+Cos[2 a \[Gamma]]+Cos[2 \[Gamma]] (3+7 Cos[2 a \[Gamma]]))	1/8 (29+Cos[2 a \[Gamma]]+Cos[2 \[Gamma]] (3+7 Cos[2 a \[Gamma]]))	1/8 (13+3 Cos[2 \[Gamma]]-(1+7 Cos[2 \[Gamma]]) Cos[2 a \[Gamma]])	1/8 (13+3 Cos[2 \[Gamma]]-(1+7 Cos[2 \[Gamma]]) Cos[2 a \[Gamma]])	Cos[\[Gamma]]^2 (3-2 Cos[2 a \[Gamma]])+3 Cos[a \[Gamma]]^2 Sin[\[Gamma]]^2	1
+
+)
+Convert to \[Gamma]\[Prime] == Sin[\[Gamma]]^2  a\[Prime] = Sin[\[Gamma] a]^2  for simplification
+In[44]:= alicesScores = (((alicesScores/.a->ArcSin[Sqrt[a\[Prime]]]/\[Gamma])/.\[Gamma]->ArcSin[Sqrt[\[Gamma]\[Prime]]]))//TrigExpand//FullSimplify;
+bobsScores = (((bobsScores/.a->ArcSin[Sqrt[a\[Prime]]]/\[Gamma])/.\[Gamma]->ArcSin[Sqrt[\[Gamma]\[Prime]]]))//TrigExpand//FullSimplify;
+In[46]:= assumptions\[Prime] = 0<\[Gamma]\[Prime]<1&&0<a\[Prime]<1;
+In[47]:= eq = DiscreteNashEquilibria[(alicesScores),(bobsScores),assumptions\[Prime]];
+eq = DeleteCases[eq,{_,_,False}];
+In[49]:= eq = ((#[[{1,2}]]~Join~{Simplify[Reduce[Simplify[#[[3]],assumptions\[Prime]]]]}&/@eq)/.Reduce->Identity);
+In[50]:= eq = DeleteCases[eq,{_,_,False}];
+In[51]:= \[Gamma]Orig[\[Gamma]_]:=ArcSin[Sqrt[\[Gamma]]];
+aOrig[\[Gamma]_,a_]:=ArcSin[Sqrt[a]]/ArcSin[Sqrt[\[Gamma]]]
+In[27]:= eq//MatrixForm
+Out[27]//MatrixForm= ({2,8}	{5-5 \[Gamma]\[Prime]+a\[Prime] (-4+7 \[Gamma]\[Prime]),a\[Prime]+5 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime]}	(a\[Prime]==0.630\[Ellipsis]&&\[Gamma]\[Prime]==(-1+a\[Prime])/(-5+3 a\[Prime]))||(0.630\[Ellipsis]<a\[Prime]<=0.705\[Ellipsis]&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]<=(10 a\[Prime]-a\[Prime]^2-11 a\[Prime]^3)/(-5+7 a\[Prime])^2-6 Sqrt[2] Sqrt[(5 a\[Prime]^3-10 a\[Prime]^4+4 a\[Prime]^5+a\[Prime]^6)/(-5+7 a\[Prime])^4])||(0.705\[Ellipsis]<a\[Prime]<=0.979\[Ellipsis]&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]<=(32-60 a\[Prime]+68 a\[Prime]^2-39 a\[Prime]^3)/(-8+7 a\[Prime])^2-8 Sqrt[(32 a\[Prime]^2-92 a\[Prime]^3+112 a\[Prime]^4-75 a\[Prime]^5+23 a\[Prime]^6)/(-8+7 a\[Prime])^4])||(0.979\[Ellipsis]<a\[Prime]<1&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]<=1/3)
+{3,5}	{5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime],a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]}	5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-\[Gamma]\[Prime]+1/2 a\[Prime] (-3+7 \[Gamma]\[Prime])&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=1/2 (6+a\[Prime]-a\[Prime]^2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]-2 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime])&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-1/4 a\[Prime] (2+a\[Prime])-3/2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+2 (-1+a\[Prime]) \[Gamma]\[Prime]&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-1/4 a\[Prime] (2+a\[Prime]-10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=5+1/4 a\[Prime] (-12+a\[Prime]+4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=1/2 (10+a\[Prime]^2-5 \[Gamma]\[Prime]+a\[Prime] (-8-2 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+3 \[Gamma]\[Prime]))&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=5-2 a\[Prime]+1/2 (-5+7 a\[Prime]) \[Gamma]\[Prime]&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/2 (a\[Prime] (3-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/2 (a\[Prime]^2+a\[Prime] (5+4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-3 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/4 a\[Prime] (8+a\[Prime]-4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1-1/4 a\[Prime] (-6+a\[Prime]+10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime]
+{4,6}	{5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime],a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]}	5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-\[Gamma]\[Prime]+1/2 a\[Prime] (-3+7 \[Gamma]\[Prime])&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=1/2 (6+a\[Prime]-a\[Prime]^2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]-2 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime])&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-1/4 a\[Prime] (2+a\[Prime]+10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-1/4 a\[Prime] (2+a\[Prime])+3/2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+2 (-1+a\[Prime]) \[Gamma]\[Prime]&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=5+1/4 a\[Prime] (a\[Prime]-4 (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]))&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=1/2 (10+a\[Prime]^2-5 \[Gamma]\[Prime]+a\[Prime] (-8+2 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+3 \[Gamma]\[Prime]))&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=5-2 a\[Prime]+1/2 (-5+7 a\[Prime]) \[Gamma]\[Prime]&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/2 (a\[Prime] (3-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/2 (a\[Prime]^2+a\[Prime] (5-4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-3 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/4 a\[Prime] (8+a\[Prime]+4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1-1/4 a\[Prime] (-6+a\[Prime]-10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime]))&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime]
+{5,3}	{a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime],5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]}	a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/2 (a\[Prime] (3-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/2 (a\[Prime]^2+a\[Prime] (5+4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-3 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/4 a\[Prime] (8+a\[Prime]-4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1-1/4 a\[Prime] (-6+a\[Prime]+10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2&&a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime]&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-\[Gamma]\[Prime]+1/2 a\[Prime] (-3+7 \[Gamma]\[Prime])&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=1/2 (6+a\[Prime]-a\[Prime]^2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]-2 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime])&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-1/4 a\[Prime] (2+a\[Prime])-3/2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+2 (-1+a\[Prime]) \[Gamma]\[Prime]&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-1/4 a\[Prime] (2+a\[Prime]-10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=5+1/4 a\[Prime] (-12+a\[Prime]+4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=1/2 (10+a\[Prime]^2-5 \[Gamma]\[Prime]+a\[Prime] (-8-2 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+3 \[Gamma]\[Prime]))&&5+1/4 (-12+a\[Prime]) a\[Prime]-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=5-2 a\[Prime]+1/2 (-5+7 a\[Prime]) \[Gamma]\[Prime]
+{5,5}	{1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime]),1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime])}	(0<a\[Prime]<=0.477\[Ellipsis]&&(4 a\[Prime]+9 a\[Prime]^2+2 a\[Prime]^3)/(2 (2+3 a\[Prime])^2)-1/2 Sqrt[(8 a\[Prime]^3+9 a\[Prime]^4-12 a\[Prime]^5-5 a\[Prime]^6)/(2+3 a\[Prime])^4]<=\[Gamma]\[Prime]<=(-24+12 a\[Prime]-13 a\[Prime]^2)/(72 (-1+a\[Prime]))-5/72 Sqrt[(48 a\[Prime]^2-24 a\[Prime]^3+a\[Prime]^4)/(-1+a\[Prime])^2])||(0.477\[Ellipsis]<a\[Prime]<0.503\[Ellipsis]&&(4 a\[Prime]+9 a\[Prime]^2+2 a\[Prime]^3)/(2 (2+3 a\[Prime])^2)-1/2 Sqrt[(8 a\[Prime]^3+9 a\[Prime]^4-12 a\[Prime]^5-5 a\[Prime]^6)/(2+3 a\[Prime])^4]<=\[Gamma]\[Prime]<=(2+a\[Prime]^2-6 a\[Prime]^3)/(1+a\[Prime])^2-3/2 Sqrt[(8 a\[Prime]^2-8 a\[Prime]^3-5 a\[Prime]^4-10 a\[Prime]^5+15 a\[Prime]^6)/(1+a\[Prime])^4])||(a\[Prime]==0.503\[Ellipsis]&&\[Gamma]\[Prime]==(2+a\[Prime]^2-6 a\[Prime]^3)/(1+a\[Prime])^2-3/2 Sqrt[(8 a\[Prime]^2-8 a\[Prime]^3-5 a\[Prime]^4-10 a\[Prime]^5+15 a\[Prime]^6)/(1+a\[Prime])^4])
+{6,4}	{a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime],5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]}	a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/2 (a\[Prime] (3-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/2 (a\[Prime]^2+a\[Prime] (5-4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-3 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/4 a\[Prime] (8+a\[Prime]+4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1-1/4 a\[Prime] (-6+a\[Prime]-10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime]))&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2&&a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]>=1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime]&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-\[Gamma]\[Prime]+1/2 a\[Prime] (-3+7 \[Gamma]\[Prime])&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=1/2 (6+a\[Prime]-a\[Prime]^2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]-2 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime])&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-1/4 a\[Prime] (2+a\[Prime]+10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=3-1/4 a\[Prime] (2+a\[Prime])+3/2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+2 (-1+a\[Prime]) \[Gamma]\[Prime]&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=5+1/4 a\[Prime] (a\[Prime]-4 (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]))&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=1/2 (10+a\[Prime]^2-5 \[Gamma]\[Prime]+a\[Prime] (-8+2 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+3 \[Gamma]\[Prime]))&&5+1/4 (-12+a\[Prime]) a\[Prime]+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+5 (-1+a\[Prime]) \[Gamma]\[Prime]>=5-2 a\[Prime]+1/2 (-5+7 a\[Prime]) \[Gamma]\[Prime]
+{6,6}	{1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime])),1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime]))}	(0<a\[Prime]<=1/22 (49-Sqrt[2049])&&(4 a\[Prime]+9 a\[Prime]^2+2 a\[Prime]^3)/(2 (2+3 a\[Prime])^2)+1/2 Sqrt[(8 a\[Prime]^3+9 a\[Prime]^4-12 a\[Prime]^5-5 a\[Prime]^6)/(2+3 a\[Prime])^4]<=\[Gamma]\[Prime]<=(-24+12 a\[Prime]-13 a\[Prime]^2)/(72 (-1+a\[Prime]))+5/72 Sqrt[(48 a\[Prime]^2-24 a\[Prime]^3+a\[Prime]^4)/(-1+a\[Prime])^2])||(1/22 (49-Sqrt[2049])<a\[Prime]<0.177\[Ellipsis]&&((4 a\[Prime]+9 a\[Prime]^2+2 a\[Prime]^3)/(2 (2+3 a\[Prime])^2)+1/2 Sqrt[(8 a\[Prime]^3+9 a\[Prime]^4-12 a\[Prime]^5-5 a\[Prime]^6)/(2+3 a\[Prime])^4]<=\[Gamma]\[Prime]<=(-4 a\[Prime]+37 a\[Prime]^2-18 a\[Prime]^3)/(2 (-2+7 a\[Prime])^2)-5/2 Sqrt[(-8 a\[Prime]^3+57 a\[Prime]^4-60 a\[Prime]^5+11 a\[Prime]^6)/(-2+7 a\[Prime])^4]||(-4 a\[Prime]+37 a\[Prime]^2-18 a\[Prime]^3)/(2 (-2+7 a\[Prime])^2)+5/2 Sqrt[(-8 a\[Prime]^3+57 a\[Prime]^4-60 a\[Prime]^5+11 a\[Prime]^6)/(-2+7 a\[Prime])^4]<=\[Gamma]\[Prime]<=(-24+12 a\[Prime]-13 a\[Prime]^2)/(72 (-1+a\[Prime]))+5/72 Sqrt[(48 a\[Prime]^2-24 a\[Prime]^3+a\[Prime]^4)/(-1+a\[Prime])^2]))||(a\[Prime]==0.177\[Ellipsis]&&((4 a\[Prime]+9 a\[Prime]^2+2 a\[Prime]^3)/(2 (2+3 a\[Prime])^2)+1/2 Sqrt[(8 a\[Prime]^3+9 a\[Prime]^4-12 a\[Prime]^5-5 a\[Prime]^6)/(2+3 a\[Prime])^4]<=\[Gamma]\[Prime]<=(-4 a\[Prime]+37 a\[Prime]^2-18 a\[Prime]^3)/(2 (-2+7 a\[Prime])^2)-5/2 Sqrt[(-8 a\[Prime]^3+57 a\[Prime]^4-60 a\[Prime]^5+11 a\[Prime]^6)/(-2+7 a\[Prime])^4]||\[Gamma]\[Prime]==(-24+12 a\[Prime]-13 a\[Prime]^2)/(72 (-1+a\[Prime]))+5/72 Sqrt[(48 a\[Prime]^2-24 a\[Prime]^3+a\[Prime]^4)/(-1+a\[Prime])^2]))||(0.177\[Ellipsis]<a\[Prime]<1/35 (-7+3 Sqrt[21])&&(4 a\[Prime]+9 a\[Prime]^2+2 a\[Prime]^3)/(2 (2+3 a\[Prime])^2)+1/2 Sqrt[(8 a\[Prime]^3+9 a\[Prime]^4-12 a\[Prime]^5-5 a\[Prime]^6)/(2+3 a\[Prime])^4]<=\[Gamma]\[Prime]<=(-4 a\[Prime]+37 a\[Prime]^2-18 a\[Prime]^3)/(2 (-2+7 a\[Prime])^2)-5/2 Sqrt[(-8 a\[Prime]^3+57 a\[Prime]^4-60 a\[Prime]^5+11 a\[Prime]^6)/(-2+7 a\[Prime])^4])||(a\[Prime]==1/35 (-7+3 Sqrt[21])&&\[Gamma]\[Prime]==(4/35 (-7+3 Sqrt[21])+(9 (-7+3 Sqrt[21])^2)/1225+(2 (-7+3 Sqrt[21])^3)/42875)/(2 (2+3/35 (-7+3 Sqrt[21]))^2)+Sqrt[(8 (-7+3 Sqrt[21])^3)/42875+(9 (-7+3 Sqrt[21])^4)/1500625-(12 (-7+3 Sqrt[21])^5)/52521875-(-7+3 Sqrt[21])^6/367653125]/(2 (2+3/35 (-7+3 Sqrt[21]))^2))
+{6,8}	{1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime],1+\[Gamma]\[Prime]+1/2 a\[Prime] (-1+3 \[Gamma]\[Prime])}	0<a\[Prime]<=0.224\[Ellipsis]&&\[Gamma]\[Prime]==a\[Prime]/(2+3 a\[Prime])
+{7,5}	{1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime],1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2}	1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime]>=a\[Prime] (3-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]&&1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime]>=a\[Prime] (4+a\[Prime])&&1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime]>=1/2 (a\[Prime]^2+a\[Prime] (7+8 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime]>=1/2 (a\[Prime]^2+a\[Prime] (7-8 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime]>=1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime])&&1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime]>=1-(-3+a\[Prime]) a\[Prime]&&1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime]>=1+a\[Prime] (4-7 \[Gamma]\[Prime])+2 \[Gamma]\[Prime]&&1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1/2 (a\[Prime] (3-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1/2 (a\[Prime]^2+a\[Prime] (5+4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-3 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=a\[Prime]^2/4+a\[Prime] (2+3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]&&1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1/4 a\[Prime] (8+a\[Prime]-4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime])&&1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1-1/4 a\[Prime] (-6+a\[Prime]+10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&1+a\[Prime]-a\[Prime]^2/2-2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime]
+{7,6}	{1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime]),1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2}	1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime])>=a\[Prime] (3-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]&&1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime])>=a\[Prime] (4+a\[Prime])&&1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime])>=1/2 (a\[Prime]^2+a\[Prime] (7+8 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime])>=1/2 (a\[Prime]^2+a\[Prime] (7-8 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime])>=1-a\[Prime]^2/2+1/2 a\[Prime] (7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-7 \[Gamma]\[Prime])+\[Gamma]\[Prime]&&1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime])>=1-(-3+a\[Prime]) a\[Prime]&&1-a\[Prime]^2/2+\[Gamma]\[Prime]-1/2 a\[Prime] (-7+6 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+7 \[Gamma]\[Prime])>=1+a\[Prime] (4-7 \[Gamma]\[Prime])+2 \[Gamma]\[Prime]&&1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1/2 (a\[Prime] (3-7 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1/2 (a\[Prime]^2+a\[Prime] (5-4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-3 \[Gamma]\[Prime])+5 \[Gamma]\[Prime])&&1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1/4 a\[Prime] (8+a\[Prime]+4 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=a\[Prime]^2/4+a\[Prime] (2-3 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-5 \[Gamma]\[Prime])+5 \[Gamma]\[Prime]&&1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1-1/4 a\[Prime] (-6+a\[Prime]-10 Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]])&&1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime]))&&1+a\[Prime]-a\[Prime]^2/2+2 Sqrt[1-a\[Prime]] a\[Prime] Sqrt[\[Gamma]\[Prime]]+\[Gamma]\[Prime]+(3 a\[Prime] \[Gamma]\[Prime])/2>=1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime]
+{7,8}	{1+a\[Prime] (4-7 \[Gamma]\[Prime])+2 \[Gamma]\[Prime],1+2 \[Gamma]\[Prime]+a\[Prime] (-1+3 \[Gamma]\[Prime])}	(0<a\[Prime]<=1/2 (7-3 Sqrt[5])&&a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]<=1/3)||(1/2 (7-3 Sqrt[5])<a\[Prime]<0.153\[Ellipsis]&&(a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]<=(-2 a\[Prime]+23 a\[Prime]^2-11 a\[Prime]^3)/(-2+7 a\[Prime])^2-6 Sqrt[2] Sqrt[(-a\[Prime]^3+8 a\[Prime]^4-8 a\[Prime]^5+a\[Prime]^6)/(-2+7 a\[Prime])^4]||(-2 a\[Prime]+23 a\[Prime]^2-11 a\[Prime]^3)/(-2+7 a\[Prime])^2+6 Sqrt[2] Sqrt[(-a\[Prime]^3+8 a\[Prime]^4-8 a\[Prime]^5+a\[Prime]^6)/(-2+7 a\[Prime])^4]<=\[Gamma]\[Prime]<=1/3))||(a\[Prime]==0.153\[Ellipsis]&&(a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]<=(-2 a\[Prime]+23 a\[Prime]^2-11 a\[Prime]^3)/(-2+7 a\[Prime])^2-6 Sqrt[2] Sqrt[(-a\[Prime]^3+8 a\[Prime]^4-8 a\[Prime]^5+a\[Prime]^6)/(-2+7 a\[Prime])^4]||\[Gamma]\[Prime]==1/3))||(0.153\[Ellipsis]<a\[Prime]<0.186\[Ellipsis]&&a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]<=(-2 a\[Prime]+23 a\[Prime]^2-11 a\[Prime]^3)/(-2+7 a\[Prime])^2-6 Sqrt[2] Sqrt[(-a\[Prime]^3+8 a\[Prime]^4-8 a\[Prime]^5+a\[Prime]^6)/(-2+7 a\[Prime])^4])||(a\[Prime]==0.186\[Ellipsis]&&\[Gamma]\[Prime]==a\[Prime]/(2+3 a\[Prime]))
+{8,2}	{a\[Prime]+5 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime],5-5 \[Gamma]\[Prime]+a\[Prime] (-4+7 \[Gamma]\[Prime])}	(a\[Prime]==0.630\[Ellipsis]&&\[Gamma]\[Prime]==(-1+a\[Prime])/(-5+3 a\[Prime]))||(0.630\[Ellipsis]<a\[Prime]<=0.705\[Ellipsis]&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]<=(10 a\[Prime]-a\[Prime]^2-11 a\[Prime]^3)/(-5+7 a\[Prime])^2-6 Sqrt[2] Sqrt[(5 a\[Prime]^3-10 a\[Prime]^4+4 a\[Prime]^5+a\[Prime]^6)/(-5+7 a\[Prime])^4])||(0.705\[Ellipsis]<a\[Prime]<=0.979\[Ellipsis]&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]<=(32-60 a\[Prime]+68 a\[Prime]^2-39 a\[Prime]^3)/(-8+7 a\[Prime])^2-8 Sqrt[(32 a\[Prime]^2-92 a\[Prime]^3+112 a\[Prime]^4-75 a\[Prime]^5+23 a\[Prime]^6)/(-8+7 a\[Prime])^4])||(0.979\[Ellipsis]<a\[Prime]<1&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]<=1/3)
+{8,6}	{1+\[Gamma]\[Prime]+1/2 a\[Prime] (-1+3 \[Gamma]\[Prime]),1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime]}	0<a\[Prime]<=0.224\[Ellipsis]&&\[Gamma]\[Prime]==a\[Prime]/(2+3 a\[Prime])
+{8,7}	{1+2 \[Gamma]\[Prime]+a\[Prime] (-1+3 \[Gamma]\[Prime]),1+a\[Prime] (4-7 \[Gamma]\[Prime])+2 \[Gamma]\[Prime]}	(0<a\[Prime]<=1/2 (7-3 Sqrt[5])&&a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]<=1/3)||(1/2 (7-3 Sqrt[5])<a\[Prime]<0.153\[Ellipsis]&&(a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]<=(-2 a\[Prime]+23 a\[Prime]^2-11 a\[Prime]^3)/(-2+7 a\[Prime])^2-6 Sqrt[2] Sqrt[(-a\[Prime]^3+8 a\[Prime]^4-8 a\[Prime]^5+a\[Prime]^6)/(-2+7 a\[Prime])^4]||(-2 a\[Prime]+23 a\[Prime]^2-11 a\[Prime]^3)/(-2+7 a\[Prime])^2+6 Sqrt[2] Sqrt[(-a\[Prime]^3+8 a\[Prime]^4-8 a\[Prime]^5+a\[Prime]^6)/(-2+7 a\[Prime])^4]<=\[Gamma]\[Prime]<=1/3))||(a\[Prime]==0.153\[Ellipsis]&&(a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]<=(-2 a\[Prime]+23 a\[Prime]^2-11 a\[Prime]^3)/(-2+7 a\[Prime])^2-6 Sqrt[2] Sqrt[(-a\[Prime]^3+8 a\[Prime]^4-8 a\[Prime]^5+a\[Prime]^6)/(-2+7 a\[Prime])^4]||\[Gamma]\[Prime]==1/3))||(0.153\[Ellipsis]<a\[Prime]<0.186\[Ellipsis]&&a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]<=(-2 a\[Prime]+23 a\[Prime]^2-11 a\[Prime]^3)/(-2+7 a\[Prime])^2-6 Sqrt[2] Sqrt[(-a\[Prime]^3+8 a\[Prime]^4-8 a\[Prime]^5+a\[Prime]^6)/(-2+7 a\[Prime])^4])||(a\[Prime]==0.186\[Ellipsis]&&\[Gamma]\[Prime]==a\[Prime]/(2+3 a\[Prime]))
+{8,8}	{1,1}	(0<\[Gamma]\[Prime]<1/7&&-((2 \[Gamma]\[Prime])/(-1+3 \[Gamma]\[Prime]))<=a\[Prime]<=(-1+5 \[Gamma]\[Prime])/(-1+3 \[Gamma]\[Prime]))||(\[Gamma]\[Prime]==1/7&&a\[Prime]==1/2)
+
+)
+In[166]:= inequalities=eq[[;;,3]];
+numRegions=Length[inequalities];
+colors=Table[ColorData[97,i],{i,1,numRegions}];
+labels=Table["Region "<>ToString[i],{i,1,numRegions}];
+
+textures={HatchFilling[0],
+HatchFilling[Pi/2],
+HatchFilling[Pi/4],
+HatchFilling[-Pi/4],
+HatchFilling[Pi/8,2],
+HatchFilling[Pi/3,2],
+HatchFilling[0,2],
+HatchFilling[Pi/2,2],
+HatchFilling[Pi/4,2],HatchFilling[-Pi/4,2]};
+
+r = RegionPlot[inequalities,{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},PlotStyle->Table[{Opacity[0.6,colors[[i]]],textures[[i]]},{i,1,numRegions}],PlotLegends->Table[ToString[D4Sym[[e]],TraditionalForm],{e,eq[[;;,1]]}],FrameLabel->{"a\[Prime]","\[Gamma]\[Prime]"},ImageSize->Large,MaxRecursion->6];
+In[173]:= RegionPlot[inequalities,{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},(*Visual Style*)PlotStyle->Table[{Opacity[0.8],colors[[i]],textures[[i]]},{i,1,numRegions}],BoundaryStyle->{Thick,Black},MaxRecursion->2,(*Labels& Fonts*)Frame->True,FrameLabel->{Style[Row[{"a",Superscript["","\[Prime]"]}],14,Bold],Style[Row[{"\[Gamma]",Superscript["","\[Prime]"]}],14,Bold]},LabelStyle->{FontSize->12,FontFamily->"Times",Black},(*Legend Polish*)PlotLegends->Placed[LineLegend[Table[ToString[D4Sym[[e]],TraditionalForm],{e,eq[[;;,1]]}],LegendMarkerSize->15,LegendLayout->"Column"],After],(*Resolution*)ImageSize->500,BaseStyle->{FontFamily->"Times"}]
+Out[173]= 	{Subscript[\[Sigma], z],Subscript[\[Sigma], y]}
+	{Subscript[S\[Sigma], x],Subscript[S\[Sigma], x]}
+	{Subscript[S\[Sigma], y],Subscript[S\[Sigma], y]}
+	{Subscript[S\[Sigma], y],Subscript[\[Sigma], y]}
+	{Subscript[\[Sigma], x],Subscript[\[Sigma], y]}
+	{Subscript[\[Sigma], y],Subscript[\[Sigma], z]}
+	{Subscript[\[Sigma], y],Subscript[S\[Sigma], y]}
+	{Subscript[\[Sigma], y],Subscript[\[Sigma], x]}
+	{Subscript[\[Sigma], y],Subscript[\[Sigma], y]}
+
+
+In[370]:= (*1. Group indices with identical inequalities*)groups=Values[GroupBy[Range[Length[inequalities]],inequalities[[#]]&]];
+
+(*2. Map original labels to groups*)
+originalLabels=Table[ToString[D4Sym[[e]],TraditionalForm],{e,eq[[;;,1]]}];
+mergedLabels=Table[Row[originalLabels[[g]],", "],{g,groups}];
+mergedInequalities=inequalities[[First/@groups]];
+
+(*3. Plot*)
+Show[(*Main 2D Regions*)RegionPlot[mergedInequalities,{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},PlotStyle->Table[{Opacity[0.8],colors[[i]],textures[[i]]},{i,Length[mergedInequalities]}],BoundaryStyle->{Thick,Black},Frame->True,FrameLabel->{Style["a'",14,Bold],Style["\[Gamma]'",14,Bold]},PlotLegends->Placed[SwatchLegend[colors[[First/@groups]],mergedLabels,LegendMarkerSize->15],After],ImageSize->500,BaseStyle->{FontFamily->"Times"}],(*4. Overlay 1D Lines for Indices 4& 7 (Bound-Restricted)*)Table[If[IntersectingQ[g,{4,7}],ContourPlot[a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime]),{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},ContourStyle->{Thick,Red, Dashed},RegionFunction->Function[{aV,gV},Evaluate[inequalities[[First[Intersection[g,{4,7}]]]]/. {a\[Prime]->aV,\[Gamma]\[Prime]->gV,Equal->(True&)}]]],Unevaluated[Sequence[]]],{g,groups}]]
+Out[374]= 	{Subscript[\[Sigma], z],Subscript[\[Sigma], y]}, {Subscript[\[Sigma], y],Subscript[\[Sigma], z]}
+	{Subscript[S\[Sigma], x],Subscript[S\[Sigma], x]}
+	{Subscript[S\[Sigma], y],Subscript[S\[Sigma], y]}
+	{Subscript[S\[Sigma], y],Subscript[\[Sigma], y]}, {Subscript[\[Sigma], y],Subscript[S\[Sigma], y]}
+	{Subscript[\[Sigma], x],Subscript[\[Sigma], y]}, {Subscript[\[Sigma], y],Subscript[\[Sigma], x]}
+	{Subscript[\[Sigma], y],Subscript[\[Sigma], y]}
+
+
+In[462]:= eq[[1,2]]
+Out[462]= {5-5 \[Gamma]\[Prime]+a\[Prime] (-4+7 \[Gamma]\[Prime]),a\[Prime]+5 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime]}
+In[406]:= (*1. Filter for strictly unique regions*)allGroups=Values[GroupBy[Range[Length[inequalities]],inequalities[[#]]&]];
+uniqueGroups=Select[allGroups,Length[#]==1&];
+
+mergedInequalities=inequalities[[First/@uniqueGroups]];
+mergedLabels=Table[originalLabels[[First@g]],{g,uniqueGroups}];
+mergedHeights=Table[eq[[First@g,2,1]],{g,uniqueGroups}];
+
+(*2. Custom Color Function:1->Black,2->White*)
+(*Rescale ensures that a payout of 1 maps to 0 (Black) and 2 maps to 1 (White)*)
+customCF=Blend[{Black,White},Rescale[#,{1,2}]]&;
+
+Show[(*3. Layered Heatmap Regions*)Table[DensityPlot[(*Use Quiet to suppress the 1/0 errors during sampling*)Quiet[mergedHeights[[i]]],{a\[Prime],0,1},{\[Gamma]\[Prime],0,0.5},RegionFunction->Function[{aV,gV},Evaluate[mergedInequalities[[i]]/. {a\[Prime]->aV,\[Gamma]\[Prime]->gV}]],ColorFunction->customCF,ColorFunctionScaling->False,(*Ensure PlotRange covers the expected payout values*)PlotRange->{0,1,{1,2}},PlotStyle->{Opacity[0.9]},Frame->False,PlotPoints->80,(*Higher points helps resolve small regions*)BoundaryStyle->Thick,Exclusions->Automatic],{i,Length[mergedInequalities]}],(*4. 1D Boundary Lines (4& 7)*)Table[If[IntersectingQ[g,{4,7}],ContourPlot[a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime]),{a\[Prime],0,1},{\[Gamma]\[Prime],0,0.5},ContourStyle->Directive[Thick,Red,Dashed],RegionFunction->Function[{aV,gV},Evaluate[inequalities[[First[Intersection[g,{4,7}]]]]/. {a\[Prime]->aV,\[Gamma]\[Prime]->gV,Equal->(True&)}]]],Nothing],{g,uniqueGroups}],(*5. Final Styling*)Background->Red,(*Areas removed because they were duplicates show as Red*)PlotRange->{{0,1},{0,0.5}},Frame->True,FrameLabel->{Style["a'",14,Bold],Style["\[Gamma]'",14,Bold]},PlotLegends->Placed[BarLegend[{customCF,{1,2}},LegendLabel->"Payout"],After],ImageSize->550,BaseStyle->{FontFamily->"Times"}]
+During evaluation of In[406]:= General::prng: Value of option PlotRange -> {0,1,{1,2}} is not All, Full, Automatic, a positive machine number, or an appropriate list of range specifications.
+During evaluation of In[406]:= Power::infy: Infinite expression 1/0. encountered.
+During evaluation of In[406]:= Power::infy: Infinite expression 1/0.^2 encountered.
+During evaluation of In[406]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[406]:= Power::infy: Infinite expression 1/0. encountered.
+During evaluation of In[406]:= General::stop: Further output of Power::infy will be suppressed during this calculation.
+During evaluation of In[406]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[406]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[406]:= General::stop: Further output of Infinity::indet will be suppressed during this calculation.
+During evaluation of In[406]:= General::prng: Value of option PlotRange -> {0,1,{1,2}} is not All, Full, Automatic, a positive machine number, or an appropriate list of range specifications.
+During evaluation of In[406]:= General::prng: Value of option PlotRange -> {0,1,{1,2}} is not All, Full, Automatic, a positive machine number, or an appropriate list of range specifications.
+During evaluation of In[406]:= General::stop: Further output of General::prng will be suppressed during this calculation.
+Out[412]= 
+In[433]:= (*1. Filter for strictly unique regions*)allGroups=Values[GroupBy[Range[Length[inequalities]],inequalities[[#]]&]];
+uniqueGroups=Select[allGroups,Length[#]==1&];
+
+(*2. Color Logic (1=Black,2=White)*)
+customCF=Blend[{Black,White},Rescale[#,{1,2}]]&;
+
+(*3. Generate a list of plots*)
+individualPlots=Table[DensityPlot[Quiet[eq[[First@g,2,1]]],{a\[Prime],0,1},{\[Gamma]\[Prime],0,0.5},RegionFunction->Function[{aV,gV},Evaluate[inequalities[[First@g]]/. {a\[Prime]->aV,\[Gamma]\[Prime]->gV}]],ColorFunction->customCF,ColorFunctionScaling->False,PlotRange->{{0,1},{0,.5},{1,2}},PlotPoints->60,BoundaryStyle->Thick,(*Red shows where this specific region ISN'T*)FrameLabel->{Style["a'",10],Style["\[Gamma]'",10]},PlotLabel->Style[mergedLabels[[i]],12,Bold],ImageSize->250],{i,Length[uniqueGroups]},{g,{uniqueGroups[[i]]}}];
+
+(*4. Layout:Line them up horizontally*)
+Row[Flatten[individualPlots],Spacer[10]]
+During evaluation of In[433]:= Power::infy: Infinite expression 1/0. encountered.
+During evaluation of In[433]:= Power::infy: Infinite expression 1/0.^2 encountered.
+During evaluation of In[433]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[433]:= Power::infy: Infinite expression 1/0. encountered.
+During evaluation of In[433]:= General::stop: Further output of Power::infy will be suppressed during this calculation.
+During evaluation of In[433]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[433]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[433]:= General::stop: Further output of Infinity::indet will be suppressed during this calculation.
+Out[437]= 
+In[444]:= (*1. Filter for strictly unique regions*)allGroups=Values[GroupBy[Range[Length[inequalities]],inequalities[[#]]&]];
+uniqueGroups=Select[allGroups,Length[#]==1&];
+mergedLabels=Table[originalLabels[[First@g]],{g,uniqueGroups}];
+
+(*2. Enhanced Color Logic:Cubing the scale stretches the high-value gradient*)
+customCF=Blend[{Black,White},Rescale[#,{1,2}]^3]&;
+
+(*3. Generate Plots*)
+individualPlots=Table[DensityPlot[Quiet[eq[[First@g,2,1]]],{a\[Prime],0,1},{\[Gamma]\[Prime],0,0.5},RegionFunction->Function[{aV,gV},Evaluate[inequalities[[First@g]]/. {a\[Prime]->aV,\[Gamma]\[Prime]->gV}]],ColorFunction->customCF,ColorFunctionScaling->False,PlotRange->{{0,1},{0,.5},{1,2}},PlotPoints->80,BoundaryStyle->Thick,Background->Red,FrameLabel->{Style["a'",10],Style["\[Gamma]'",10]},PlotLabel->Style[mergedLabels[[i]],12,Bold],ImageSize->200],{i,Length[uniqueGroups]},{g,{uniqueGroups[[i]]}}];
+
+(*4. Display Row with Shared Legend*)
+Legended[Row[Flatten[individualPlots],Spacer[5]],BarLegend[{customCF,{1,2}},LegendLabel->"Payout (Power Scaled)"]]
+During evaluation of In[444]:= Power::infy: Infinite expression 1/0. encountered.
+During evaluation of In[444]:= Power::infy: Infinite expression 1/0.^2 encountered.
+During evaluation of In[444]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[444]:= Power::infy: Infinite expression 1/0. encountered.
+During evaluation of In[444]:= General::stop: Further output of Power::infy will be suppressed during this calculation.
+During evaluation of In[444]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[444]:= Infinity::indet: Indeterminate expression ComplexInfinity+ComplexInfinity encountered.
+During evaluation of In[444]:= General::stop: Further output of Infinity::indet will be suppressed during this calculation.
+Out[449]= Payout (Power Scaled)
+
+
+
+In[207]:= inequalities[[4]]//Reduce
+inequalities[[7]]//Reduce
+Out[207]= (\[Gamma]\[Prime]<=0.0837\[Ellipsis]&&a\[Prime]==-((2 \[Gamma]\[Prime])/(-1+3 \[Gamma]\[Prime])))||(\[Gamma]\[Prime]>1/3&&a\[Prime]==-((2 \[Gamma]\[Prime])/(-1+3 \[Gamma]\[Prime])))
+Out[208]= (\[Gamma]\[Prime]<=0.0837\[Ellipsis]&&a\[Prime]==-((2 \[Gamma]\[Prime])/(-1+3 \[Gamma]\[Prime])))||(\[Gamma]\[Prime]>1/3&&a\[Prime]==-((2 \[Gamma]\[Prime])/(-1+3 \[Gamma]\[Prime])))
+In[187]:= -((2 .08)/(-1+3 .08))
+Out[187]= 0.210526
+In[209]:= plots=Table[Show[(*1. Background:Light grey outlines of all regions*)RegionPlot[Or@@inequalities,{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},PlotStyle->None,BoundaryStyle->LightGray,Frame->False],(*2. Main Region:Handles Area (with texture)*)RegionPlot[inequalities[[i]],{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},PlotStyle->{Opacity[0.8],colors[[i]],textures[[i]]},BoundaryStyle->None],(*3. Geometry Fallback:Handles Lines/Points explicitly*)Graphics[{Thick,Black,DiscretizeRegion[ImplicitRegion[inequalities[[i]],{{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5}}]]}],(*Options*)Frame->True,FrameLabel->If[i>numRegions-2,{Style[Row[{"a",Superscript["","\[Prime]"]}],12,Bold],Style[Row[{"\[Gamma]",Superscript["","\[Prime]"]}],12,Bold]},{None,None}],LabelStyle->{FontSize->10,FontFamily->"Times",Black},PlotLabel->Style[ToString[D4Sym[[eq[[i,1]]]],TraditionalForm]+i,12],ImageSize->250,BaseStyle->{FontFamily->"Times"}],{i,1,numRegions}];
+
+GraphicsGrid[Partition[plots,3,3,{1,1},{}],Spacings->{10,10}]
+During evaluation of In[209]:= DiscretizeRegion::drf: DiscretizeRegion was unable to discretize the region ImplicitRegion[<<2>>].
+During evaluation of In[209]:= DiscretizeRegion::drf: DiscretizeRegion was unable to discretize the region ImplicitRegion[<<2>>].
+During evaluation of In[209]:= DiscretizeRegion::drf: DiscretizeRegion was unable to discretize the region ImplicitRegion[<<2>>].
+During evaluation of In[209]:= General::stop: Further output of DiscretizeRegion::drf will be suppressed during this calculation.
+During evaluation of In[209]:= DiscretizeRegion::drcm: Method->Semialgebraic not able to resolve all components of dimension less than the embedding dimension 2; these may be omitted from the result.
+During evaluation of In[209]:= DiscretizeRegion::drcm: Method->Semialgebraic not able to resolve all components of dimension less than the embedding dimension 2; these may be omitted from the result.
+During evaluation of In[209]:= DiscretizeRegion::drcm: Method->Semialgebraic not able to resolve all components of dimension less than the embedding dimension 2; these may be omitted from the result.
+During evaluation of In[209]:= General::stop: Further output of DiscretizeRegion::drcm will be suppressed during this calculation.
+During evaluation of In[209]:= DiscretizeRegion::dre: DiscretizeRegion did not find any sample points in the region ImplicitRegion[<<2>>] with bounds {{-2.22507*10^-308,1.},{-2.22507*10^-308,0.5}}. If this is not correct, different bounds may help.
+During evaluation of In[209]:= DiscretizeRegion::dre: DiscretizeRegion did not find any sample points in the region ImplicitRegion[<<2>>] with bounds {{-2.22507*10^-308,1.},{-2.22507*10^-308,0.5}}. If this is not correct, different bounds may help.
+Out[209]= $Aborted
+Out[210]= 
+In[255]:= inequalities[[7]]==\[Gamma]\[Prime]>=0&&Sqrt[3810+850 Sqrt[17]]+240 \[Gamma]\[Prime]<=5 (17+Sqrt[17])&&a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime])
+Out[255]= (a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime])&&Im[\[Gamma]\[Prime]]==0&&(3 Re[\[Gamma]\[Prime]]>1||Re[\[Gamma]\[Prime]]<=0.0837\[Ellipsis]))==\[Gamma]\[Prime]>=0&&Sqrt[3810+850 Sqrt[17]]+240 \[Gamma]\[Prime]<=5 (17+Sqrt[17])&&a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime])
+In[254]:= Reduce[inequalities[[7]]&&1>=a\[Prime]>=0&&1>=\[Gamma]\[Prime]>=0]//FullSimplify
+Out[254]= \[Gamma]\[Prime]>=0&&Sqrt[3810+850 Sqrt[17]]+240 \[Gamma]\[Prime]<=5 (17+Sqrt[17])&&a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime])
+In[249]:= Solve[Reduce[inequalities[[7]]&&1>=a\[Prime]>=0&&1>=\[Gamma]\[Prime]>=0],a\[Prime]][[1,1,2]]//FullSimplify
+(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime]) if \[Gamma]\[Prime]>0&&Sqrt[3810+850 Sqrt[17]]+240 \[Gamma]\[Prime]<85+5 Sqrt[17]
+plots=Table[Show[(*1. Background:Light grey outlines of all regions*)(*Note:RegionPlot may miss 1D lines in the background;usually acceptable for context*)RegionPlot[Or@@inequalities,{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},PlotStyle->None,BoundaryStyle->LightGray,Frame->False],(*2. Main Region Logic*)If[MemberQ[{4,7},i],(*FIXED 4& 7:ContourPlot with robust RegionFunction*)ContourPlot[a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime]),{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},(*Fix:Replace symbols with function args #1,#2 and ignore'Equal' constraints*)RegionFunction->Function[{aVal,gVal},Evaluate[inequalities[[i]]/. {a\[Prime]->aVal,\[Gamma]\[Prime]->gVal,Equal->(True&)}]],ContourStyle->{Thick,Black}],(*Standard 2D Areas*)RegionPlot[inequalities[[i]],{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},PlotStyle->{Opacity[0.8],colors[[i]],textures[[i]]},BoundaryStyle->Thick]],(*3. Styling*)Frame->True,FrameLabel->If[i>numRegions-2,{Style[Row[{"a",Superscript["","\[Prime]"]}],12,Bold],Style[Row[{"\[Gamma]",Superscript["","\[Prime]"]}],12,Bold]},{None,None}],LabelStyle->{FontSize->10,FontFamily->"Times",Black},PlotLabel->Style[ToString[D4Sym[[eq[[i,1]]]],TraditionalForm]+i,12],ImageSize->250,BaseStyle->{FontFamily->"Times"}],{i,1,numRegions}];
+
+GraphicsGrid[Partition[plots,3,3,{1,1},{}],Spacings->{10,10}]
+Out[261]= 
+In[265]:= D4Sym
+Out[265]= {Subscript[\[Sigma], 0],Subscript[\[Sigma], z],S,Subscript[S\[Sigma], z],Subscript[S\[Sigma], x],Subscript[S\[Sigma], y],Subscript[\[Sigma], x],Subscript[\[Sigma], y]}
+(*Pre-calculate background group to avoid 1D line errors in RegionPlot*)bgInequalities=Delete[inequalities,{{4},{7}}];
+
+plots=Table[Show[(*1. Background:Show outlines of ALL 2D regions individually*)RegionPlot[Evaluate[bgInequalities],{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},PlotStyle->None,BoundaryStyle->LightGray,Frame->False],(*2. Main Region Logic*)If[MemberQ[{4,7},i],(*Case for Lines (Indices 4& 7)*)ContourPlot[a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime]),{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},RegionFunction->Function[{aVal,gVal},Evaluate[inequalities[[i]]/. {a\[Prime]->aVal,\[Gamma]\[Prime]->gVal,Equal->(True&)}]],ContourStyle->{Thick,Black}],(*Black Line*)(*Case for Areas*)RegionPlot[inequalities[[i]],{a\[Prime],0,1},{\[Gamma]\[Prime],0,.5},PlotStyle->{Opacity[0.8],colors[[i]],textures[[i]]},BoundaryStyle->{Thick,Black}] (*Black Boundary*)],(*3. Styling*)Frame->True,FrameLabel->If[i>numRegions-2,{Style[Row[{"a",Superscript["","\[Prime]"]}],12,Bold],Style[Row[{"\[Gamma]",Superscript["","\[Prime]"]}],12,Bold]},{None,None}],LabelStyle->{FontSize->10,FontFamily->"Times",Black},PlotLabel->Style[ToString[D4Sym[[eq[[i,1]]]],TraditionalForm],12],ImageSize->250,BaseStyle->{FontFamily->"Times"}],{i,1,numRegions}];
+
+GraphicsGrid[Partition[plots,3,3,{1,1},{}],Spacings->{10,10}]
+Out[264]= 
+In[276]:= D4Sym[[eq[[1,1]]]]
+Out[276]= {Subscript[\[Sigma], z],Subscript[\[Sigma], y]}
+In[81]:= eq//MatrixForm
+Out[81]//MatrixForm= ({2,8}	{5-5 \[Gamma]\[Prime]+a\[Prime] (-4+7 \[Gamma]\[Prime]),a\[Prime]+5 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime]}	(a\[Prime]==0.630\[Ellipsis]&&\[Gamma]\[Prime]+-0.119\[Ellipsis]==0)||(3 \[Gamma]\[Prime]<=1&&(3 a\[Prime]>=5||(a\[Prime]>0.979\[Ellipsis]&&1+3 a\[Prime] \[Gamma]\[Prime]<=a\[Prime]+5 \[Gamma]\[Prime])))||((-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]&&((a\[Prime]>0.630\[Ellipsis]&&a\[Prime]<=0.705\[Ellipsis]&&(a\[Prime] (-10+a\[Prime]+11 a\[Prime]^2))/(5-7 a\[Prime])^2+6 Sqrt[2] Sqrt[(a\[Prime]^3 (5-10 a\[Prime]+4 a\[Prime]^2+a\[Prime]^3))/(5-7 a\[Prime])^4]+\[Gamma]\[Prime]<=0)||(a\[Prime]>0.705\[Ellipsis]&&a\[Prime]<=0.979\[Ellipsis]&&8 Sqrt[(a\[Prime]^2 (32-92 a\[Prime]+112 a\[Prime]^2-75 a\[Prime]^3+23 a\[Prime]^4))/(8-7 a\[Prime])^4]+\[Gamma]\[Prime]<=(32-60 a\[Prime]+68 a\[Prime]^2-39 a\[Prime]^3)/(8-7 a\[Prime])^2)))
+{5,5}	{1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime]),1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime])}	(2+3 a\[Prime]==0&&54 \[Gamma]\[Prime]<=17+Sqrt[145])||(a\[Prime]==-0.590\[Ellipsis]&&\[Gamma]\[Prime]==1/72 ((-24+12 a\[Prime]-13 a\[Prime]^2)/(-1+a\[Prime])+5 Sqrt[(a\[Prime]^2 (48-24 a\[Prime]+a\[Prime]^2))/(-1+a\[Prime])^2]))||(a\[Prime]==0.503\[Ellipsis]&&6916252 \[Gamma]\[Prime]+3 Sqrt[7 (351156463431424-5958129102912 49.3\[Ellipsis]-68154041956 49.3\[Ellipsis]^2+225248900 49.3\[Ellipsis]^3+13811831 49.3\[Ellipsis]^4)]==1372 (101154-131684 0.503\[Ellipsis]-248261 0.503\[Ellipsis]^2+28136 0.503\[Ellipsis]^3+432572 0.503\[Ellipsis]^4))||(1/2 ((a\[Prime] (4+9 a\[Prime]+2 a\[Prime]^2))/(2+3 a\[Prime])^2-Sqrt[-((a\[Prime]^3 (-8-9 a\[Prime]+12 a\[Prime]^2+5 a\[Prime]^3))/(2+3 a\[Prime])^4)])<=\[Gamma]\[Prime]&&((\[Gamma]\[Prime]<=1/72 ((-24+12 a\[Prime]-13 a\[Prime]^2)/(-1+a\[Prime])+5 Sqrt[(a\[Prime]^2 (48-24 a\[Prime]+a\[Prime]^2))/(-1+a\[Prime])^2])&&(-(2/3)<a\[Prime]<-0.590\[Ellipsis]||(2+3 a\[Prime]<0&&17+Sqrt[129]+10 a\[Prime]>=0)))||(a\[Prime]>0.477\[Ellipsis]&&a\[Prime]<0.503\[Ellipsis]&&3/2 Sqrt[(a\[Prime]^2 (8-8 a\[Prime]-5 a\[Prime]^2-10 a\[Prime]^3+15 a\[Prime]^4))/(1+a\[Prime])^4]+\[Gamma]\[Prime]<=(2+a\[Prime]^2-6 a\[Prime]^3)/(1+a\[Prime])^2)||(0<=a\[Prime]&&a\[Prime]<=0.477\[Ellipsis]&&\[Gamma]\[Prime]<=1/72 ((-24+12 a\[Prime]-13 a\[Prime]^2)/(-1+a\[Prime])-5 Sqrt[(a\[Prime]^2 (48-24 a\[Prime]+a\[Prime]^2))/(-1+a\[Prime])^2]))))
+{6,6}	{1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime])),1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime]))}	(a\[Prime]==0&&0<=\[Gamma]\[Prime]&&3 \[Gamma]\[Prime]<=1)||(a\[Prime]==0.177\[Ellipsis]&&2520 \[Gamma]\[Prime]==952+Sqrt[2 (62328-24164 1.24\[Ellipsis]-856 1.24\[Ellipsis]^2+17 1.24\[Ellipsis]^3)]+28 0.177\[Ellipsis]-301 0.177\[Ellipsis]^2+49 0.177\[Ellipsis]^3)||(7+35 a\[Prime]==3 Sqrt[21]&&70 (293+63 Sqrt[21]) \[Gamma]\[Prime]==3 (763+83 Sqrt[21]+5 Sqrt[3598-182 Sqrt[21]]))||(a\[Prime]>0&&((Sqrt[2049]+22 a\[Prime]>49&&((a\[Prime]<0.177\[Ellipsis]&&1/2 ((a\[Prime] (-4+37 a\[Prime]-18 a\[Prime]^2))/(2-7 a\[Prime])^2+5 Sqrt[(a\[Prime]^3 (-8+57 a\[Prime]-60 a\[Prime]^2+11 a\[Prime]^3))/(2-7 a\[Prime])^4])<=\[Gamma]\[Prime]&&\[Gamma]\[Prime]<=1/72 ((-24+12 a\[Prime]-13 a\[Prime]^2)/(-1+a\[Prime])+5 Sqrt[(a\[Prime]^2 (48-24 a\[Prime]+a\[Prime]^2))/(-1+a\[Prime])^2]))||(7+35 a\[Prime]<3 Sqrt[21]&&1/2 ((a\[Prime] (4+9 a\[Prime]+2 a\[Prime]^2))/(2+3 a\[Prime])^2+Sqrt[-((a\[Prime]^3 (-8-9 a\[Prime]+12 a\[Prime]^2+5 a\[Prime]^3))/(2+3 a\[Prime])^4)])<=\[Gamma]\[Prime]&&\[Gamma]\[Prime]<=1/2 ((a\[Prime] (-4+37 a\[Prime]-18 a\[Prime]^2))/(2-7 a\[Prime])^2-5 Sqrt[(a\[Prime]^3 (-8+57 a\[Prime]-60 a\[Prime]^2+11 a\[Prime]^3))/(2-7 a\[Prime])^4]))))||(Sqrt[2049]+22 a\[Prime]<=49&&(((24-12 a\[Prime]+13 a\[Prime]^2)/(72-72 a\[Prime])<\[Gamma]\[Prime]&&\[Gamma]\[Prime]<=1/72 ((-24+12 a\[Prime]-13 a\[Prime]^2)/(-1+a\[Prime])+5 Sqrt[(a\[Prime]^2 (48-24 a\[Prime]+a\[Prime]^2))/(-1+a\[Prime])^2]))||(1/2 ((a\[Prime] (4+9 a\[Prime]+2 a\[Prime]^2))/(2+3 a\[Prime])^2+Sqrt[-((a\[Prime]^3 (-8-9 a\[Prime]+12 a\[Prime]^2+5 a\[Prime]^3))/(2+3 a\[Prime])^4)])<=\[Gamma]\[Prime]&&\[Gamma]\[Prime]<=(24-12 a\[Prime]+13 a\[Prime]^2)/(72-72 a\[Prime]))))))
+{6,8}	{1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime],1+\[Gamma]\[Prime]+1/2 a\[Prime] (-1+3 \[Gamma]\[Prime])}	a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime])&&Im[\[Gamma]\[Prime]]==0&&(3 Re[\[Gamma]\[Prime]]>1||Re[\[Gamma]\[Prime]]<=0.0837\[Ellipsis])
+{7,8}	{1+a\[Prime] (4-7 \[Gamma]\[Prime])+2 \[Gamma]\[Prime],1+2 \[Gamma]\[Prime]+a\[Prime] (-1+3 \[Gamma]\[Prime])}	(a\[Prime]==0.153\[Ellipsis]&&3 \[Gamma]\[Prime]==1)||(8+3 a\[Prime]==3 Sqrt[5]+Sqrt[151-66 Sqrt[5]]&&Sqrt[151-66 Sqrt[5]] (7+3 Sqrt[5])+60 \[Gamma]\[Prime]==23+3 Sqrt[5])||(3 Sqrt[5]+2 a\[Prime]>7&&((a\[Prime]<0.153\[Ellipsis]&&(a\[Prime] (-2+23 a\[Prime]-11 a\[Prime]^2))/(2-7 a\[Prime])^2+6 Sqrt[2] Sqrt[(a\[Prime]^3 (-1+8 a\[Prime]-8 a\[Prime]^2+a\[Prime]^3))/(2-7 a\[Prime])^4]<=\[Gamma]\[Prime]&&3 \[Gamma]\[Prime]<=1)||(a\[Prime]>0&&8+3 a\[Prime]<3 Sqrt[5]+Sqrt[151-66 Sqrt[5]]&&a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]&&6 Sqrt[2] Sqrt[(a\[Prime]^3 (-1+8 a\[Prime]-8 a\[Prime]^2+a\[Prime]^3))/(2-7 a\[Prime])^4]+\[Gamma]\[Prime]<=(a\[Prime] (-2+23 a\[Prime]-11 a\[Prime]^2))/(2-7 a\[Prime])^2)))||(3 \[Gamma]\[Prime]<=1&&(((2+3 a\[Prime]) \[Gamma]\[Prime]>=a\[Prime]&&3 Sqrt[5]+2 a\[Prime]<=7)||2+3 a\[Prime]<=0))
+{8,2}	{a\[Prime]+5 \[Gamma]\[Prime]-3 a\[Prime] \[Gamma]\[Prime],5-5 \[Gamma]\[Prime]+a\[Prime] (-4+7 \[Gamma]\[Prime])}	(a\[Prime]==0.630\[Ellipsis]&&\[Gamma]\[Prime]+-0.119\[Ellipsis]==0)||(3 \[Gamma]\[Prime]<=1&&(3 a\[Prime]>=5||(a\[Prime]>0.979\[Ellipsis]&&1+3 a\[Prime] \[Gamma]\[Prime]<=a\[Prime]+5 \[Gamma]\[Prime])))||((-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]&&((a\[Prime]>0.630\[Ellipsis]&&a\[Prime]<=0.705\[Ellipsis]&&(a\[Prime] (-10+a\[Prime]+11 a\[Prime]^2))/(5-7 a\[Prime])^2+6 Sqrt[2] Sqrt[(a\[Prime]^3 (5-10 a\[Prime]+4 a\[Prime]^2+a\[Prime]^3))/(5-7 a\[Prime])^4]+\[Gamma]\[Prime]<=0)||(a\[Prime]>0.705\[Ellipsis]&&a\[Prime]<=0.979\[Ellipsis]&&8 Sqrt[(a\[Prime]^2 (32-92 a\[Prime]+112 a\[Prime]^2-75 a\[Prime]^3+23 a\[Prime]^4))/(8-7 a\[Prime])^4]+\[Gamma]\[Prime]<=(32-60 a\[Prime]+68 a\[Prime]^2-39 a\[Prime]^3)/(8-7 a\[Prime])^2)))
+{8,6}	{1+\[Gamma]\[Prime]+1/2 a\[Prime] (-1+3 \[Gamma]\[Prime]),1+a\[Prime] (2-(7 \[Gamma]\[Prime])/2)+\[Gamma]\[Prime]}	a\[Prime]==(2 \[Gamma]\[Prime])/(1-3 \[Gamma]\[Prime])&&Im[\[Gamma]\[Prime]]==0&&(3 Re[\[Gamma]\[Prime]]>1||Re[\[Gamma]\[Prime]]<=0.0837\[Ellipsis])
+{8,7}	{1+2 \[Gamma]\[Prime]+a\[Prime] (-1+3 \[Gamma]\[Prime]),1+a\[Prime] (4-7 \[Gamma]\[Prime])+2 \[Gamma]\[Prime]}	(a\[Prime]==0.153\[Ellipsis]&&3 \[Gamma]\[Prime]==1)||(8+3 a\[Prime]==3 Sqrt[5]+Sqrt[151-66 Sqrt[5]]&&Sqrt[151-66 Sqrt[5]] (7+3 Sqrt[5])+60 \[Gamma]\[Prime]==23+3 Sqrt[5])||(3 Sqrt[5]+2 a\[Prime]>7&&((a\[Prime]<0.153\[Ellipsis]&&(a\[Prime] (-2+23 a\[Prime]-11 a\[Prime]^2))/(2-7 a\[Prime])^2+6 Sqrt[2] Sqrt[(a\[Prime]^3 (-1+8 a\[Prime]-8 a\[Prime]^2+a\[Prime]^3))/(2-7 a\[Prime])^4]<=\[Gamma]\[Prime]&&3 \[Gamma]\[Prime]<=1)||(a\[Prime]>0&&8+3 a\[Prime]<3 Sqrt[5]+Sqrt[151-66 Sqrt[5]]&&a\[Prime]/(2+3 a\[Prime])<=\[Gamma]\[Prime]&&6 Sqrt[2] Sqrt[(a\[Prime]^3 (-1+8 a\[Prime]-8 a\[Prime]^2+a\[Prime]^3))/(2-7 a\[Prime])^4]+\[Gamma]\[Prime]<=(a\[Prime] (-2+23 a\[Prime]-11 a\[Prime]^2))/(2-7 a\[Prime])^2)))||(3 \[Gamma]\[Prime]<=1&&(((2+3 a\[Prime]) \[Gamma]\[Prime]>=a\[Prime]&&3 Sqrt[5]+2 a\[Prime]<=7)||2+3 a\[Prime]<=0))
+{8,8}	{1,1}	(7 \[Gamma]\[Prime]<1&&(2+3 a\[Prime]) \[Gamma]\[Prime]<=a\[Prime]&&1+3 a\[Prime] \[Gamma]\[Prime]>=a\[Prime]+5 \[Gamma]\[Prime])||(7 \[Gamma]\[Prime]==1&&2 a\[Prime]==1)
+
+)
+In[87]:= Manipulate[{r,Cases[DeleteCases[(eq/.{a\[Prime]->pt[[1]],\[Gamma]\[Prime]->pt[[2]]}),{_,_,False}],{_,{a_,a_},_}][[;;,2,1]]},{{pt,{0.5,0.25}},Locator}]
+Out[87]= Manipulate[{r, Cases[DeleteCases[eq /. {a\[Prime] -> pt[[1]], \[Gamma]\[Prime] -> pt[[2]]}, 
+      {_, _, False}], {_, {a_, a_}, _}][[1 ;; All,2,1]]}, 
+  {{pt, {0.15250000000000002, 0.367}}, Automatic, ControlType -> Locator}]
+In[101]:= Max[{1,2,3}]
+Out[101]= 3
+In[450]:= DensityPlot[With[{vals=Cases[DeleteCases[(eq/. {a\[Prime]->x,\[Gamma]\[Prime]->y}),{_,_,False}],{_,{val_,val_},_}:>val]},If[vals==={},Indeterminate,Max[vals]]],{x,0,1},{y,0,Pi/2},(*LABELS*)FrameLabel->{"a'","\[Gamma]'"},PlotLegends->BarLegend[Automatic,LegendLabel->"Equilibrium Payout"],(*STYLING*)PlotRange->{All,All,{1,2.1}},ColorFunction->"TemperatureMap",PlotPoints->100,MaxRecursion->4,ClippingStyle->White]
+Out[450]= Equilibrium Payout
+
+
+
+In[455]:= Plot3D[With[{vals=Cases[DeleteCases[(eq/. {a\[Prime]->x,\[Gamma]\[Prime]->y}),{_,_,False}],{_,{val_,val_},_}:>val]},If[vals==={},Indeterminate,Max[vals]]],{x,0,1},{y,0,Pi/2},PlotLegends->BarLegend[Automatic,LegendLabel->"Equilibrium Payout"],(*STYLING*)PlotRange->{All,All,{1,2.1}},ColorFunction->"TemperatureMap",PlotPoints->100,MaxRecursion->4,ClippingStyle->White]
+Out[455]= Equilibrium Payout
+
+
+
+In[127]:= DensityPlot[With[{vals=Cases[DeleteCases[(eq/. {a\[Prime]->x,\[Gamma]\[Prime]->y}),{_,_,False}],{_,{val_,val_},_}:>val]},If[vals==={},Indeterminate,Max[vals]]],{x,0,1},{y,0,Pi/2},(*LABELS*)FrameLabel->{"a'","\[Gamma]'"},PlotLegends->BarLegend[Automatic,LegendLabel->"Equilibrium Payout"],(*STYLING*)PlotRange->{All,All,{1,2}},ColorFunction->"Rainbow",PlotPoints->100,MaxRecursion->4,ClippingStyle->White]
+Out[127]= Equilibrium Payout
+
+
+
+In[130]:= DensityPlot[With[{vals=Cases[DeleteCases[(eq/. {a\[Prime]->x,\[Gamma]\[Prime]->y}),{_,_,False}],{_,{val_,val_},_}:>val]},If[vals==={},Indeterminate,Max[vals]]],{x,0,1},{y,0,Pi/2},(*SCIENTIFIC STYLING*)ColorFunction->"GrayTones",Frame->True,FrameLabel->{"a'","\[Gamma]'"},LabelStyle->{FontFamily->"Times",FontSize->12,Black},PlotRange->{All,All,{1,2}},PlotPoints->100,MaxRecursion->4,ClippingStyle->White,ImageSize->Medium,(*LEGEND STYLING*)PlotLegends->BarLegend[Automatic,LegendLabel->"Equilibrium Payout",LabelStyle->{FontFamily->"Times",FontSize->11}]]
+Out[130]= Equilibrium Payout
+
+
+
+In[131]:= DensityPlot[With[{vals=Cases[DeleteCases[(eq/. {a\[Prime]->x,\[Gamma]\[Prime]->y}),{_,_,False}],{_,{val_,val_},_}:>val]},If[vals==={},Indeterminate,Max[vals]]],{x,0,1},{y,0,Pi/2},(*STYLING*)ColorFunction->"GrayTones",Frame->True,FrameLabel->{"a'","\[Gamma]'"},LabelStyle->{FontFamily->"Times",FontSize->12,Black},PlotRange->{All,All,{1,2}},PlotPoints->100,MaxRecursion->4,ImageSize->Medium,(*HASHING LOGIC*)ClippingStyle->None,Prolog->{FaceForm[HatchFilling[Pi/4,3,0.5]],Rectangle[Scaled[{0,0}],Scaled[{1,1}]]},(*LEGEND*)PlotLegends->BarLegend[Automatic,LegendLabel->"Equilibrium Payout",LabelStyle->{FontFamily->"Times",FontSize->11}]]
+Out[131]= Equilibrium Payout
+
+
+
+In[128]:= DensityPlot[With[{vals=Cases[DeleteCases[(eq/. {a\[Prime]->x,\[Gamma]\[Prime]->y}),{_,_,False}],{_,{val_,val1_},_}:>val]},If[vals==={},Indeterminate,Max[vals]]],{x,0,1},{y,0,Pi/2},(*LABELS*)FrameLabel->{"a'","\[Gamma]'"},PlotLegends->BarLegend[Automatic,LegendLabel->"Equilibrium Payout"],(*STYLING*)PlotRange->{All,All,{1,2}},ColorFunction->"Rainbow",PlotPoints->100,MaxRecursion->4,ClippingStyle->White]
+Out[128]= Equilibrium Payout
+
+
+
+In[116]:= Export["equilibrium_plot.png",%,ImageResolution->300]
+Out[116]= equilibrium_plot.png
+(Cases[DeleteCases[(eq),{_,_,False}],{_,{val_,val_},_}:>val])
+In[96]:= Table[(Cases[DeleteCases[(eq),{_,_,False}],{_,{val_,val_},_}:>val])/. {a'->x,\[Gamma]'->y},{x,0,1},{y,0,Pi/2}]
+Out[96]= {{{1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime]),1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime])),1},{1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime]),1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime])),1}},{{1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime]),1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime])),1},{1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime]),1/4 (4-a\[Prime]^2+8 \[Gamma]\[Prime]-2 a\[Prime] (-3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]+4 \[Gamma]\[Prime])),1}}}
+In[89]:= Manipulate[Grid[{{r,Cases[DeleteCases[(eq/. {a'->pt[[1]],\[Gamma]'->pt}),{_,_,False}],{_,{a_,b_},_}][[1]]}}],{{pt,{0.5,0.25}},Locator}]
+Out[89]= Manipulate[
+  Grid[{{r, Cases[DeleteCases[eq /. {Derivative[1][a] -> pt[[1]], 
+          Derivative[1][\[Gamma]] -> pt}, {_, _, False}], {_, {a_, b_}, _}][[
+      1]]}}], {{pt, {1.3541666666666667, -1.252}}, Automatic, 
+   ControlType -> Locator}]
+Part::partw: Part 1 of {} does not exist.
+In[480]:= eq[[2]]
+Out[480]= {{5,5},{1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime]),1/4 (4-a\[Prime]^2+2 a\[Prime] (3+Sqrt[1-a\[Prime]] Sqrt[\[Gamma]\[Prime]]-4 \[Gamma]\[Prime])+8 \[Gamma]\[Prime])},(2+3 a\[Prime]==0&&54 \[Gamma]\[Prime]<=17+Sqrt[145])||(a\[Prime]==-0.590\[Ellipsis]&&\[Gamma]\[Prime]==1/72 ((-24+12 a\[Prime]-13 a\[Prime]^2)/(-1+a\[Prime])+5 Sqrt[(a\[Prime]^2 (48-24 a\[Prime]+a\[Prime]^2))/(-1+a\[Prime])^2]))||(a\[Prime]==0.503\[Ellipsis]&&6916252 \[Gamma]\[Prime]+3 Sqrt[7 (351156463431424-5958129102912 49.3\[Ellipsis]-68154041956 49.3\[Ellipsis]^2+225248900 49.3\[Ellipsis]^3+13811831 49.3\[Ellipsis]^4)]==1372 (101154-131684 0.503\[Ellipsis]-248261 0.503\[Ellipsis]^2+28136 0.503\[Ellipsis]^3+432572 0.503\[Ellipsis]^4))||(1/2 ((a\[Prime] (4+9 a\[Prime]+2 a\[Prime]^2))/(2+3 a\[Prime])^2-Sqrt[-((a\[Prime]^3 (-8-9 a\[Prime]+12 a\[Prime]^2+5 a\[Prime]^3))/(2+3 a\[Prime])^4)])<=\[Gamma]\[Prime]&&((\[Gamma]\[Prime]<=1/72 ((-24+12 a\[Prime]-13 a\[Prime]^2)/(-1+a\[Prime])+5 Sqrt[(a\[Prime]^2 (48-24 a\[Prime]+a\[Prime]^2))/(-1+a\[Prime])^2])&&(-(2/3)<a\[Prime]<-0.590\[Ellipsis]||(2+3 a\[Prime]<0&&17+Sqrt[129]+10 a\[Prime]>=0)))||(a\[Prime]>0.477\[Ellipsis]&&a\[Prime]<0.503\[Ellipsis]&&3/2 Sqrt[(a\[Prime]^2 (8-8 a\[Prime]-5 a\[Prime]^2-10 a\[Prime]^3+15 a\[Prime]^4))/(1+a\[Prime])^4]+\[Gamma]\[Prime]<=(2+a\[Prime]^2-6 a\[Prime]^3)/(1+a\[Prime])^2)||(0<=a\[Prime]&&a\[Prime]<=0.477\[Ellipsis]&&\[Gamma]\[Prime]<=1/72 ((-24+12 a\[Prime]-13 a\[Prime]^2)/(-1+a\[Prime])-5 Sqrt[(a\[Prime]^2 (48-24 a\[Prime]+a\[Prime]^2))/(-1+a\[Prime])^2]))))}
+In[474]:= eqFilter = eq[[{2,3,9}]];
+bestResult = MultipleRegionNMaximize[eq[[;;,2,1]]+eq[[;;,2,2]],{a\[Prime],\[Gamma]\[Prime]},eq[[;;,3]]];
+In[483]:= bestResult = MultipleRegionNMaximize[eqFilter[[;;,2,1]],{a\[Prime],\[Gamma]\[Prime]},eqFilter[[;;,3]]];
+During evaluation of In[483]:= Found 7 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[483]:= Analysis complete. Returning the best result found.
+During evaluation of In[483]:= Found 7 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[483]:= Analysis complete. Returning the best result found.
+During evaluation of In[483]:= Found 2 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[483]:= Analysis complete. Returning the best result found.
+During evaluation of In[483]:= {{1.91987,{a\[Prime]->0.477118,\[Gamma]\[Prime]->0.179741}},{1.98427,{a\[Prime]->0.177164,\[Gamma]\[Prime]->0.475037}},{1.,{a\[Prime]->0.5,\[Gamma]\[Prime]->0.142857}}}
+In[482]:= bestResult
+Out[482]= {2.28403,{a\[Prime]->0.978681,\[Gamma]\[Prime]->0.333333}}
+In[80]:= eq/.bestResult[[2]]//MatrixForm
+Out[80]//MatrixForm= ({2,8}	{2.50528,2.29987}	False
+{5,5}	{2.09504,2.09504}	False
+{6,6}	{1.98427,1.98427}	True
+{6,8}	{1.53481,1.51269}	False
+{7,8}	{2.06961,2.02539}	False
+{8,2}	{2.29987,2.50528}	False
+{8,6}	{1.51269,1.53481}	False
+{8,7}	{2.02539,2.06961}	False
+{8,8}	{1,1}	False
+
+)
+In[132]:= cnstrt = eq[[1,3]];
+conds = If[Head[LogicalExpand[cnstrt]]===Or,List@@LogicalExpand[cnstrt],{LogicalExpand[cnstrt]}]
+Out[133]= {\[Gamma]\[Prime]+-0.119\[Ellipsis]==0&&0.630\[Ellipsis]==a\[Prime],3 a\[Prime]>=5&&3 \[Gamma]\[Prime]<=1,a\[Prime]>0.979\[Ellipsis]&&3 \[Gamma]\[Prime]<=1&&1+3 a\[Prime] \[Gamma]\[Prime]<=a\[Prime]+5 \[Gamma]\[Prime],a\[Prime]>0.705\[Ellipsis]&&a\[Prime]<=0.979\[Ellipsis]&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]&&8 Sqrt[(a\[Prime]^2 (32-92 a\[Prime]+112 a\[Prime]^2-75 a\[Prime]^3+23 a\[Prime]^4))/(8-7 a\[Prime])^4]+\[Gamma]\[Prime]<=(32-60 a\[Prime]+68 a\[Prime]^2-39 a\[Prime]^3)/(8-7 a\[Prime])^2,a\[Prime]>0.630\[Ellipsis]&&a\[Prime]<=0.705\[Ellipsis]&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]&&(a\[Prime] (-10+a\[Prime]+11 a\[Prime]^2))/(5-7 a\[Prime])^2+6 Sqrt[2] Sqrt[(a\[Prime]^3 (5-10 a\[Prime]+4 a\[Prime]^2+a\[Prime]^3))/(5-7 a\[Prime])^4]+\[Gamma]\[Prime]<=0}
+In[140]:= Select[conds,RegionDimension[ImplicitRegion[#,{a\[Prime],\[Gamma]\[Prime]}]]==0&]//N//Simplify
+Out[140]= {\[Gamma]\[Prime]==0.118955&&a\[Prime]==0.630076}
+
+Out[123]= (a\[Prime]==0.630\[Ellipsis]&&\[Gamma]\[Prime]+-0.119\[Ellipsis]==0)||(3 \[Gamma]\[Prime]<=1&&(3 a\[Prime]>=5||(a\[Prime]>0.979\[Ellipsis]&&1+3 a\[Prime] \[Gamma]\[Prime]<=a\[Prime]+5 \[Gamma]\[Prime])))||((-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]&&((a\[Prime]>0.630\[Ellipsis]&&a\[Prime]<=0.705\[Ellipsis]&&(a\[Prime] (-10+a\[Prime]+11 a\[Prime]^2))/(5-7 a\[Prime])^2+6 Sqrt[2] Sqrt[(a\[Prime]^3 (5-10 a\[Prime]+4 a\[Prime]^2+a\[Prime]^3))/(5-7 a\[Prime])^4]+\[Gamma]\[Prime]<=0)||(a\[Prime]>0.705\[Ellipsis]&&a\[Prime]<=0.979\[Ellipsis]&&8 Sqrt[(a\[Prime]^2 (32-92 a\[Prime]+112 a\[Prime]^2-75 a\[Prime]^3+23 a\[Prime]^4))/(8-7 a\[Prime])^4]+\[Gamma]\[Prime]<=(32-60 a\[Prime]+68 a\[Prime]^2-39 a\[Prime]^3)/(8-7 a\[Prime])^2)))
+(a=b) != 0  
+In[18]:= assumptions = 0<\[Gamma]<\[Pi]/2&&-Infinity<a<Infinity;
+In[61]:= symmetricJ = FullSimplify[(J[a,a,Pi/2]//FullSimplify),Assumptions->assumptions];
+In[62]:= finalStates = FullSimplify[Table[play[symmetricJ,D4[[i]],D4[[j]]],{i,8},{j,8}]/.Conjugate->MyConj,Assumptions->assumptions];
+In[68]:= alicesScores = FullSimplify[(ParallelMap[alicesScore,finalStates,{2}])//Simplify];
+bobsScores = FullSimplify[(ParallelMap[bobsScore,finalStates,{2}])//Simplify];
+In[70]:= alicesScores//MatrixForm
+Out[70]//MatrixForm= (5	3 Sin[(a \[Pi])/2]^2	1/4 (13-3 Cos[a \[Pi]])	1/4 (13-3 Cos[a \[Pi]])	1/4 (5+3 Cos[a \[Pi]])	1/4 (5+3 Cos[a \[Pi]])	3/2 (1+Cos[a \[Pi]])	1
+Sin[(a \[Pi])/2]^2	5 Cos[(a \[Pi])/2]^4+Sin[a \[Pi]]^2	1/16 (23-4 Cos[(a \[Pi])/2]+16 Cos[a \[Pi]]+4 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	1/16 (23+4 Cos[(a \[Pi])/2]+16 Cos[a \[Pi]]-4 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	1/16 (49-8 Cos[(a \[Pi])/2]-16 Cos[a \[Pi]]+8 Cos[(3 a \[Pi])/2]-Cos[2 a \[Pi]])	1/16 (49+8 Cos[(a \[Pi])/2]-16 Cos[a \[Pi]]-8 Cos[(3 a \[Pi])/2]-Cos[2 a \[Pi]])	1/8 (17-8 Cos[a \[Pi]]-Cos[2 a \[Pi]])	4-Cos[a \[Pi]]
+1/4 (11-Cos[a \[Pi]])	1/16 (31-12 Cos[(a \[Pi])/2]+8 Cos[a \[Pi]]+12 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	2 Cos[(a \[Pi])/4]^2 (9+Cos[(a \[Pi])/2]) Sin[(a \[Pi])/4]^4	1/32 (115-8 Cos[(a \[Pi])/2]+44 Cos[a \[Pi]]+8 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	1/32 (85+4 Cos[(a \[Pi])/2]+12 Cos[a \[Pi]]-4 Cos[(3 a \[Pi])/2]-Cos[2 a \[Pi]])	1/4 (3+Cos[a \[Pi]]^2+80 Cos[(a \[Pi])/4]^6 Sin[(a \[Pi])/4]^2)	1/8 ((1+Cos[a \[Pi]])^2+3 (-1-2 Cos[(a \[Pi])/2]+Cos[a \[Pi]])^2+5 Sin[a \[Pi]]^2)	1/2 (5-Cos[a \[Pi]])
+1/4 (11-Cos[a \[Pi]])	1/16 (31+12 Cos[(a \[Pi])/2]+8 Cos[a \[Pi]]-12 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	1/32 (115+8 Cos[(a \[Pi])/2]+44 Cos[a \[Pi]]-8 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	-2 Cos[(a \[Pi])/4]^4 (-9+Cos[(a \[Pi])/2]) Sin[(a \[Pi])/4]^2	1/4 (3+Cos[a \[Pi]]^2+80 Cos[(a \[Pi])/4]^2 Sin[(a \[Pi])/4]^6)	1/32 (85-4 Cos[(a \[Pi])/2]+12 Cos[a \[Pi]]+4 Cos[(3 a \[Pi])/2]-Cos[2 a \[Pi]])	1/8 ((1+Cos[a \[Pi]])^2+3 (-1+2 Cos[(a \[Pi])/2]+Cos[a \[Pi]])^2+5 Sin[a \[Pi]]^2)	1/2 (5-Cos[a \[Pi]])
+1/4 (7+Cos[a \[Pi]])	41/16-Cos[(a \[Pi])/2]-1/2 Cos[a \[Pi]]+Cos[(3 a \[Pi])/2]-1/16 Cos[2 a \[Pi]]	1/32 (53-12 Cos[(a \[Pi])/2]-20 Cos[a \[Pi]]+12 Cos[(3 a \[Pi])/2]-Cos[2 a \[Pi]])	1/4 (7+Cos[a \[Pi]] (4+Cos[a \[Pi]])+80 Cos[(a \[Pi])/4]^2 Sin[(a \[Pi])/4]^6)	1/32 (115+24 Cos[(a \[Pi])/2]+44 Cos[a \[Pi]]-24 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	-(1/8) (-17-8 Cos[(a \[Pi])/2]+Cos[a \[Pi]]) Sin[(a \[Pi])/2]^2	1/16 (43+16 Cos[(a \[Pi])/2]-4 Cos[a \[Pi]]-16 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	1/2 (4+Cos[a \[Pi]])
+1/4 (7+Cos[a \[Pi]])	Cos[(a \[Pi])/2]+1/16 (41-8 Cos[a \[Pi]]-16 Cos[(3 a \[Pi])/2]-Cos[2 a \[Pi]])	1/4 (7+Cos[a \[Pi]] (4+Cos[a \[Pi]])+80 Cos[(a \[Pi])/4]^6 Sin[(a \[Pi])/4]^2)	1/32 (53+12 Cos[(a \[Pi])/2]-20 Cos[a \[Pi]]-12 Cos[(3 a \[Pi])/2]-Cos[2 a \[Pi]])	-(1/8) (-17+8 Cos[(a \[Pi])/2]+Cos[a \[Pi]]) Sin[(a \[Pi])/2]^2	1/32 (115-24 Cos[(a \[Pi])/2]+44 Cos[a \[Pi]]+24 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	1/16 (43-16 Cos[(a \[Pi])/2]-4 Cos[a \[Pi]]+16 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	1/2 (4+Cos[a \[Pi]])
+Cos[(a \[Pi])/2]^2	17/8+Cos[a \[Pi]]-1/8 Cos[2 a \[Pi]]	1/16 (21+4 Cos[(a \[Pi])/2]+12 Cos[a \[Pi]]-4 Cos[(3 a \[Pi])/2]-Cos[2 a \[Pi]])	1/8 (3 (1+Cos[a \[Pi]])^2+(-1+2 Cos[(a \[Pi])/2]+Cos[a \[Pi]])^2+5 Sin[a \[Pi]]^2)	1/16 (51+8 Cos[(a \[Pi])/2]-12 Cos[a \[Pi]]-8 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	1/16 (51-8 Cos[(a \[Pi])/2]-12 Cos[a \[Pi]]+8 Cos[(3 a \[Pi])/2]+Cos[2 a \[Pi]])	5 Sin[(a \[Pi])/2]^4+Sin[a \[Pi]]^2	4+Cos[a \[Pi]]
+3	3-2 Cos[a \[Pi]]	3-Cos[a \[Pi]]	3-Cos[a \[Pi]]	3/2+Cos[a \[Pi]]	3/2+Cos[a \[Pi]]	3+2 Cos[a \[Pi]]	0
+
+)
+Convert to \[Gamma]\[Prime] == Sin[\[Gamma]]^2  a\[Prime] = Sin[\[Gamma] a]^2  for simplification
+In[66]:= alicesScores = (((alicesScores/.a->ArcSin[Sqrt[a\[Prime]]]/\[Gamma])/.\[Gamma]->ArcSin[Sqrt[\[Gamma]\[Prime]]]))//TrigExpand//FullSimplify;
+bobsScores = (((bobsScores/.a->ArcSin[Sqrt[a\[Prime]]]/\[Gamma])/.\[Gamma]->ArcSin[Sqrt[\[Gamma]\[Prime]]]))//TrigExpand//FullSimplify;
+Out[67]= $Aborted
+In[71]:= eq = DiscreteNashEquilibria[(alicesScores),(bobsScores),assumptions];
+eq = DeleteCases[eq,{_,_,False}];
+In[74]:= eq = ((#[[{1,2}]]~Join~{Simplify[Reduce[Simplify[#[[3]],assumptions]]]}&/@eq)/.Reduce->Identity);
+In[75]:= eq = DeleteCases[eq,{_,_,False}];
+In[76]:= eq//MatrixForm
+Out[76]//MatrixForm= {}
+In[68]:= inequalities=eq[[;;,3]];
+numRegions=Length[inequalities];
+colors=Table[ColorData[97,i],{i,1,numRegions}];
+labels=Table["Region "<>ToString[i],{i,1,numRegions}];
+
+textures={HatchFilling[0],
+HatchFilling[Pi/2],
+HatchFilling[Pi/4],
+HatchFilling[-Pi/4],
+HatchFilling[Pi/8,2],
+HatchFilling[Pi/3,2],
+HatchFilling[0,2],
+HatchFilling[Pi/2,2],
+HatchFilling[Pi/4,2],HatchFilling[-Pi/4,2]};
+
+r = RegionPlot[inequalities,{a\[Prime],0,1},{\[Gamma]\[Prime],0,1},PlotStyle->Table[{Opacity[0.6,colors[[i]]],textures[[i]]},{i,1,numRegions}],PlotLegends->Table[ToString[D4Sym[[e]],TraditionalForm],{e,eq[[;;,1]]}],FrameLabel->{"a\[Prime]","\[Gamma]\[Prime]"},ImageSize->Large,MaxRecursion->6];
+During evaluation of In[68]:= Part::partw: Part 11 of {HatchFilling[Angle: 0
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/2
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/4
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: -(\[Pi]/4)
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/8
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/3
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: 0
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/2
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/4
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: -(\[Pi]/4)
+Thickness: 2
+Spacing: 5
+
+]} does not exist.
+During evaluation of In[68]:= Part::partw: Part 12 of {HatchFilling[Angle: 0
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/2
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/4
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: -(\[Pi]/4)
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/8
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/3
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: 0
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/2
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/4
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: -(\[Pi]/4)
+Thickness: 2
+Spacing: 5
+
+]} does not exist.
+During evaluation of In[68]:= Part::partw: Part 13 of {HatchFilling[Angle: 0
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/2
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/4
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: -(\[Pi]/4)
+Thickness: 1
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/8
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/3
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: 0
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/2
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: \[Pi]/4
+Thickness: 2
+Spacing: 5
+
+],HatchFilling[Angle: -(\[Pi]/4)
+Thickness: 2
+Spacing: 5
+
+]} does not exist.
+During evaluation of In[68]:= General::stop: Further output of Part::partw will be suppressed during this calculation.
+In[74]:= Manipulate[Grid[{{r,DeleteCases[(eq/.{a\[Prime]->pt[[1]],\[Gamma]\[Prime]->pt[[2]]}),{_,_,False}]//MatrixForm}}],{{pt,{0.5,0.25}},Locator}]
+Out[74]= Manipulate[
+  Grid[{{r, MatrixForm[DeleteCases[eq /. {a\[Prime] -> pt[[1]], \[Gamma]\[Prime] -> pt[[2]]}, 
+       {_, _, False}]]}}], {{pt, {0.5, 0.25}}, Automatic, 
+   ControlType -> Locator}]
+In[76]:= bestResult = MultipleRegionNMaximize[eq[[;;,2,1]]+eq[[;;,2,2]],{a\[Prime],\[Gamma]\[Prime]},eq[[;;,3]]];
+During evaluation of In[76]:= Found 5 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= Found 7 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= Found 7 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= Found 2 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= Found 6 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= Found 5 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= Found 2 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= Found 6 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= Found 2 distinct regions to analyze. Running NMaximize on each...
+During evaluation of In[76]:= Analysis complete. Returning the best result found.
+During evaluation of In[76]:= {{3.40958,{a\[Prime]->0.630076,\[Gamma]\[Prime]->0.118955}},{3.83973,{a\[Prime]->0.477118,\[Gamma]\[Prime]->0.179741}},{3.96854,{a\[Prime]->0.177164,\[Gamma]\[Prime]->0.475037}},{2.46532,{a\[Prime]->0.223556,\[Gamma]\[Prime]->0.0837078}},{3.58761,{a\[Prime]->0.152566,\[Gamma]\[Prime]->0.333333}},{3.40958,{a\[Prime]->0.630076,\[Gamma]\[Prime]->0.118955}},{2.46532,{a\[Prime]->0.223556,\[Gamma]\[Prime]->0.0837078}},{3.58761,{a\[Prime]->0.152566,\[Gamma]\[Prime]->0.333333}},{2.,{a\[Prime]->0.5,\[Gamma]\[Prime]->0.142857}}}
+In[79]:= bestResult
+Out[79]= {3.96854,{a\[Prime]->0.177164,\[Gamma]\[Prime]->0.475037}}
+In[80]:= eq/.bestResult[[2]]//MatrixForm
+Out[80]//MatrixForm= ({2,8}	{2.50528,2.29987}	False
+{5,5}	{2.09504,2.09504}	False
+{6,6}	{1.98427,1.98427}	True
+{6,8}	{1.53481,1.51269}	False
+{7,8}	{2.06961,2.02539}	False
+{8,2}	{2.29987,2.50528}	False
+{8,6}	{1.51269,1.53481}	False
+{8,7}	{2.02539,2.06961}	False
+{8,8}	{1,1}	False
+
+)
+In[132]:= cnstrt = eq[[1,3]];
+conds = If[Head[LogicalExpand[cnstrt]]===Or,List@@LogicalExpand[cnstrt],{LogicalExpand[cnstrt]}]
+Out[133]= {\[Gamma]\[Prime]+-0.119\[Ellipsis]==0&&0.630\[Ellipsis]==a\[Prime],3 a\[Prime]>=5&&3 \[Gamma]\[Prime]<=1,a\[Prime]>0.979\[Ellipsis]&&3 \[Gamma]\[Prime]<=1&&1+3 a\[Prime] \[Gamma]\[Prime]<=a\[Prime]+5 \[Gamma]\[Prime],a\[Prime]>0.705\[Ellipsis]&&a\[Prime]<=0.979\[Ellipsis]&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]&&8 Sqrt[(a\[Prime]^2 (32-92 a\[Prime]+112 a\[Prime]^2-75 a\[Prime]^3+23 a\[Prime]^4))/(8-7 a\[Prime])^4]+\[Gamma]\[Prime]<=(32-60 a\[Prime]+68 a\[Prime]^2-39 a\[Prime]^3)/(8-7 a\[Prime])^2,a\[Prime]>0.630\[Ellipsis]&&a\[Prime]<=0.705\[Ellipsis]&&(-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]&&(a\[Prime] (-10+a\[Prime]+11 a\[Prime]^2))/(5-7 a\[Prime])^2+6 Sqrt[2] Sqrt[(a\[Prime]^3 (5-10 a\[Prime]+4 a\[Prime]^2+a\[Prime]^3))/(5-7 a\[Prime])^4]+\[Gamma]\[Prime]<=0}
+In[140]:= Select[conds,RegionDimension[ImplicitRegion[#,{a\[Prime],\[Gamma]\[Prime]}]]==0&]//N//Simplify
+Out[140]= {\[Gamma]\[Prime]==0.118955&&a\[Prime]==0.630076}
+
+Out[123]= (a\[Prime]==0.630\[Ellipsis]&&\[Gamma]\[Prime]+-0.119\[Ellipsis]==0)||(3 \[Gamma]\[Prime]<=1&&(3 a\[Prime]>=5||(a\[Prime]>0.979\[Ellipsis]&&1+3 a\[Prime] \[Gamma]\[Prime]<=a\[Prime]+5 \[Gamma]\[Prime])))||((-1+a\[Prime])/(-5+3 a\[Prime])<=\[Gamma]\[Prime]&&((a\[Prime]>0.630\[Ellipsis]&&a\[Prime]<=0.705\[Ellipsis]&&(a\[Prime] (-10+a\[Prime]+11 a\[Prime]^2))/(5-7 a\[Prime])^2+6 Sqrt[2] Sqrt[(a\[Prime]^3 (5-10 a\[Prime]+4 a\[Prime]^2+a\[Prime]^3))/(5-7 a\[Prime])^4]+\[Gamma]\[Prime]<=0)||(a\[Prime]>0.705\[Ellipsis]&&a\[Prime]<=0.979\[Ellipsis]&&8 Sqrt[(a\[Prime]^2 (32-92 a\[Prime]+112 a\[Prime]^2-75 a\[Prime]^3+23 a\[Prime]^4))/(8-7 a\[Prime])^4]+\[Gamma]\[Prime]<=(32-60 a\[Prime]+68 a\[Prime]^2-39 a\[Prime]^3)/(8-7 a\[Prime])^2)))

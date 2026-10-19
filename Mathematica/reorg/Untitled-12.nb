@@ -1,0 +1,705 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     26223,        695]
+NotebookOptionsPosition[     24142,        653]
+NotebookOutlinePosition[     24547,        669]
+CellTagsIndexPosition[     24504,        666]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Ensure", " ", "your", " ", "payoff", " ", "functions", " ", 
+    "aScoresComputed", " ", "and", " ", "bScoresComputed", " ", "are", " ", 
+    "defined"}], "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"For", " ", 
+      RowBox[{"example", ":", "aScoresComputed"}]}], "=", 
+     RowBox[{
+      RowBox[{"...", " ", "your", " ", "expression"}], "..."}]}], ";"}], 
+   "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"bScoresComputed", "=", 
+     RowBox[{
+      RowBox[{"...", " ", "your", " ", "expression"}], "..."}]}], ";"}], 
+   "*)"}], 
+  RowBox[{"(*", 
+   RowBox[{
+   "1.", " ", "Define", " ", "your", " ", "variables", " ", "and", " ", "any",
+     " ", "constants"}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"varsA", "=", 
+     RowBox[{"{", 
+      RowBox[{"\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1"}], "}"}]}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"varsB", "=", 
+     RowBox[{"{", 
+      RowBox[{"\[Theta]2", ",", "\[Phi]2", ",", "\[Zeta]2"}], "}"}]}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"allVars", "=", 
+     RowBox[{"Join", "[", 
+      RowBox[{"varsA", ",", "varsB"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"\[Gamma]", "=", "0.760425"}], " ", ";"}], "\[IndentingNewLine]", 
+   " ", 
+   RowBox[{
+    RowBox[{"a", "=", "0.571321"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "2.", " ", "Compute", " ", "the", " ", "gradients", " ", "for", " ", 
+     "each", " ", "player"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"gradA", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{"aScoresComputed", ",", 
+       RowBox[{"{", "varsA", "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"gradB", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{"bScoresComputed", ",", 
+       RowBox[{"{", "varsB", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "3.", " ", "Set", " ", "up", " ", "the", " ", "system", " ", "of", " ", 
+     "equations"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"equations", "=", 
+     RowBox[{"FullSimplify", "[", 
+      RowBox[{
+       RowBox[{"Join", "[", 
+        RowBox[{"gradA", ",", "gradB"}], "]"}], "==", "0"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "4.", " ", "Solve", " ", "the", " ", "system", " ", "numerically", " ", 
+     "with", " ", "FindRoot"}], "*)"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "You", " ", "MUST", " ", "provide", " ", "a", " ", "good", " ", 
+     "starting", " ", "point", " ", "for", " ", "each", " ", 
+     RowBox[{"variable", "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Define", " ", "all", " ", "the", " ", "variables", " ", "in", " ", 
+     "your", " ", "system"}], "*)"}], 
+   RowBox[{
+    RowBox[{"allVars", "=", 
+     RowBox[{"{", 
+      RowBox[{
+      "\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1", ",", "\[Theta]2", ",", 
+       "\[Phi]2", ",", "\[Zeta]2"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"Optional", " ", "but", " ", "recommended"}], ")"}], " ", 
+     "Make", " ", "the", " ", "randomization", " ", "reproducible"}], "*)"}], 
+   "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"SeedRandom", "[", "1234", "]"}], ";"}], " ", "*)"}], 
+   RowBox[{"(*", 
+    RowBox[{"Use", " ", "any", " ", "integer", " ", "you", " ", "like"}], 
+    "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Generate", " ", "a", " ", "list", " ", "of", " ", "random", " ", 
+     "values", " ", "between", " ", "0", " ", "and", " ", "2", "\[Pi]"}], 
+    "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"randomValues", "=", 
+     RowBox[{"RandomReal", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", 
+         RowBox[{"2", " ", "Pi"}]}], "}"}], ",", 
+       RowBox[{"Length", "[", "allVars", "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Combine", " ", "variables", " ", "and", " ", "values", " ", "into", " ", 
+     "the", " ", 
+     RowBox[{"{", 
+      RowBox[{"var", ",", "start_val"}], "}"}], " ", "format"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"startPoint", "=", 
+     RowBox[{"MapThread", "[", 
+      RowBox[{"List", ",", 
+       RowBox[{"{", 
+        RowBox[{"allVars", ",", "randomValues"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"solution", "=", 
+    RowBox[{"FindRoot", "[", 
+     RowBox[{"equations", ",", "startPoint"}], "]"}]}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "The", " ", "output", " ", "will", " ", "be", " ", "a", " ", "set", " ", 
+      "of", " ", "replacement", " ", "rules", " ", "for", " ", "the", " ", 
+      "variables"}], ",", 
+     RowBox[{"representing", " ", "a", " ", "candidate", " ", "Nash", " ", 
+      RowBox[{"Equilibrium", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Assume", "'"}], 
+      RowBox[{"solution", "'"}], " ", "is", " ", "the", " ", "output", " ", 
+      "from", " ", "FindRoot"}], ",", 
+     RowBox[{
+      RowBox[{"e", ".", "g", "."}], ":"}]}], "*)"}], 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"solution", "=", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\[Theta]1", "->", "1.5"}], ",", 
+        RowBox[{"\[Phi]1", "->", "0.8"}], ",", 
+        RowBox[{"\[Zeta]1", "->", "2.1"}], ",", 
+        RowBox[{"\[Theta]2", "->", "1.8"}], ",", 
+        RowBox[{"\[Phi]2", "->", "0.5"}], ",", 
+        RowBox[{"\[Zeta]2", "->", "2.5"}]}], "}"}]}], ";"}], "*)"}], 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"And", " ", "aScoresComputed"}], ",", "bScoresComputed", ",", 
+     RowBox[{"\[Gamma]", " ", "are", " ", "defined"}]}], "*)"}], 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "1."}]}], " ", "Validation", " ", "for", " ", "Player", 
+      " ", 
+      RowBox[{"A", "--"}]}], "-"}], "*)"}], 
+   RowBox[{"(*", 
+    RowBox[{"Define", " ", "Player", " ", 
+     RowBox[{"A", "'"}], "s", " ", "variables"}], "*)"}], 
+   RowBox[{
+    RowBox[{"varsA", "=", 
+     RowBox[{"{", 
+      RowBox[{"\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Compute", " ", "the", " ", "Hessian", " ", "matrix", " ", "for", " ", 
+     "Player", " ", "A"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"hessianA", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{"aScoresComputed", ",", 
+       RowBox[{"{", 
+        RowBox[{"varsA", ",", "2"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Substitute", " ", "the", " ", "candidate", " ", "NE", " ", "point", " ", 
+     "into", " ", "the", " ", "Hessian"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"hessianAatNE", "=", 
+     RowBox[{
+      RowBox[{"hessianA", "/.", " ", "solution"}], "/.", " ", 
+      RowBox[{"{", 
+       RowBox[{"\[Gamma]", "->", 
+        RowBox[{"ArcSin", "[", 
+         FractionBox["1", 
+          SqrtBox["3"]], "]"}]}], "}"}]}]}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"Use", " ", "your", " ", "value", " ", "for", " ", "\[Gamma]"}], 
+    "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Calculate", " ", "the", " ", "eigenvalues"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"eigenvaluesA", "=", 
+     RowBox[{"Eigenvalues", "[", "hessianAatNE", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Player A Eigenvalues: \>\"", ",", "eigenvaluesA"}], "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"AllTrue", "[", 
+       RowBox[{"eigenvaluesA", ",", 
+        RowBox[{
+         RowBox[{"#", "<", "0"}], "&"}]}], "]"}], ",", 
+      RowBox[{"Print", "[", "\"\<--> Player A condition PASSED.\>\"", "]"}], 
+      ",", 
+      RowBox[{"Print", "[", "\"\<--> Player A condition FAILED.\>\"", "]"}]}],
+      "]"}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "2."}]}], " ", "Validation", " ", "for", " ", "Player", 
+      " ", 
+      RowBox[{"B", "--"}]}], "-"}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Define", " ", "Player", " ", 
+     RowBox[{"B", "'"}], "s", " ", "variables"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"varsB", "=", 
+     RowBox[{"{", 
+      RowBox[{"\[Theta]2", ",", "\[Phi]2", ",", "\[Zeta]2"}], "}"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Compute", " ", "the", " ", "Hessian", " ", "matrix", " ", "for", " ", 
+     "Player", " ", "B"}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{"hessianB", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{"bScoresComputed", ",", 
+       RowBox[{"{", 
+        RowBox[{"varsB", ",", "2"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Substitute", " ", "the", " ", "candidate", " ", "NE", " ", "point", " ", 
+     "into", " ", "the", " ", "Hessian"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"hessianBatNE", "=", 
+     RowBox[{
+      RowBox[{"hessianB", "/.", " ", "solution"}], "/.", " ", 
+      RowBox[{"{", 
+       RowBox[{"\[Gamma]", "->", "0.5"}], "}"}]}]}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"Use", " ", "your", " ", "value", " ", "for", " ", "\[Gamma]"}], 
+    "*)"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Calculate", " ", "the", " ", "eigenvalues"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"eigenvaluesB", "=", 
+     RowBox[{"Eigenvalues", "[", "hessianBatNE", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<\\nPlayer B Eigenvalues: \>\"", ",", "eigenvaluesB"}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"AllTrue", "[", 
+       RowBox[{"eigenvaluesB", ",", 
+        RowBox[{
+         RowBox[{"#", "<", "0"}], "&"}]}], "]"}], ",", 
+      RowBox[{"Print", "[", "\"\<--> Player B condition PASSED.\>\"", "]"}], 
+      ",", 
+      RowBox[{"Print", "[", "\"\<--> Player B condition FAILED.\>\"", "]"}]}],
+      "]"}], ";"}], "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "3."}]}], " ", "Final", " ", 
+      RowBox[{"Conclusion", "--"}]}], "-"}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"AllTrue", "[", 
+        RowBox[{"eigenvaluesA", ",", 
+         RowBox[{
+          RowBox[{"#", "<", "0"}], "&"}]}], "]"}], "&&", 
+       RowBox[{"AllTrue", "[", 
+        RowBox[{"eigenvaluesB", ",", 
+         RowBox[{
+          RowBox[{"#", "<", "0"}], "&"}]}], "]"}]}], ",", 
+      RowBox[{
+      "Print", "[", 
+       "\"\<\\nConclusion: The point is a locally stable Nash \
+Equilibrium.\>\"", "]"}], ",", 
+      RowBox[{
+      "Print", "[", 
+       "\"\<\\nConclusion: The point is NOT a locally stable Nash \
+Equilibrium.\>\"", "]"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"aScoresComputed", "/.", "solution"}]}]}]], "Input",
+ CellChangeTimes->{{3.9665362257820587`*^9, 3.96653622578306*^9}, {
+  3.966536668419882*^9, 3.9665367158744316`*^9}, {3.9665373677361393`*^9, 
+  3.966537372470848*^9}, {3.9665374340427303`*^9, 3.966537436586836*^9}, {
+  3.9665374678694515`*^9, 3.966537474869877*^9}, {3.9665389425185223`*^9, 
+  3.966538954078844*^9}},
+ CellLabel->
+  "In[1900]:=",ExpressionUUID->"17f2ae04-5908-cf45-b30a-dfa8319b9a78"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\[Theta]1", "\[Rule]", "1.2758015100802034`"}], ",", 
+   RowBox[{"\[Phi]1", "\[Rule]", "3.4365874703044805`"}], ",", 
+   RowBox[{"\[Zeta]1", "\[Rule]", "2.152307330709492`"}], ",", 
+   RowBox[{"\[Theta]2", "\[Rule]", "3.4365874703044885`"}], ",", 
+   RowBox[{"\[Phi]2", "\[Rule]", "1.2758015100801954`"}], ",", 
+   RowBox[{"\[Zeta]2", "\[Rule]", "4.130877976470094`"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.9665362285631638`*^9, {3.966536672543873*^9, 3.9665367236618786`*^9}, {
+   3.966537373196089*^9, 3.966537427269434*^9}, {3.9665374706475735`*^9, 
+   3.966537490520914*^9}, 3.96653898020907*^9},
+ CellLabel->
+  "Out[1911]=",ExpressionUUID->"8a9e171c-1c86-c441-a527-1d0e93d64e51"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Player A Eigenvalues: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "10.87474581629601`"}], ",", 
+     RowBox[{"-", "4.157870199967029`"}], ",", 
+     RowBox[{"-", "0.24536620091642058`"}]}], "}"}]}],
+  SequenceForm[
+  "Player A Eigenvalues: ", {-10.87474581629601, -4.157870199967029, \
+-0.24536620091642058`}],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.966536700007923*^9, 3.9665367236663895`*^9}, {
+   3.966537373196089*^9, 3.966537427269434*^9}, {3.9665374706475735`*^9, 
+   3.9665374905259285`*^9}, 3.966538980213068*^9},
+ CellLabel->
+  "During evaluation of \
+In[1900]:=",ExpressionUUID->"64b68ef0-a841-e94d-beed-0d0da4b2c8e0"],
+
+Cell[BoxData["\<\"--> Player A condition PASSED.\"\>"], "Print",
+ CellChangeTimes->{{3.966536700007923*^9, 3.9665367236663895`*^9}, {
+   3.966537373196089*^9, 3.966537427269434*^9}, {3.9665374706475735`*^9, 
+   3.9665374905259285`*^9}, 3.9665389802150726`*^9},
+ CellLabel->
+  "During evaluation of \
+In[1900]:=",ExpressionUUID->"c934898e-3743-2148-aaf4-c4348a50380a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\nPlayer B Eigenvalues: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "10.874745816296008`"}], ",", 
+     RowBox[{"-", "4.15787019996703`"}], ",", 
+     RowBox[{"-", "0.24536620091642103`"}]}], "}"}]}],
+  SequenceForm[
+  "\nPlayer B Eigenvalues: ", {-10.874745816296008`, -4.15787019996703, \
+-0.24536620091642103`}],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.966536700007923*^9, 3.9665367236663895`*^9}, {
+   3.966537373196089*^9, 3.966537427269434*^9}, {3.9665374706475735`*^9, 
+   3.9665374905259285`*^9}, 3.9665389802205944`*^9},
+ CellLabel->
+  "During evaluation of \
+In[1900]:=",ExpressionUUID->"ea967509-8e9b-dc41-8463-a4bbe09962ec"],
+
+Cell[BoxData["\<\"--> Player B condition PASSED.\"\>"], "Print",
+ CellChangeTimes->{{3.966536700007923*^9, 3.9665367236663895`*^9}, {
+   3.966537373196089*^9, 3.966537427269434*^9}, {3.9665374706475735`*^9, 
+   3.9665374905259285`*^9}, 3.9665389802235928`*^9},
+ CellLabel->
+  "During evaluation of \
+In[1900]:=",ExpressionUUID->"a8ccc669-80fc-ca45-b956-cc484fb81ef1"],
+
+Cell[BoxData["\<\"\\nConclusion: The point is a locally stable Nash \
+Equilibrium.\"\>"], "Print",
+ CellChangeTimes->{{3.966536700007923*^9, 3.9665367236663895`*^9}, {
+   3.966537373196089*^9, 3.966537427269434*^9}, {3.9665374706475735`*^9, 
+   3.9665374905259285`*^9}, 3.966538980224598*^9},
+ CellLabel->
+  "During evaluation of \
+In[1900]:=",ExpressionUUID->"c1bac50a-47d9-994d-b9db-b4b5512ca403"]
+}, Open  ]],
+
+Cell[BoxData["7.395163657101455`"], "Output",
+ CellChangeTimes->{
+  3.9665362285631638`*^9, {3.966536672543873*^9, 3.9665367236618786`*^9}, {
+   3.966537373196089*^9, 3.966537427269434*^9}, {3.9665374706475735`*^9, 
+   3.966537490520914*^9}, 3.966538980226593*^9},
+ CellLabel->
+  "Out[1925]=",ExpressionUUID->"509f5d1f-6690-de4c-833e-80652f45c507"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["aScoresComputed"], "Input",
+ CellLabel->
+  "In[1927]:=",ExpressionUUID->"35d01f0a-ef64-204f-b712-a1c69cc72351"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   FractionBox["5", "8"], " ", 
+   SuperscriptBox[
+    RowBox[{"Cos", "[", "\[Zeta]2", "]"}], "2"], " ", 
+   RowBox[{"(", 
+    RowBox[{"20.227806661518404`", "\[VeryThinSpace]", "+", 
+     RowBox[{"1.723928881518402`", " ", 
+      RowBox[{"Cos", "[", 
+       RowBox[{
+        RowBox[{"2", " ", "\[Theta]2"}], "-", 
+        RowBox[{"2", " ", "\[Phi]1"}]}], "]"}]}]}], ")"}], " ", 
+   SuperscriptBox[
+    RowBox[{"Sin", "[", "\[Zeta]1", "]"}], "2"]}], "-", 
+  RowBox[{"2", " ", 
+   RowBox[{"Cos", "[", "\[Zeta]1", "]"}], " ", 
+   RowBox[{"Cos", "[", "\[Zeta]2", "]"}], " ", 
+   RowBox[{"Cos", "[", 
+    RowBox[{"\[Theta]1", "+", "\[Theta]2"}], "]"}], " ", 
+   RowBox[{"Cos", "[", 
+    RowBox[{"\[Phi]1", "+", "\[Phi]2"}], "]"}], " ", 
+   RowBox[{"Sin", "[", "\[Zeta]1", "]"}], " ", 
+   RowBox[{"Sin", "[", "\[Zeta]2", "]"}]}], "+", 
+  RowBox[{"4.036913604018402`", " ", 
+   SuperscriptBox[
+    RowBox[{"Cos", "[", 
+     RowBox[{"\[Phi]1", "+", "\[Phi]2"}], "]"}], "2"], " ", 
+   SuperscriptBox[
+    RowBox[{"Sin", "[", "\[Zeta]1", "]"}], "2"], " ", 
+   SuperscriptBox[
+    RowBox[{"Sin", "[", "\[Zeta]2", "]"}], "2"]}], "-", 
+  RowBox[{"2.7186864540740014`", " ", 
+   RowBox[{"Cos", "[", 
+    RowBox[{"\[Theta]2", "-", "\[Phi]1"}], "]"}], " ", 
+   RowBox[{"Cos", "[", 
+    RowBox[{"\[Theta]1", "-", "\[Phi]2"}], "]"}], " ", 
+   RowBox[{"Sin", "[", 
+    RowBox[{"2", " ", "\[Zeta]1"}], "]"}], " ", 
+   RowBox[{"Sin", "[", 
+    RowBox[{"2", " ", "\[Zeta]2"}], "]"}]}], "+", 
+  RowBox[{"2.674949163259201`", " ", 
+   RowBox[{"Cos", "[", 
+    RowBox[{"\[Theta]1", "+", "\[Theta]2"}], "]"}], " ", 
+   RowBox[{"Cos", "[", 
+    RowBox[{"\[Phi]1", "+", "\[Phi]2"}], "]"}], " ", 
+   RowBox[{"Sin", "[", 
+    RowBox[{"2", " ", "\[Zeta]1"}], "]"}], " ", 
+   RowBox[{"Sin", "[", 
+    RowBox[{"2", " ", "\[Zeta]2"}], "]"}]}], "+", 
+  RowBox[{
+   FractionBox["1", "4"], " ", 
+   SuperscriptBox[
+    RowBox[{"Cos", "[", "\[Zeta]1", "]"}], "2"], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"8.61964440759201`", " ", 
+      SuperscriptBox[
+       RowBox[{"Cos", "[", 
+        RowBox[{"\[Theta]1", "-", "\[Phi]2"}], "]"}], "2"], " ", 
+      SuperscriptBox[
+       RowBox[{"Sin", "[", "\[Zeta]2", "]"}], "2"]}], "+", 
+     RowBox[{"4", " ", 
+      SuperscriptBox[
+       RowBox[{"Cos", "[", "\[Zeta]2", "]"}], "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"8.662883049018403`", " ", 
+         SuperscriptBox[
+          RowBox[{"Cos", "[", 
+           RowBox[{"\[Theta]1", "+", "\[Theta]2"}], "]"}], "2"]}], "+", 
+        RowBox[{"6.9389541675`", " ", 
+         SuperscriptBox[
+          RowBox[{"Sin", "[", 
+           RowBox[{"\[Theta]1", "+", "\[Theta]2"}], "]"}], "2"]}]}], 
+       ")"}]}]}], ")"}]}], "+", 
+  RowBox[{"2.3129847225`", " ", 
+   SuperscriptBox[
+    RowBox[{"Sin", "[", "\[Zeta]1", "]"}], "2"], " ", 
+   SuperscriptBox[
+    RowBox[{"Sin", "[", "\[Zeta]2", "]"}], "2"], " ", 
+   SuperscriptBox[
+    RowBox[{"Sin", "[", 
+     RowBox[{"\[Phi]1", "+", "\[Phi]2"}], "]"}], "2"]}]}]], "Output",
+ CellChangeTimes->{3.9665396723276463`*^9},
+ CellLabel->
+  "Out[1927]=",ExpressionUUID->"bcb903f3-fff2-2f4d-a8c7-81367c6e6f5d"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.9665367453527145`*^9, 
+  3.9665367525506954`*^9}},ExpressionUUID->"d3669e82-6d6c-f94c-a5ad-\
+bf356177570e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"alicesScore", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"play", "[", 
+     RowBox[{"symmetricJ", ",", 
+      RowBox[{
+       RowBox[{"su2", "[", 
+        RowBox[{"\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1"}], "]"}], "/.", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\[Theta]1", "\[Rule]", "1.2758015100802034`"}], ",", 
+         RowBox[{"\[Phi]1", "\[Rule]", "3.4365874703044805`"}], ",", 
+         RowBox[{"\[Zeta]1", "\[Rule]", "2.152307330709492`"}], ",", 
+         RowBox[{"\[Theta]2", "\[Rule]", "3.4365874703044885`"}], ",", 
+         RowBox[{"\[Phi]2", "\[Rule]", "1.2758015100801954`"}], ",", 
+         RowBox[{"\[Zeta]2", "\[Rule]", "4.130877976470094`"}]}], "}"}]}], 
+      ",", 
+      RowBox[{
+       RowBox[{"su2", "[", 
+        RowBox[{"\[Theta]2", ",", "\[Phi]2", ",", "\[Zeta]2"}], "]"}], "/.", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\[Theta]1", "\[Rule]", "1.2758015100802034`"}], ",", 
+         RowBox[{"\[Phi]1", "\[Rule]", "3.4365874703044805`"}], ",", 
+         RowBox[{"\[Zeta]1", "\[Rule]", "2.152307330709492`"}], ",", 
+         RowBox[{"\[Theta]2", "\[Rule]", "3.4365874703044885`"}], ",", 
+         RowBox[{"\[Phi]2", "\[Rule]", "1.2758015100801954`"}], ",", 
+         RowBox[{"\[Zeta]2", "\[Rule]", "4.130877976470094`"}]}], "}"}]}]}], 
+     "]"}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"a\[Prime]", "->", "a"}], ",", " ", 
+      RowBox[{"\[Gamma]\[Prime]", "->", "\[Gamma]"}]}], "}"}]}], "//", "N"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.96653741192622*^9, 3.966537422439991*^9}, {
+  3.9665396641592407`*^9, 3.9665397097497807`*^9}, {3.9665397431006584`*^9, 
+  3.966539858795498*^9}, {3.9665399073113956`*^9, 3.966539919530798*^9}},
+ CellLabel->
+  "In[1941]:=",ExpressionUUID->"5db7d9de-3f37-aa42-b4b3-d9758bff47b2"],
+
+Cell[BoxData["2.7593732391401558`"], "Output",
+ CellChangeTimes->{3.966539933755867*^9},
+ CellLabel->
+  "Out[1941]=",ExpressionUUID->"626cb4c0-ef40-a34c-9f74-d89016cdd2ef"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"bobsScore", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"play", "[", 
+     RowBox[{"symmetricJ", ",", 
+      RowBox[{
+       RowBox[{"su2", "[", 
+        RowBox[{"\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1"}], "]"}], "/.", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\[Theta]1", "\[Rule]", "1.2758015100802034`"}], ",", 
+         RowBox[{"\[Phi]1", "\[Rule]", "3.4365874703044805`"}], ",", 
+         RowBox[{"\[Zeta]1", "\[Rule]", "2.152307330709492`"}], ",", 
+         RowBox[{"\[Theta]2", "\[Rule]", "3.4365874703044885`"}], ",", 
+         RowBox[{"\[Phi]2", "\[Rule]", "1.2758015100801954`"}], ",", 
+         RowBox[{"\[Zeta]2", "\[Rule]", "4.130877976470094`"}]}], "}"}]}], 
+      ",", 
+      RowBox[{
+       RowBox[{"su2", "[", 
+        RowBox[{"\[Theta]2", ",", "\[Phi]2", ",", "\[Zeta]2"}], "]"}], "/.", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\[Theta]1", "\[Rule]", "1.2758015100802034`"}], ",", 
+         RowBox[{"\[Phi]1", "\[Rule]", "3.4365874703044805`"}], ",", 
+         RowBox[{"\[Zeta]1", "\[Rule]", "2.152307330709492`"}], ",", 
+         RowBox[{"\[Theta]2", "\[Rule]", "3.4365874703044885`"}], ",", 
+         RowBox[{"\[Phi]2", "\[Rule]", "1.2758015100801954`"}], ",", 
+         RowBox[{"\[Zeta]2", "\[Rule]", "4.130877976470094`"}]}], "}"}]}]}], 
+     "]"}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"a\[Prime]", "->", "a"}], ",", " ", 
+      RowBox[{"\[Gamma]\[Prime]", "->", "\[Gamma]"}]}], "}"}]}], "//", "N"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.9665399292555065`*^9, 3.966539931139946*^9}},
+ CellLabel->
+  "In[1940]:=",ExpressionUUID->"74f907d5-0e5a-384f-9dfe-9ffafbcdbce9"],
+
+Cell[BoxData["1.5202031868945345`"], "Output",
+ CellChangeTimes->{{3.9665397915150223`*^9, 3.966539859663542*^9}, {
+  3.9665399019607964`*^9, 3.966539931520687*^9}},
+ CellLabel->
+  "Out[1940]=",ExpressionUUID->"0c8bc971-c64f-8e4f-9628-4795acdab322"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["S"], "Input",
+ CellChangeTimes->{{3.9665397115032063`*^9, 
+  3.9665397253305187`*^9}},ExpressionUUID->"129478da-22ba-064c-a447-\
+a144534fe10e"],
+
+Cell[BoxData["JSymmetric"], "Output",
+ CellChangeTimes->{3.9665397184678288`*^9},
+ CellLabel->
+  "Out[1928]=",ExpressionUUID->"651396ed-7dce-594b-9e9f-f8c0e933d963"]
+}, Open  ]]
+},
+WindowSize->{718.5, 819.75},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"d99e1fb9-59bf-2e47-b1d8-cd89bc59cb2c"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 11971, 328, 1597, "Input",ExpressionUUID->"17f2ae04-5908-cf45-b30a-dfa8319b9a78"],
+Cell[12554, 352, 743, 14, 46, "Output",ExpressionUUID->"8a9e171c-1c86-c441-a527-1d0e93d64e51"],
+Cell[CellGroupData[{
+Cell[13322, 370, 723, 17, 22, "Print",ExpressionUUID->"64b68ef0-a841-e94d-beed-0d0da4b2c8e0"],
+Cell[14048, 389, 367, 6, 22, "Print",ExpressionUUID->"c934898e-3743-2148-aaf4-c4348a50380a"],
+Cell[14418, 397, 731, 17, 40, "Print",ExpressionUUID->"ea967509-8e9b-dc41-8463-a4bbe09962ec"],
+Cell[15152, 416, 367, 6, 22, "Print",ExpressionUUID->"a8ccc669-80fc-ca45-b956-cc484fb81ef1"],
+Cell[15522, 424, 399, 7, 40, "Print",ExpressionUUID->"c1bac50a-47d9-994d-b9db-b4b5512ca403"]
+}, Open  ]],
+Cell[15936, 434, 348, 6, 46, "Output",ExpressionUUID->"509f5d1f-6690-de4c-833e-80652f45c507"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16321, 445, 125, 2, 28, "Input",ExpressionUUID->"35d01f0a-ef64-204f-b712-a1c69cc72351"],
+Cell[16449, 449, 3170, 86, 216, "Output",ExpressionUUID->"bcb903f3-fff2-2f4d-a8c7-81367c6e6f5d"]
+}, Open  ]],
+Cell[19634, 538, 156, 3, 28, "Input",ExpressionUUID->"d3669e82-6d6c-f94c-a5ad-bf356177570e"],
+Cell[CellGroupData[{
+Cell[19815, 545, 1818, 39, 143, "Input",ExpressionUUID->"5db7d9de-3f37-aa42-b4b3-d9758bff47b2"],
+Cell[21636, 586, 172, 3, 46, "Output",ExpressionUUID->"626cb4c0-ef40-a34c-9f74-d89016cdd2ef"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21845, 594, 1667, 37, 143, "Input",ExpressionUUID->"74f907d5-0e5a-384f-9dfe-9ffafbcdbce9"],
+Cell[23515, 633, 249, 4, 46, "Output",ExpressionUUID->"0c8bc971-c64f-8e4f-9628-4795acdab322"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23801, 642, 157, 3, 28, "Input",ExpressionUUID->"129478da-22ba-064c-a447-a144534fe10e"],
+Cell[23961, 647, 165, 3, 46, "Output",ExpressionUUID->"651396ed-7dce-594b-9e9f-f8c0e933d963"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

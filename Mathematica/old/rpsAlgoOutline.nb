@@ -1,0 +1,202 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6809,        192]
+NotebookOptionsPosition[      5639,        166]
+NotebookOutlinePosition[      6045,        182]
+CellTagsIndexPosition[      6002,        179]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"tieScore", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"winScore", " ", "=", " ", "1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"loseScore", " ", "=", " ", 
+   RowBox[{"-", "1"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"PayoffMatrix", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"tie", ",", "lose", ",", "win"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"win", ",", "tie", ",", "lose"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"lose", ",", "win", ",", "tie"}], "}"}]}], "}"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.955739629199707*^9, 3.955739658819206*^9}, {
+  3.9557462908193264`*^9, 3.955746296648424*^9}, {3.9557465037393284`*^9, 
+  3.9557465268129997`*^9}},
+ CellLabel->
+  "In[123]:=",ExpressionUUID->"d9cd5cf2-a159-c74d-9a91-834f41262ba4"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"agentsPlayingRock", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"agentsPlayingPaper", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1", ",", "0", ",", "0",
+      ",", "0", ",", "0"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"agentsPlayingScissors", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "1",
+      ",", "1", ",", "1"}], "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9557392101335773`*^9, 3.9557392580870113`*^9}, {
+  3.9557462582468204`*^9, 3.955746285648508*^9}},
+ CellLabel->
+  "In[112]:=",ExpressionUUID->"caabefbe-846b-6c42-9787-393b37d0ede2"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"adgentStrategies", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "agentsPlayingRock", ",", "agentsPlayingPaper", ",", 
+     "agentsPlayingScissors"}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.9557464416681747`*^9, 3.9557464645387*^9}},
+ CellLabel->
+  "In[121]:=",ExpressionUUID->"3e820ef8-8135-7840-bc19-eac607746dc0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"adjcencyMatrix", " ", "=", " ", 
+   RowBox[{"am", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"GraphData", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<CayleyTree\>\"", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"3", ",", " ", "2"}], "}"}]}], "}"}], "]"}], "//", 
+     "AdjacencyMatrix"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.9557463072999783`*^9, 3.955746319917633*^9}},
+ CellLabel->
+  "In[115]:=",ExpressionUUID->"088c26a7-7c73-6b42-8b91-4335365ef3b6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"numberOfOpponentsPlayingRock", " ", "=", " ", 
+   RowBox[{"am", ".", "rock"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"numberOfOpponentsPlayingPaper", " ", "=", " ", 
+   RowBox[{"am", ".", "paper"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"numberOfOpponentsPlayingScissors", "=", " ", 
+   RowBox[{"am", ".", "scissors"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"numberOfOpponentsPlayingRPS", " ", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+   "numberOfOpponentsPlayingRock", ",", "numberOfOpponentsPlayingPaper", ",", 
+    "numberOfOpponentsPlayingScissors"}], "}"}]}]}], "Input",
+ CellChangeTimes->{{3.9557463620739937`*^9, 3.955746416807232*^9}},
+ CellLabel->
+  "In[117]:=",ExpressionUUID->"b947b6f3-7c03-bc4d-8f6f-96189b7ead8d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "2", ",", "1", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0",
+      ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "1", ",", "2", ",", "1", ",", "1", ",", "0", ",", "0",
+      ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "2", ",", "1",
+      ",", "1", ",", "0"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.9557464176553955`*^9},
+ CellLabel->
+  "Out[120]=",ExpressionUUID->"787d4a4c-a9d1-f944-becf-2327b2d96034"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"allPayoffs", " ", "=", " ", 
+   RowBox[{"PayoffMatrix", ".", "adgentStrategies"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.9557466378070297`*^9, 3.955746643026205*^9}},
+ CellLabel->
+  "In[132]:=",ExpressionUUID->"a0a4af2d-bba6-a047-ac5f-b3d3a534b671"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Total", "[", 
+  RowBox[{
+   RowBox[{"numberOfOpponentsPlayingRPS", "*", "allPayoffs"}], ",", "1"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.9557466494960995`*^9, 3.9557466683507385`*^9}},
+ CellLabel->
+  "In[133]:=",ExpressionUUID->"b22d3895-dba5-e749-b7ca-d9efb84bf0d4"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", 
+   RowBox[{"-", "1"}], ",", "0", ",", 
+   RowBox[{"-", "1"}], ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", 
+   "1"}], "}"}]], "Output",
+ CellChangeTimes->{3.955746668623064*^9},
+ CellLabel->
+  "Out[133]=",ExpressionUUID->"42ae2b5a-4a1b-514e-a7a4-ad6a753c879c"]
+}, Open  ]]
+},
+WindowSize->{718.5, 825},
+WindowMargins->{{Automatic, -5.25}, {Automatic, 0}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"fb559572-3545-a34a-8215-581d43abee90"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 880, 23, 86, "Input",ExpressionUUID->"d9cd5cf2-a159-c74d-9a91-834f41262ba4"],
+Cell[1441, 45, 912, 22, 67, "Input",ExpressionUUID->"caabefbe-846b-6c42-9787-393b37d0ede2"],
+Cell[2356, 69, 364, 9, 28, "Input",ExpressionUUID->"3e820ef8-8135-7840-bc19-eac607746dc0"],
+Cell[2723, 80, 502, 13, 28, "Input",ExpressionUUID->"088c26a7-7c73-6b42-8b91-4335365ef3b6"],
+Cell[CellGroupData[{
+Cell[3250, 97, 794, 17, 124, "Input",ExpressionUUID->"b947b6f3-7c03-bc4d-8f6f-96189b7ead8d"],
+Cell[4047, 116, 630, 17, 32, "Output",ExpressionUUID->"787d4a4c-a9d1-f944-becf-2327b2d96034"]
+}, Open  ]],
+Cell[4692, 136, 287, 6, 28, "Input",ExpressionUUID->"a0a4af2d-bba6-a047-ac5f-b3d3a534b671"],
+Cell[CellGroupData[{
+Cell[5004, 146, 296, 7, 28, "Input",ExpressionUUID->"b22d3895-dba5-e749-b7ca-d9efb84bf0d4"],
+Cell[5303, 155, 320, 8, 32, "Output",ExpressionUUID->"42ae2b5a-4a1b-514e-a7a4-ad6a753c879c"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

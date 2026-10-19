@@ -31,7 +31,7 @@ DiscreteNashEquilibria[bscores_, ascores_,conditions_] := Module[{
  p2Best = SymbolicArgMax /@ Transpose[bscores];
 
  (* Monitor the Table computation *)
- equilibria = Monitor[
+ equilibria = 
    Flatten[ParallelTable[
      Module[{cond1, cond2, combinedCond},
       cond1 = FirstCase[p1Best[[i]], {j, c_} :> c, False];
@@ -46,8 +46,7 @@ DiscreteNashEquilibria[bscores_, ascores_,conditions_] := Module[{
         ]
        ]
       ],
-     {i, 1, nn}, {j, 1, nn}], 1],
-   ];
+     {i, 1, nn}, {j, 1, nn}], 1];
 
  Return[equilibria];
  ]

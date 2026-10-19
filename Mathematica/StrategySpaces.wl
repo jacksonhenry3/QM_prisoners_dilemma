@@ -16,7 +16,7 @@ su2[\[Theta]_,\[Phi]_,\[Zeta]_]:={{Cos[\[Zeta]/2]-I*Cos[\[Theta]]*Sin[\[Zeta]/2]
 su2[\[Phi]p_,\[Phi]m_,\[Theta]_]:= RotationMatrix[\[Theta]]*{{Exp[\[Phi]p I],Exp[\[Phi]m I]},{Exp[- \[Phi]m I],Exp[-\[Phi]p I]}}
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*cyclic*)
 
 
@@ -51,25 +51,55 @@ A . MatrixPower[B,x]//FullSimplify];
 
 
 (* ::Subsubsection:: *)
-(*binary tetrahedral (incorrect becouse you need srs)*)
+(*binary tetrahedral (incorrect because you need srs)*)
 
 
-binaryTetrahedral[i_,j_]:=Module[{\[Omega]1=Exp[2 Pi I/6],\[Omega]2=Exp[Pi I/2],A,B},
+(*binaryTetrahedral[i_,j_]:=Module[{\[Omega]1=Exp[2 Pi I/6],\[Omega]2=Exp[Pi I/2],A,B},
 A={{\[Omega]1,0},{0,Conjugate[\[Omega]1]}};
 B=(1/Sqrt[2]) {{\[Omega]2,\[Omega]2},{\[Omega]2,-\[Omega]2}};
 MatrixPower[A,i] . MatrixPower[B,j]]
 
 (*Function to generate the full group*)binaryTetrahedralGroup=Module[{elements},elements=Flatten[Table[binaryTetrahedral[i,j],{i,0,5},(*A has order 6*){j,0,3}   (*B has order 4*)],1];
-DeleteDuplicates[elements]];
+DeleteDuplicates[elements]];*)
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*binary octahedral (incorrect becouse you need srs)*)
 
 
-(*single binary-octahedral element from exponents i,j*)binaryOctahedral[i_,j_]:=Module[{\[Omega]8=Exp[I*\[Pi]/4],(*e^{i\[Pi]/4}*)r,s},r={{\[Omega]8,0},{0,Conjugate[\[Omega]8]}};(*order 8*)s=1/2 {{1+I,1+I},{I-1,1-I}};(*order 6*)MatrixPower[r,i] . MatrixPower[s,j]];
+(*(*single binary-octahedral element from exponents i,j*)binaryOctahedral[i_,j_]:=Module[{\[Omega]8=Exp[I*\[Pi]/4],(*e^{i\[Pi]/4}*)r,s},r={{\[Omega]8,0},{0,Conjugate[\[Omega]8]}};(*order 8*)s=1/2 {{1+I,1+I},{I-1,1-I}};(*order 6*)MatrixPower[r,i] . MatrixPower[s,j]];
 
 (*the full group of 48 elements*)
 binaryOctahedralGroup=Module[{elems},elems=Flatten[Table[binaryOctahedral[i,j],{i,0,7},(*r^8=I*){j,0,5}     (*s^6=I*)],1];
 DeleteDuplicates[elems]];
+*)
 
+
+(*---quaternion units as SU(2) matrices; qj matches B in binaryDihedral---*)
+qi = {{I, 0}, {0, -I}};
+qj = {{0, 1}, {-1, 0}};
+qk = qi . qj;
+q8 = {IdentityMatrix[2], -IdentityMatrix[2], qi, -qi, qj, -qj, qk, -qk};
+
+(*---binary tetrahedral 2T, order 24---*)
+(*s=(1+i+j+k)/2: order 6, a 3-fold rotation about (1,1,1)*)
+binaryTetrahedral[q_, j_] := Module[{s},
+  s = (IdentityMatrix[2] + qi + qj + qk)/2;
+  q8[[q]] . MatrixPower[s, j] // Expand];
+
+binaryTetrahedralGroup = Flatten[Table[binaryTetrahedral[q, j],
+    {q, 1, 8},   (*element of Q8*)
+    {j, 0, 2}],  (*coset of Q8: s^0, s^1, s^2*)
+   1];
+
+(*---binary octahedral 2O, order 48---*)
+(*r=(1+i)/Sqrt[2]: order 8, a 4-fold rotation about z*)
+binaryOctahedral[q_, j_, x_] := Module[{r},
+  r = (IdentityMatrix[2] + qi)/Sqrt[2];
+  binaryTetrahedral[q, j] . MatrixPower[r, x] // Expand];
+
+binaryOctahedralGroup = Flatten[Table[binaryOctahedral[q, j, x],
+    {q, 1, 8},
+    {j, 0, 2},
+    {x, 0, 1}],  (*coset of 2T: r^0 or r^1*)
+   2];

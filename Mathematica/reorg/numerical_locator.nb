@@ -1,0 +1,638 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     26145,        630]
+NotebookOptionsPosition[     24525,        601]
+NotebookOutlinePosition[     24931,        617]
+CellTagsIndexPosition[     24888,        614]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"Import", "[", 
+  "\"\<C:\\\\Users\\\\jhenry1\\\\Documents\\\\GitHub\\\\QM_prisoners_dilemma\\\
+\\Mathematica\\\\StrategySpaces.wl\>\"", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Import", "[", 
+  "\"\<C:\\\\Users\\\\jhenry1\\\\Documents\\\\GitHub\\\\QM_prisoners_dilemma\\\
+\\Mathematica\\\\QPD_dynamics.wl\>\"", "]"}]}], "Input",
+ CellLabel->"In[1]:=",ExpressionUUID->"74742a37-4612-0943-88d3-5b5cc3ebf06a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"finalState", " ", "=", 
+   RowBox[{"(", " ", 
+    RowBox[{
+     RowBox[{"play", "[", 
+      RowBox[{
+       RowBox[{"J", "[", 
+        RowBox[{"a", ",", "a", ",", "\[Gamma]"}], "]"}], ",", 
+       RowBox[{"su2", "[", 
+        RowBox[{"\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1"}], "]"}], ",", 
+       RowBox[{"su2", "[", 
+        RowBox[{"\[Theta]2", ",", "\[Phi]2", ",", "\[Zeta]2"}], "]"}]}], 
+      "]"}], "/.", 
+     RowBox[{"Conjugate", "->", " ", "MyConj"}]}], ")"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.959700241481631*^9, 3.959700307511732*^9}, {
+   3.959700368200828*^9, 3.959700397069771*^9}, {3.959700434093311*^9, 
+   3.959700440042979*^9}, {3.959779773001335*^9, 3.9597798314828777`*^9}, {
+   3.959867388585169*^9, 3.959867422318302*^9}, {3.959867973712124*^9, 
+   3.959867973992758*^9}, {3.959868019636802*^9, 3.95986802172217*^9}, {
+   3.959868095285868*^9, 3.959868106647793*^9}, {3.959895554653297*^9, 
+   3.95989561149369*^9}, 3.959895689113477*^9, {3.960097354953907*^9, 
+   3.960097420211006*^9}, {3.960541354169617*^9, 3.96054137506509*^9}, {
+   3.960706755743271*^9, 3.960706798730709*^9}, {3.96220331994952*^9, 
+   3.962203320030731*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"215b1c6a-6ade-3d47-bdfa-486e84478fa7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"finalState", "=", 
+   RowBox[{"FullSimplify", "[", 
+    RowBox[{"Simplify", "/@", 
+     RowBox[{"ComplexExpand", "[", "finalState", "]"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{
+  3.960098255314438*^9, {3.96220147568713*^9, 3.962201478369934*^9}, {
+   3.962201510106596*^9, 3.962201515315124*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"5a02359a-57f6-404c-9a76-5db203ee5f46"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"aScoresComputed", " ", "=", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"alicesScore", "[", "finalState", "]"}], "/.", 
+     RowBox[{"Conjugate", "->", "MyConj"}]}], ")"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.9622754151956367`*^9, 3.9622754284777527`*^9}, 
+   3.9622756587276993`*^9, 3.962279697843317*^9},
+ CellLabel->"In[5]:=",ExpressionUUID->"6eded831-04a6-1e47-abe5-262d9e6bdd2a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"bScoresComputed", " ", "=", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"bobsScore", "[", "finalState", "]"}], "/.", 
+     RowBox[{"Conjugate", "->", "MyConj"}]}], ")"}]}], ";"}]], "Input",
+ CellLabel->"In[6]:=",ExpressionUUID->"f45befe5-0037-434c-9cfc-fc4771fb6c7b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"aScoresComputed", " ", "=", " ", 
+   RowBox[{"Simplify", "/@", 
+    RowBox[{"(", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"aScoresComputed", "/.", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"a", "->", "1"}], ",", 
+          RowBox[{"\[Gamma]", "->", 
+           FractionBox["Pi", "4"]}]}], "}"}]}], "//", "ComplexExpand"}], 
+      ")"}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bScoresComputed", " ", "=", " ", 
+   RowBox[{"Simplify", "/@", 
+    RowBox[{"(", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"bScoresComputed", "/.", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"a", "->", "1"}], ",", 
+          RowBox[{"\[Gamma]", "->", 
+           FractionBox["Pi", "4"]}]}], "}"}]}], "//", "ComplexExpand"}], 
+      ")"}], ")"}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9622756546447372`*^9, 3.962275657337614*^9}, {
+   3.962275762241869*^9, 3.9622757674390583`*^9}, {3.962275897140167*^9, 
+   3.9622759141910095`*^9}, {3.962278070034857*^9, 3.962278075631153*^9}, {
+   3.962278130191145*^9, 3.9622781402399025`*^9}, 3.9622797165023537`*^9},
+ CellLabel->"In[7]:=",ExpressionUUID->"a8c21253-3bc8-7e4e-a5aa-cd92e076fdb6"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ascores", " ", "=", 
+   RowBox[{"Compile", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"t1", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"p1", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"z1", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t2", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"p2", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"z2", ",", "_Real"}], "}"}]}], "}"}], ",", 
+     RowBox[{"aScoresComputed", "/.", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\[Theta]1", "->", "t1"}], ",", 
+        RowBox[{"\[Phi]1", "->", "p1"}], ",", 
+        RowBox[{"\[Zeta]1", "->", "z1"}], ",", 
+        RowBox[{"\[Theta]2", "->", "t2"}], ",", 
+        RowBox[{"\[Phi]2", "->", "p2"}], ",", 
+        RowBox[{"\[Zeta]2", "->", "z2"}]}], "}"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bscores", " ", "=", 
+   RowBox[{"Compile", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"t1", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"p1", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"z1", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t2", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"p2", ",", "_Real"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"z2", ",", "_Real"}], "}"}]}], "}"}], ",", 
+     RowBox[{"bScoresComputed", "/.", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\[Theta]1", "->", "t1"}], ",", 
+        RowBox[{"\[Phi]1", "->", "p1"}], ",", 
+        RowBox[{"\[Zeta]1", "->", "z1"}], ",", 
+        RowBox[{"\[Theta]2", "->", "t2"}], ",", 
+        RowBox[{"\[Phi]2", "->", "p2"}], ",", 
+        RowBox[{"\[Zeta]2", "->", "z2"}]}], "}"}]}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.962279641250515*^9, 3.9622798594967976`*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"6eb7bb4d-18df-2e40-a707-5538efaf9b7a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ascoresSafe", "[", 
+   RowBox[{
+    RowBox[{"t1_", "?", "NumericQ"}], ",", 
+    RowBox[{"p1_", "?", "NumericQ"}], ",", 
+    RowBox[{"z1_", "?", "NumericQ"}], ",", 
+    RowBox[{"t2_", "?", "NumericQ"}], ",", 
+    RowBox[{"p2_", "?", "NumericQ"}], ",", 
+    RowBox[{"z2_", "?", "NumericQ"}]}], "]"}], ":=", 
+  RowBox[{"ascores", "[", 
+   RowBox[{"t1", ",", "p1", ",", "z1", ",", "t2", ",", "p2", ",", "z2"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bscoresSafe", "[", 
+   RowBox[{
+    RowBox[{"t1_", "?", "NumericQ"}], ",", 
+    RowBox[{"p1_", "?", "NumericQ"}], ",", 
+    RowBox[{"z1_", "?", "NumericQ"}], ",", 
+    RowBox[{"t2_", "?", "NumericQ"}], ",", 
+    RowBox[{"p2_", "?", "NumericQ"}], ",", 
+    RowBox[{"z2_", "?", "NumericQ"}]}], "]"}], ":=", 
+  RowBox[{"bscores", "[", 
+   RowBox[{"t1", ",", "p1", ",", "z1", ",", "t2", ",", "p2", ",", "z2"}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.962282882029827*^9, 3.962282955495346*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"7f8150fb-2274-8a46-93fd-d58c88f49bfe"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.9622828874003143`*^9, 
+  3.962282899390787*^9}},ExpressionUUID->"488ffb4e-d8e2-fc49-94a8-\
+37dfd5058d23"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"aliceBestResponse", "[", "bmove_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"NMaximize", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"aScoresComputed", "/.", "bmove"}], ",", 
+        RowBox[{"0", "<", "\[Theta]1", "<", 
+         RowBox[{"2", "Pi"}]}], ",", 
+        RowBox[{"0", "<", "\[Phi]1", "<", 
+         RowBox[{"2", "Pi"}]}], ",", 
+        RowBox[{"0", "<", "\[Zeta]1", "<", 
+         RowBox[{"2", "Pi"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1"}], "}"}]}], 
+     "]"}]}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bobsBestResponse", "[", "amove_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"NMaximize", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"bScoresComputed", "/.", "amove"}], ",", 
+        RowBox[{"0", "<", "\[Theta]2", "<", 
+         RowBox[{"2", "Pi"}]}], ",", 
+        RowBox[{"0", "<", "\[Phi]2", "<", 
+         RowBox[{"2", "Pi"}]}], ",", 
+        RowBox[{"0", "<", "\[Zeta]2", "<", 
+         RowBox[{"2", "Pi"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\[Theta]2", ",", "\[Phi]2", ",", "\[Zeta]2"}], "}"}]}], 
+     "]"}]}], "\[IndentingNewLine]", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.9622756042587433`*^9, 3.962275645856785*^9}, {
+   3.9622757265698776`*^9, 3.9622757326862087`*^9}, {3.9622758002590504`*^9, 
+   3.9622758601228275`*^9}, {3.962275943193125*^9, 3.9622759585541306`*^9}, {
+   3.9622759993226833`*^9, 3.9622760025582047`*^9}, {3.9622780285980167`*^9, 
+   3.962278030395315*^9}, {3.962278874654482*^9, 3.9622788777806263`*^9}, 
+   3.962279899565729*^9},
+ CellLabel->"In[11]:=",ExpressionUUID->"7fe30a6b-7d98-d443-9fdb-19b3e058ccf2"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.9622807229094963`*^9, 
+  3.962280728623152*^9}},ExpressionUUID->"feca3e48-d05d-6340-b73e-\
+6127530b7ebe"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"aliceBestResponse", "[", "bmove_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"NMaximize", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"ascoresSafe", "[", 
+         RowBox[{"\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1", ",", 
+          RowBox[{"bmove", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", 
+          RowBox[{"bmove", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], ",", 
+          RowBox[{"bmove", "[", 
+           RowBox[{"[", "3", "]"}], "]"}]}], "]"}], ",", 
+        RowBox[{"0", "<", "\[Theta]1", "<", 
+         RowBox[{"2", "Pi"}]}], ",", 
+        RowBox[{"0", "<", "\[Phi]1", "<", 
+         RowBox[{"2", "Pi"}]}], ",", 
+        RowBox[{"0", "<", "\[Zeta]1", "<", 
+         RowBox[{"2", "Pi"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\[Theta]1", ",", "\[Phi]1", ",", "\[Zeta]1"}], "}"}], ",", 
+      RowBox[{"Method", "->", "\"\<NelderMead\>\""}]}], "]"}]}], 
+   "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bobsBestResponse", "[", "amove_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"NMaximize", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"bscoresSafe", "[", 
+         RowBox[{
+          RowBox[{"amove", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", 
+          RowBox[{"amove", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], ",", 
+          RowBox[{"amove", "[", 
+           RowBox[{"[", "3", "]"}], "]"}], ",", "\[Theta]2", ",", "\[Phi]2", 
+          ",", "\[Zeta]2"}], "]"}], ",", 
+        RowBox[{"0", "<", "\[Theta]2", "<", 
+         RowBox[{"2", "Pi"}]}], ",", 
+        RowBox[{"0", "<", "\[Phi]2", "<", 
+         RowBox[{"2", "Pi"}]}], ",", 
+        RowBox[{"0", "<", "\[Zeta]2", "<", 
+         RowBox[{"2", "Pi"}]}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\[Theta]2", ",", "\[Phi]2", ",", "\[Zeta]2"}], "}"}], ",", 
+      RowBox[{"Method", "->", "\"\<NelderMead\>\""}]}], "]"}]}], 
+   "\[IndentingNewLine]", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.962279931154257*^9, 3.962280006651331*^9}, {
+  3.962280036701185*^9, 3.962280077868347*^9}, {3.962280732967417*^9, 
+  3.962280734305973*^9}, {3.9622807723789616`*^9, 3.962280798389742*^9}, {
+  3.9622829733294697`*^9, 3.9622829769228935`*^9}},
+ CellLabel->"In[22]:=",ExpressionUUID->"8a268743-27c9-f040-adcf-08e2febe90c7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"amInit", "=", 
+     RowBox[{"{", 
+      RowBox[{"Null", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\[Theta]1", "->", "th1"}], ",", 
+         RowBox[{"\[Phi]1", "->", "ph1"}], ",", 
+         RowBox[{"\[Zeta]1", "->", "z1"}]}], "}"}]}], "}"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"bmInit", "=", 
+     RowBox[{"{", 
+      RowBox[{"Null", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\[Theta]2", "->", "th2"}], ",", 
+         RowBox[{"\[Phi]2", "->", "ph2"}], ",", 
+         RowBox[{"\[Zeta]2", "->", "z2"}]}], "}"}]}], "}"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"am", "=", "amInit"}], ",", 
+        RowBox[{"bm", "=", "bmInit"}], ",", "hist"}], "}"}], ",", 
+      RowBox[{
+       RowBox[{"hist", "=", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"am", "=", 
+            RowBox[{"aliceBestResponse", "[", 
+             RowBox[{
+              RowBox[{"Last", "[", "bm", "]"}], "/.", " ", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"_", "->", "val_"}], ")"}], "->", "val"}]}], "]"}]}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{"bCurrentScore1", "=", 
+            RowBox[{
+             RowBox[{"bScoresComputed", "/.", " ", 
+              RowBox[{"(", 
+               RowBox[{"am", "//", "Last"}], ")"}]}], "/.", " ", 
+             RowBox[{"(", 
+              RowBox[{"bm", "//", "Last"}], ")"}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"aCurrentScore1", "=", 
+            RowBox[{
+             RowBox[{"aScoresComputed", "/.", " ", 
+              RowBox[{"(", 
+               RowBox[{"am", "//", "Last"}], ")"}]}], "/.", " ", 
+             RowBox[{"(", 
+              RowBox[{"bm", "//", "Last"}], ")"}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"bm", "=", 
+            RowBox[{"bobsBestResponse", "[", 
+             RowBox[{
+              RowBox[{"Last", "[", "am", "]"}], "/.", " ", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"_", "->", "val_"}], ")"}], "->", "val"}]}], "]"}]}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{"bCurrentScore", "=", 
+            RowBox[{
+             RowBox[{"bScoresComputed", "/.", " ", 
+              RowBox[{"(", 
+               RowBox[{"am", "//", "Last"}], ")"}]}], "/.", " ", 
+             RowBox[{"(", 
+              RowBox[{"bm", "//", "Last"}], ")"}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"aCurrentScore", "=", 
+            RowBox[{
+             RowBox[{"aScoresComputed", "/.", " ", 
+              RowBox[{"(", 
+               RowBox[{"am", "//", "Last"}], ")"}]}], "/.", " ", 
+             RowBox[{"(", 
+              RowBox[{"bm", "//", "Last"}], ")"}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"bCurrentScore1", ",", "aCurrentScore1"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"bCurrentScore", ",", "aCurrentScore"}], "}"}]}], 
+            "}"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "0", ",", "1"}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"ListPlot", "[", 
+        RowBox[{
+         RowBox[{"Flatten", "[", 
+          RowBox[{"hist", ",", "1"}], "]"}], ",", 
+         RowBox[{"PlotRange", "->", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "5"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "5"}], "}"}]}], "}"}]}], ",", 
+         RowBox[{"Frame", "->", "True"}], ",", 
+         RowBox[{"AspectRatio", "->", "1"}], ",", 
+         RowBox[{"FrameLabel", "->", 
+          RowBox[{"{", 
+           RowBox[{"\"\<Bob's Score\>\"", ",", "\"\<Alice's Score\>\""}], 
+           "}"}]}], ",", 
+         RowBox[{"PlotLabel", "->", "\"\<Iterative Score Dynamics\>\""}]}], 
+        "]"}]}]}], "]"}]}], ",", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Slider", " ", "controls", " ", "for", " ", "each", " ", "initial", " ", 
+     RowBox[{"parameter", "."}]}], "*)"}], 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"th1", ",", "0.5", ",", "\"\<Alice \[Theta]1\>\""}], "}"}], ",", 
+     RowBox[{"-", "\[Pi]"}], ",", "\[Pi]"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ph1", ",", "1.0", ",", "\"\<Alice \[Phi]1\>\""}], "}"}], ",", 
+     RowBox[{"-", "\[Pi]"}], ",", "\[Pi]"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"z1", ",", "0", ",", "\"\<Alice \[Zeta]1\>\""}], "}"}], ",", 
+     RowBox[{"-", "\[Pi]"}], ",", "\[Pi]"}], "}"}], ",", 
+   RowBox[{"Pane", "[", 
+    RowBox[{"Item", "[", 
+     RowBox[{"\"\<\>\"", ",", 
+      RowBox[{"Background", "->", "LightGray"}], ",", 
+      RowBox[{"ImageSize", "->", 
+       RowBox[{"{", 
+        RowBox[{"280", ",", "2"}], "}"}]}]}], "]"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"th2", ",", "1.5", ",", "\"\<Bob \[Theta]2\>\""}], "}"}], ",", 
+     RowBox[{"-", "\[Pi]"}], ",", "\[Pi]"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ph2", ",", "2.0", ",", "\"\<Bob \[Phi]2\>\""}], "}"}], ",", 
+     RowBox[{"-", "\[Pi]"}], ",", "\[Pi]"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"z2", ",", "0", ",", "\"\<Bob \[Zeta]2\>\""}], "}"}], ",", 
+     RowBox[{"-", "\[Pi]"}], ",", "\[Pi]"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.9622816111447926`*^9, 3.962281640285803*^9}, {
+   3.962281684411602*^9, 3.9622817129487247`*^9}, {3.9622817928212337`*^9, 
+   3.9622817931580524`*^9}, {3.9622818489730434`*^9, 3.9622818493708572`*^9}, 
+   3.9622818903402386`*^9, {3.96228192571113*^9, 3.9622819462159004`*^9}, 
+   3.962282013078121*^9, {3.962282205309105*^9, 3.962282232433056*^9}, {
+   3.962282553152422*^9, 3.962282602096386*^9}, {3.962283191323784*^9, 
+   3.962283191889673*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"2f626be4-8b50-c34c-a03e-d5f8798d90f1"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`ph1$$ = 1., $CellContext`ph2$$ = 
+    2., $CellContext`th1$$ = 0.5, $CellContext`th2$$ = 
+    1.5, $CellContext`z1$$ = -1.947787445225672, $CellContext`z2$$ = \
+-0.5152211951887262, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`th1$$], 0.5, "Alice \[Theta]1"}, -Pi, Pi, 
+      ControlType -> Manipulator}, {{
+       Hold[$CellContext`ph1$$], 1., "Alice \[Phi]1"}, -Pi, Pi, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`z1$$], 0, "Alice \[Zeta]1"}, -Pi, Pi, ControlType -> 
+      Manipulator}, {
+      Hold[
+       Pane[
+        Item["", Background -> GrayLevel[0.85], ImageSize -> {280, 2}]]], 
+      Manipulate`Dump`ThisIsNotAControl, ControlType -> None}, {{
+       Hold[$CellContext`th2$$], 1.5, "Bob \[Theta]2"}, -Pi, Pi, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`ph2$$], 2., "Bob \[Phi]2"}, -Pi, Pi, ControlType -> 
+      Manipulator}, {{
+       Hold[$CellContext`z2$$], 0, "Bob \[Zeta]2"}, -Pi, Pi, ControlType -> 
+      Manipulator}}, Typeset`size$$ = {360., {189., 192.82177770137787`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`ph1$$ = 1., $CellContext`ph2$$ = 
+        2., $CellContext`th1$$ = 0.5, $CellContext`th2$$ = 
+        1.5, $CellContext`z1$$ = 0, $CellContext`z2$$ = 0}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`amInit = {
+         Null, {$CellContext`\[Theta]1 -> $CellContext`th1$$, $CellContext`\
+\[Phi]1 -> $CellContext`ph1$$, $CellContext`\[Zeta]1 -> $CellContext`z1$$}}; \
+$CellContext`bmInit = {
+         Null, {$CellContext`\[Theta]2 -> $CellContext`th2$$, $CellContext`\
+\[Phi]2 -> $CellContext`ph2$$, $CellContext`\[Zeta]2 -> $CellContext`z2$$}}; 
+       Module[{$CellContext`am = $CellContext`amInit, $CellContext`bm = \
+$CellContext`bmInit, $CellContext`hist}, $CellContext`hist = 
+          Table[$CellContext`am = $CellContext`aliceBestResponse[
+               ReplaceAll[
+                Last[$CellContext`bm], (Blank[] -> Pattern[$CellContext`val, 
+                   
+                   Blank[]]) -> $CellContext`val]]; \
+$CellContext`bCurrentScore1 = ReplaceAll[
+               ReplaceAll[$CellContext`bScoresComputed, 
+                Last[$CellContext`am]], 
+               Last[$CellContext`bm]]; $CellContext`aCurrentScore1 = 
+             ReplaceAll[
+               ReplaceAll[$CellContext`aScoresComputed, 
+                Last[$CellContext`am]], 
+               
+               Last[$CellContext`bm]]; $CellContext`bm = \
+$CellContext`bobsBestResponse[
+               ReplaceAll[
+                Last[$CellContext`am], (Blank[] -> Pattern[$CellContext`val, 
+                   
+                   Blank[]]) -> $CellContext`val]]; \
+$CellContext`bCurrentScore = ReplaceAll[
+               ReplaceAll[$CellContext`bScoresComputed, 
+                Last[$CellContext`am]], 
+               Last[$CellContext`bm]]; $CellContext`aCurrentScore = ReplaceAll[
+               ReplaceAll[$CellContext`aScoresComputed, 
+                Last[$CellContext`am]], 
+               
+               Last[$CellContext`bm]]; {{$CellContext`bCurrentScore1, \
+$CellContext`aCurrentScore1}, {$CellContext`bCurrentScore, \
+$CellContext`aCurrentScore}}, {$CellContext`i, 0, 1}]; ListPlot[
+           Flatten[$CellContext`hist, 1], PlotRange -> {{0, 5}, {0, 5}}, 
+           Frame -> True, AspectRatio -> 1, 
+           FrameLabel -> {"Bob's Score", "Alice's Score"}, PlotLabel -> 
+           "Iterative Score Dynamics"]]), 
+      "Specifications" :> {{{$CellContext`th1$$, 0.5, "Alice \[Theta]1"}, -Pi,
+          Pi}, {{$CellContext`ph1$$, 1., "Alice \[Phi]1"}, -Pi, 
+         Pi}, {{$CellContext`z1$$, 0, "Alice \[Zeta]1"}, -Pi, Pi}, 
+        Pane[
+         Item[
+         "", Background -> GrayLevel[0.85], 
+          ImageSize -> {280, 2}]], {{$CellContext`th2$$, 1.5, 
+          "Bob \[Theta]2"}, -Pi, 
+         Pi}, {{$CellContext`ph2$$, 2., "Bob \[Phi]2"}, -Pi, 
+         Pi}, {{$CellContext`z2$$, 0, "Bob \[Zeta]2"}, -Pi, Pi}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{408., {295.13403309800196`, 300.86596690199804`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.962281611892502*^9, {3.962281673813616*^9, 3.9622817133783817`*^9}, 
+   3.962281793748436*^9, 3.9622818499285564`*^9, {3.962281891499607*^9, 
+   3.962281928790104*^9}, {3.9622820015150967`*^9, 3.9622820135843506`*^9}, {
+   3.9622822066407356`*^9, 3.9622822330911903`*^9}, 3.9622822643189545`*^9, 
+   3.9622825611077614`*^9, {3.9622825953741665`*^9, 3.962282602620577*^9}, 
+   3.9622827684682617`*^9, {3.962283070782564*^9, 3.962283085567198*^9}, 
+   3.9622832133366604`*^9},
+ CellLabel->"Out[29]=",ExpressionUUID->"f29112e4-cb0f-2d4d-9466-bca1e576acc7"]
+}, Open  ]]
+},
+WindowSize->{718.5, 825},
+WindowMargins->{{-5.25, Automatic}, {Automatic, 0}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"8705e9d2-449a-6f4e-8e0c-6906b9267c4a"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 431, 7, 86, "Input",ExpressionUUID->"74742a37-4612-0943-88d3-5b5cc3ebf06a"],
+Cell[992, 29, 1280, 25, 28, "Input",ExpressionUUID->"215b1c6a-6ade-3d47-bdfa-486e84478fa7"],
+Cell[2275, 56, 422, 10, 28, "Input",ExpressionUUID->"5a02359a-57f6-404c-9a76-5db203ee5f46"],
+Cell[2700, 68, 424, 9, 28, "Input",ExpressionUUID->"6eded831-04a6-1e47-abe5-262d9e6bdd2a"],
+Cell[3127, 79, 302, 7, 28, "Input",ExpressionUUID->"f45befe5-0037-434c-9cfc-fc4771fb6c7b"],
+Cell[3432, 88, 1225, 31, 84, "Input",ExpressionUUID->"a8c21253-3bc8-7e4e-a5aa-cd92e076fdb6"],
+Cell[4660, 121, 2090, 58, 124, "Input",ExpressionUUID->"6eb7bb4d-18df-2e40-a707-5538efaf9b7a"],
+Cell[6753, 181, 1076, 26, 86, "Input",ExpressionUUID->"7f8150fb-2274-8a46-93fd-d58c88f49bfe"],
+Cell[7832, 209, 154, 3, 28, "Input",ExpressionUUID->"488ffb4e-d8e2-fc49-94a8-37dfd5058d23"],
+Cell[7989, 214, 1919, 45, 162, "Input",ExpressionUUID->"7fe30a6b-7d98-d443-9fdb-19b3e058ccf2"],
+Cell[9911, 261, 154, 3, 28, "Input",ExpressionUUID->"feca3e48-d05d-6340-b73e-6127530b7ebe"],
+Cell[10068, 266, 2513, 60, 162, "Input",ExpressionUUID->"8a268743-27c9-f040-adcf-08e2febe90c7"],
+Cell[CellGroupData[{
+Cell[12606, 330, 6236, 158, 371, "Input",ExpressionUUID->"2f626be4-8b50-c34c-a03e-d5f8798d90f1"],
+Cell[18845, 490, 5664, 108, 615, "Output",ExpressionUUID->"f29112e4-cb0f-2d4d-9466-bca1e576acc7"]
+}, Open  ]]
+}
+]
+*)
+

@@ -1,0 +1,1066 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     43755,       1058]
+NotebookOptionsPosition[     42370,       1030]
+NotebookOutlinePosition[     42776,       1046]
+CellTagsIndexPosition[     42733,       1043]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"::", "Package", "::"}], "\[IndentingNewLine]", ":", "Name", ":",
+      "NashEquilibriumFinder", ":", "Title", ":", 
+     RowBox[{
+      RowBox[{"Find", " ", "Pure"}], "-", 
+      RowBox[{
+      "Strategy", " ", "Nash", " ", "Equilibria", " ", "in", " ", 
+       "Continuous", " ", 
+       RowBox[{"Games", ":", "Author", ":", "Gemini", ":", "Date", ":", 
+        RowBox[{"2024", "-", "06", "-", "24"}], ":", "Summary", ":", 
+        RowBox[{
+        "This", " ", "package", " ", "provides", " ", "the", " ", "function", 
+         " ", "FindNashEquilibria"}]}]}]}]}], ",", 
+    RowBox[{
+     RowBox[{
+     "which", " ", "attempts", " ", "to", " ", "locate", " ", "pure"}], "-", 
+     RowBox[{
+     "strategy", " ", "Nash", " ", "equilibria", " ", "for", " ", "two"}], 
+     "-", 
+     RowBox[{
+     "player", " ", "games", " ", "with", " ", "continuous", " ", "strategy", 
+      " ", 
+      RowBox[{"spaces", "."}]}]}]}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"BeginPackage", "[", "\"\<NashEquilibriumFinder`\>\"", "]"}], 
+    ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FindNashEquilibria", "::", "usage"}], "=", 
+     "\"\<FindNashEquilibria[ascore, bscore, avars, bvars, constraints, game] \
+attempts to find pure-strategy Nash equilibria by solving the first-order \
+conditions for two-player continuous games.\>\""}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"FindNashEquilibria", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Function", "--"}], "--"}], "--"}], "--"}], "--"}],
+                "--"}], "--"}], "--"}], "--"}], "--"}], "--"}], "--"}], 
+        "--"}], " ", "This", " ", "function", " ", "attempts", " ", "to", " ",
+        "find", " ", "pure"}], "-", 
+      RowBox[{
+      "strategy", " ", "Nash", " ", "equilibria", " ", "for", " ", "a", " ", 
+       "two"}], "-", 
+      RowBox[{"player", " ", "game", " ", "where", " ", "the", " ", 
+       RowBox[{"players", "'"}], " ", "strategies", " ", "are", " ", 
+       "represented", " ", "by", " ", "lists", " ", "of", " ", "real", " ", 
+       RowBox[{"numbers", ".", 
+        RowBox[{"Arguments", ":", 
+         RowBox[{"-", "ascore"}], ":", 
+         RowBox[{
+         "A", " ", "function", " ", "defining", " ", "the", " ", "payoff", 
+          " ", "for", " ", "player", " ", 
+          RowBox[{"A", ".", "It"}], " ", "must", " ", "take", " ", "the", " ",
+           "form", " ", 
+          RowBox[{
+           RowBox[{"ascore", "[", 
+            RowBox[{"amove_List", ",", "bmove_List", ",", "game_"}], "]"}], 
+           ".", 
+           RowBox[{"-", 
+            RowBox[{"bscore", ":", 
+             RowBox[{
+             "A", " ", "function", " ", "defining", " ", "the", " ", "payoff",
+               " ", "for", " ", "player", " ", "B"}]}]}]}]}]}]}]}]}], ",", 
+     RowBox[{"with", " ", "the", " ", "same", " ", 
+      RowBox[{"signature", ".", 
+       RowBox[{"-", 
+        RowBox[{"avars", ":", 
+         RowBox[{
+         "A", " ", "list", " ", "of", " ", "symbols", " ", "representing", 
+          " ", "the", " ", "components", " ", "of", " ", "player", " ", 
+          RowBox[{"A", "'"}], "s", " ", "strategy", " ", 
+          RowBox[{"vector", ".", "Example"}]}], ":", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"ax", ",", "ay"}], "}"}], "-", 
+          RowBox[{"bvars", ":", 
+           RowBox[{
+           "A", " ", "list", " ", "of", " ", "symbols", " ", "representing", 
+            " ", "the", " ", "components", " ", "of", " ", "player", " ", 
+            RowBox[{"B", "'"}], "s", " ", "strategy", " ", 
+            RowBox[{"vector", ".", "Example"}]}], ":", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"bx", ",", "by"}], "}"}], "-", 
+            RowBox[{"constraints", ":", 
+             RowBox[{
+             "A", " ", "logical", " ", "expression", " ", "representing", " ",
+               "constraints", " ", "on", " ", "the", " ", "strategy", " ", 
+              "variables", " ", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"e", ".", "g", "."}], ",", 
+                 RowBox[{
+                  RowBox[{"qa", ">", "0"}], "&&", 
+                  RowBox[{"qb", ">", "0"}]}]}], ")"}], ".", "Use"}], " ", 
+              "True", " ", "if", " ", "there", " ", "are", " ", "no", " ", 
+              RowBox[{"constraints", ".", 
+               RowBox[{"-", "game"}]}]}], ":", 
+             RowBox[{
+             "A", " ", "parameter", " ", "or", " ", "structure", " ", "that", 
+              " ", "can", " ", "be", " ", "passed", " ", "to", " ", "the", 
+              " ", "score", " ", 
+              RowBox[{"functions", ".", "This"}], " ", "is", " ", "useful", 
+              " ", "for", " ", "parameterizing", " ", "families", " ", "of", 
+              " ", 
+              RowBox[{"games", ".", "Use"}], " ", 
+              RowBox[{"{", "}"}], " ", "or", " ", "any", " ", "placeholder", 
+              " ", "if", " ", "not", " ", 
+              RowBox[{"needed", ".", 
+               RowBox[{"Method", ":", 
+                RowBox[{
+                "The", " ", "function", " ", "assumes", " ", "that", " ", 
+                 "the", " ", "score", " ", "functions", " ", "are", " ", 
+                 RowBox[{"differentiable", ".", "A"}], " ", "necessary", " ", 
+                 "condition", " ", "for", " ", "an", " ", "interior", " ", 
+                 "Nash", " ", "Equilibrium", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"i", ".", "e", "."}], ",", 
+                   RowBox[{
+                   "not", " ", "on", " ", "the", " ", "boundary", " ", "of", 
+                    " ", "the", " ", "strategy", " ", "space"}]}], ")"}], " ",
+                  "is", " ", "that", " ", "each", " ", 
+                 RowBox[{"player", "'"}], "s", " ", "payoff", " ", "is", " ", 
+                 "maximized", " ", "given", " ", "the", " ", "other", " ", 
+                 RowBox[{"player", "'"}], "s", " ", 
+                 RowBox[{"strategy", ".", "This"}], " ", "implies", " ", 
+                 "the", " ", "gradient", " ", "of", " ", "each", " ", 
+                 RowBox[{"player", "'"}], "s", " ", "score", " ", "function", 
+                 " ", "with", " ", "respect", " ", "to", " ", "their", " ", 
+                 "own", " ", "strategy", " ", "variables", " ", "must", " ", 
+                 "be", " ", "the", " ", "zero", " ", 
+                 RowBox[{"vector", ".", "The"}], " ", "function", " ", 
+                 "constructs", " ", "a", " ", "system", " ", "of", " ", 
+                 "equations", " ", "from", " ", "these", " ", "gradient", " ",
+                  "conditions", " ", "and", " ", "uses", " ", 
+                 RowBox[{"Mathematica", "'"}], "s", " ", "`Solve`", " ", 
+                 "command", " ", "to", " ", "find", " ", 
+                 RowBox[{"solutions", ".", "Returns"}]}], ":", 
+                RowBox[{
+                "A", " ", "list", " ", "of", " ", "replacement", " ", "rules",
+                  " ", "that", " ", "specify", " ", "the", " ", "values", " ",
+                  "of", " ", "the", " ", "strategy", " ", "variables", " ", 
+                 "at", " ", "each", " ", "candidate", " ", "Nash", " ", 
+                 RowBox[{"equilibrium", ".", "An"}], " ", "empty", " ", 
+                 "list", " ", "`", 
+                 RowBox[{"{", "}"}], "`", " ", "indicates", " ", "that", " ", 
+                 "no", " ", "interior", " ", "solution", " ", "was", " ", 
+                 RowBox[{"found", ".", 
+                  RowBox[{"Limitations", ":", 
+                   RowBox[{
+                    RowBox[{"-", "Boundary"}], " ", "Solutions"}], ":", 
+                   RowBox[{"This", " ", "method", " ", "only", " ", 
+                    RowBox[{"finds", "'"}], 
+                    RowBox[{"interior", "'"}], " ", "equilibria", " ", 
+                    "where", " ", "the", " ", "gradient", " ", "is", " ", 
+                    "defined", " ", "and", " ", 
+                    RowBox[{"zero", ".", "It"}], " ", "will", " ", "not", " ",
+                     "find", " ", "equilibria", " ", "that", " ", "lie", " ", 
+                    "on", " ", "the", " ", "boundary", " ", "of", " ", "the", 
+                    " ", "allowed", " ", "strategy", " ", 
+                    RowBox[{"space", ".", "For"}], " ", "such", " ", 
+                    "problems"}]}]}]}]}]}]}]}]}]}]}]}]}]}]}], ",", 
+     RowBox[{
+      RowBox[{
+      "more", " ", "advanced", " ", "methods", " ", "involving", " ", "the", 
+       " ", "Karush"}], "-", "Kuhn", "-", 
+      RowBox[{"Tucker", " ", 
+       RowBox[{"(", "KKT", ")"}], " ", "conditions", " ", "may", " ", "be", 
+       " ", 
+       RowBox[{"necessary", ".", 
+        RowBox[{"-", 
+         RowBox[{"Sufficiency", ":", 
+          RowBox[{
+           RowBox[{
+           "The", " ", "function", " ", "solves", " ", "the", " ", "first"}], 
+           "-", 
+           RowBox[{"order", " ", 
+            RowBox[{"(", "necessary", ")"}], " ", 
+            RowBox[{"conditions", ".", "You"}], " ", "must", " ", "manually", 
+            " ", "verify", " ", "the", " ", "second"}], "-", 
+           RowBox[{"order", " ", 
+            RowBox[{"(", "sufficient", ")"}], " ", "conditions", " ", "to", 
+            " ", "ensure", " ", "that", " ", "the", " ", "solution", " ", 
+            "is", " ", "indeed", " ", "a", " ", "local", " ", "maximum", " ", 
+            "for", " ", "each", " ", 
+            RowBox[{"player", ".", 
+             RowBox[{"-", "Multiple"}]}], " ", "Equilibria"}]}], ":", 
+          RowBox[{
+          "`Solve`", " ", "will", " ", "attempt", " ", "to", " ", "find", " ",
+            "all", " ", "solutions"}]}]}]}]}]}], ",", 
+     RowBox[{
+     "but", " ", "for", " ", "highly", " ", "complex", " ", "systems"}], ",", 
+     RowBox[{
+     "it", " ", "may", " ", "not", " ", "find", " ", "every", " ", "possible",
+       " ", 
+      RowBox[{"equilibrium", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FindNashEquilibria", "[", 
+      RowBox[{
+      "ascore_", ",", "bscore_", ",", "avars_List", ",", "bvars_List", ",", 
+       "constraints_", ",", "game_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "gradA", ",", "gradB", ",", "equations", ",", "allvars", ",", 
+         "system"}], "}"}], ",", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Calculate", " ", "the", " ", "gradient", " ", "of", " ", "each", " ", 
+         RowBox[{"player", "'"}], "s", " ", "score", " ", 
+         RowBox[{"w", ".", "r", ".", "t", ".", "their"}], " ", "own", " ", 
+         "variables"}], "*)"}], 
+       RowBox[{
+        RowBox[{"gradA", "=", 
+         RowBox[{"Grad", "[", 
+          RowBox[{
+           RowBox[{"ascore", "[", 
+            RowBox[{"avars", ",", "bvars", ",", "game"}], "]"}], ",", 
+           "avars"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"gradB", "=", 
+         RowBox[{"Grad", "[", 
+          RowBox[{
+           RowBox[{"bscore", "[", 
+            RowBox[{"avars", ",", "bvars", ",", "game"}], "]"}], ",", 
+           "bvars"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Create", " ", "a", " ", "system", " ", "of", " ", "equations", " ", 
+          "by", " ", "setting", " ", "the", " ", "gradients", " ", "to", " ", 
+          "zero"}], "*)"}], 
+        RowBox[{"equations", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"Thread", "[", 
+            RowBox[{"gradA", "==", "0"}], "]"}], ",", 
+           RowBox[{"Thread", "[", 
+            RowBox[{"gradB", "==", "0"}], "]"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Combine", " ", "all", " ", "strategy", " ", "variables", " ", 
+          "into", " ", "a", " ", "single", " ", "list"}], "*)"}], 
+        RowBox[{"allvars", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{"avars", ",", "bvars"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Combine", " ", "the", " ", "equations", " ", "and", " ", 
+          "constraints", " ", "into", " ", "a", " ", "single", " ", "logical",
+           " ", "expression"}], "*)"}], 
+        RowBox[{"system", "=", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"constraints", "===", "True"}], ",", 
+           RowBox[{"And", "@@", "equations"}], ",", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"And", "@@", "equations"}], ")"}], "&&", 
+            "constraints"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Solve", " ", "the", " ", "system", " ", "for", " ", "the", " ", 
+          "strategy", " ", "variables"}], "*)"}], 
+        RowBox[{"Solve", "[", 
+         RowBox[{"system", ",", "allvars"}], "]"}]}]}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"End", "[", "]"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"End", " ", "`Private`", " ", "context"}], "*)"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"EndPackage", "[", "]"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"End", " ", "of", " ", "Package"}], "*)"}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "*****************************************************************************)"}\
+], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"EXAMPLE", " ", "USAGE"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "*****************************************************************************)"}\
+], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Load", " ", "the", " ", "package", " ", "we", " ", "just", " ", 
+     "defined"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Needs", "[", "\"\<NashEquilibriumFinder`\>\"", "]"}], 
+    ";"}]}]}]], "Input",
+ CellLabel->"In[9]:=",ExpressionUUID->"e1b74465-7b46-014e-80ec-8c77fab0d4bd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\n", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ClearAll", "[", 
+     RowBox[{"ascore", ",", "bscore", ",", "qa", ",", "qb"}], "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"--", 
+      RowBox[{"-", "Define"}]}], " ", "the", " ", 
+     RowBox[{"Game", ":", 
+      RowBox[{
+       RowBox[{"Cournot", " ", "Duopoly", " ", 
+        RowBox[{"Competition", "--"}]}], "-"}]}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Two", " ", "firms"}], ",", 
+     RowBox[{"A", " ", "and", " ", "B"}], ",", 
+     RowBox[{
+      RowBox[{
+      "compete", " ", "by", " ", "choosing", " ", "quantities", " ", "to", 
+       " ", "produce", " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"qa", " ", "and", " ", "qb"}], ")"}], ".", "The"}], " ", 
+       "market", " ", "price", " ", "P", " ", "depends", " ", "on", " ", 
+       "the", " ", "total", " ", "quantity", " ", "Q"}], "=", 
+      RowBox[{"qa", "+", 
+       RowBox[{
+        RowBox[{"qb", ".", "Each"}], " ", "firm", " ", "has", " ", "a", " ", 
+        "cost", " ", "to", " ", "produce", " ", "its", " ", 
+        RowBox[{"quantity", ".", "The"}], " ", "payoff", " ", 
+        RowBox[{"(", "score", ")"}], " ", "for", " ", "each", " ", "firm", 
+        " ", "is", " ", "its", " ", 
+        RowBox[{"profit", "."}]}]}]}]}], "*)"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Game", " ", "parameters", " ", "passed", " ", "in", " ", 
+     RowBox[{"the", "'"}], 
+     RowBox[{"game", "'"}], " ", "argument"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"marketParams", "=", 
+     RowBox[{"<|", 
+      RowBox[{
+       RowBox[{"\"\<DemandIntercept\>\"", "->", "120"}], ",", 
+       RowBox[{"\"\<MarginalCost\>\"", "->", "30"}]}], "|>"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Player", " ", 
+     RowBox[{"A", "'"}], "s", " ", "score", " ", 
+     RowBox[{"(", "profit", ")"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Price", " ", "is", " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"a", "-", 
+         RowBox[{"(", 
+          RowBox[{"qa", "+", "qb"}], ")"}]}], ")"}], ".", "Profit"}], " ", 
+      "is", " ", "Price", "*", "qa"}], "-", 
+     RowBox[{"Cost", "*", "qa"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ascore", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"qa_", ",", "_"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"qb_", ",", "_"}], "}"}], ",", "params_"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"params", "[", "\"\<DemandIntercept\>\"", "]"}], "-", 
+         RowBox[{"(", 
+          RowBox[{"qa", "+", "qb"}], ")"}]}], ")"}], "*", "qa"}], "-", 
+      RowBox[{
+       RowBox[{"params", "[", "\"\<MarginalCost\>\"", "]"}], "*", "qa"}]}]}], 
+    ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Player", " ", 
+     RowBox[{"B", "'"}], "s", " ", "score", " ", 
+     RowBox[{"(", "profit", ")"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"bscore", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"qa_", ",", "_"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"qb_", ",", "_"}], "}"}], ",", "params_"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"params", "[", "\"\<DemandIntercept\>\"", "]"}], "-", 
+         RowBox[{"(", 
+          RowBox[{"qa", "+", "qb"}], ")"}]}], ")"}], "*", "qb"}], "-", 
+      RowBox[{
+       RowBox[{"params", "[", "\"\<MarginalCost\>\"", "]"}], "*", "qb"}]}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "Define"}]}], " ", "the", " ", "Strategy", " ", 
+      "Variables", " ", "and", " ", 
+      RowBox[{"Constraints", "--"}]}], "-"}], "*)"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"The", " ", 
+      RowBox[{"user", "'"}], "s", " ", "request", " ", "specified", " ", 
+      "strategies", " ", "as", " ", "lists", " ", "of", " ", "two", " ", 
+      RowBox[{"reals", ".", "In"}], " ", "this", " ", "model"}], ",", 
+     RowBox[{
+     "each", " ", "firm", " ", "only", " ", "has", " ", "one", " ", 
+      "strategic", " ", "variable", " ", 
+      RowBox[{
+       RowBox[{"(", "quantity", ")"}], ".", 
+       RowBox[{"We", "'"}]}], "ll", " ", "use", " ", "a", " ", "dummy", " ", 
+      "variable", " ", "as", " ", "the", " ", "second", " ", "element", " ", 
+      "in", " ", "each", " ", "list", " ", "to", " ", "match", " ", "the", 
+      " ", "required", " ", 
+      RowBox[{"structure", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"avars", "=", 
+     RowBox[{"{", 
+      RowBox[{"qa", ",", "dummyA"}], "}"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"bvars", "=", 
+     RowBox[{"{", 
+      RowBox[{"qb", ",", "dummyB"}], "}"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Constraints", ":", 
+     RowBox[{
+      RowBox[{"Quantities", " ", "must", " ", "be", " ", "non"}], "-", 
+      "negative"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"constraints", "=", 
+     RowBox[{
+      RowBox[{"qa", ">=", "0"}], "&&", 
+      RowBox[{"qb", ">=", "0"}]}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "Find"}]}], " ", "the", " ", "Nash", " ", 
+      RowBox[{"Equilibrium", "--"}]}], "-"}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<Finding Nash Equilibrium for the Cournot model...\>\"",
+      "]"}], ";"}], "\n", 
+   RowBox[{"nashEquilibrium", "=", 
+    RowBox[{"FindNashEquilibria", "[", 
+     RowBox[{
+     "ascore", ",", "bscore", ",", "avars", ",", "bvars", ",", "constraints", 
+      ",", "marketParams"}], "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"--", 
+       RowBox[{"-", "Verification"}]}], " ", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Checking", " ", "Second"}], "-", 
+         RowBox[{"Order", " ", "Conditions"}]}], ")"}], "--"}]}], "-"}], 
+    "*)"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"The", " ", "point", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"qa", "->", "30"}], ",", 
+        RowBox[{"qb", "->", "30"}]}], "}"}], " ", "is", " ", "a", " ", 
+      "candidate", " ", 
+      RowBox[{"equilibrium", ".", "To"}], " ", "confirm", " ", 
+      RowBox[{"it", "'"}], "s", " ", "a", " ", "Nash", " ", "Equilibrium"}], 
+     ",", 
+     RowBox[{
+     "we", " ", "must", " ", "check", " ", "that", " ", "at", " ", "this", 
+      " ", "point"}], ",", 
+     RowBox[{
+     "neither", " ", "player", " ", "can", " ", "improve", " ", "their", " ", 
+      "payoff", " ", "by", " ", "changing", " ", "their", " ", 
+      RowBox[{"strategy", ".", "This"}], " ", "means", " ", "checking", " ", 
+      "that", " ", "the", " ", "profit", " ", "functions", " ", "are", " ", 
+      "locally", " ", "concave", " ", "at", " ", "the", " ", 
+      RowBox[{"solution", ".", "We"}], " ", "check", " ", "the", " ", 
+      "second", " ", "partial", " ", "derivatives", " ", "of", " ", "each", 
+      " ", 
+      RowBox[{"player", "'"}], "s", " ", "score", " ", "with", " ", "respect",
+       " ", "to", " ", "their", " ", "own", " ", 
+      RowBox[{"variables", ".", "They"}], " ", "should", " ", "be", " ", 
+      "negative", " ", "for", " ", "a", " ", 
+      RowBox[{"maximum", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "Print", "[", "\"\<\\n--- Verifying Second-Order Conditions ---\>\"", 
+     "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"For", " ", "Player", " ", "A"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"secondDerivA", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{"ascore", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"qa", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"qb", ",", "0"}], "}"}], ",", "marketParams"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"qa", ",", "2"}], "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{
+     "\"\<Second derivative of A's score w.r.t. qa: \>\"", ",", 
+      "secondDerivA"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"secondDerivA", "<", "0"}], ",", 
+      RowBox[{
+      "Print", "[", "\"\<Player A's score is maximized (condition met).\>\"", 
+       "]"}], ",", 
+      RowBox[{
+      "Print", "[", "\"\<Player A's score is not maximized.\>\"", "]"}]}], 
+     "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"For", " ", "Player", " ", "B"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"secondDerivB", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{"bscore", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"qa", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"qb", ",", "0"}], "}"}], ",", "marketParams"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"qb", ",", "2"}], "}"}]}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{
+     "\"\<Second derivative of B's score w.r.t. qb: \>\"", ",", 
+      "secondDerivB"}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"secondDerivB", "<", "0"}], ",", 
+      RowBox[{
+      "Print", "[", "\"\<Player B's score is maximized (condition met).\>\"", 
+       "]"}], ",", 
+      RowBox[{
+      "Print", "[", "\"\<Player B's score is not maximized.\>\"", "]"}]}], 
+     "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+      "Since", " ", "both", " ", "second", " ", "derivatives", " ", "are"}], 
+      "-", 
+      RowBox[{"2", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"which", " ", "is"}], "<", "0"}], ")"}]}]}], ",", 
+     RowBox[{
+     "the", " ", "profit", " ", "functions", " ", "are", " ", "concave"}], 
+     ",", 
+     RowBox[{
+     "and", " ", "the", " ", "solution", " ", "found", " ", "is", " ", 
+      "indeed", " ", "a", " ", "Nash", " ", 
+      RowBox[{"equilibrium", "."}]}]}], "*)"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.959688307929104*^9, 3.959688307929104*^9}, 
+   3.9596885557146244`*^9},ExpressionUUID->"90c54d65-8e7e-d94a-94b2-\
+79643508e9b5"],
+
+Cell[BoxData["\<\"Finding Nash Equilibrium for the Cournot model...\"\>"], \
+"Print",
+ CellChangeTimes->{3.959688317551737*^9},
+ CellLabel->
+  "During evaluation of \
+In[64]:=",ExpressionUUID->"d3063429-6c64-a242-b72e-be87f8772532"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Solve", "svars", 
+   "\"Equations may not give solutions for all \\\"solve\\\" variables.\"", 2,
+    79, 10, 33065122800497852381, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9596883176135063`*^9},
+ CellLabel->
+  "During evaluation of \
+In[64]:=",ExpressionUUID->"af777dac-c1e5-af43-8491-367398a060cc"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"qa", "\[Rule]", "30"}], ",", 
+    RowBox[{"qb", "\[Rule]", "30"}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.9596883176135063`*^9},
+ CellLabel->"Out[79]=",ExpressionUUID->"023ce84c-37e6-0e4d-a431-f310e51fe7e5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"\\n--- Verifying Second-Order Conditions ---\"\>"], "Print",
+ CellChangeTimes->{3.9596883176135063`*^9},
+ CellLabel->
+  "During evaluation of \
+In[64]:=",ExpressionUUID->"89bbbb69-7921-b543-a9a2-acde766b42d5"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Second derivative of A's score w.r.t. qa: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"-", "2"}]}],
+  SequenceForm["Second derivative of A's score w.r.t. qa: ", -2],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9596883176135063`*^9},
+ CellLabel->
+  "During evaluation of \
+In[64]:=",ExpressionUUID->"6bb2e754-96c5-5243-a0bd-d5b76cd8c284"],
+
+Cell[BoxData["\<\"Player A's score is maximized (condition met).\"\>"], \
+"Print",
+ CellChangeTimes->{3.9596883176135063`*^9},
+ CellLabel->
+  "During evaluation of \
+In[64]:=",ExpressionUUID->"8e87a50a-fe88-5f44-b3fb-98c9c1456ca7"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Second derivative of B's score w.r.t. qb: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"-", "2"}]}],
+  SequenceForm["Second derivative of B's score w.r.t. qb: ", -2],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9596883176291237`*^9},
+ CellLabel->
+  "During evaluation of \
+In[64]:=",ExpressionUUID->"9db3fee9-d5c8-6641-a6a2-534073683bc9"],
+
+Cell[BoxData["\<\"Player B's score is maximized (condition met).\"\>"], \
+"Print",
+ CellChangeTimes->{3.9596883176291237`*^9},
+ CellLabel->
+  "During evaluation of \
+In[64]:=",ExpressionUUID->"c7fba058-5842-e34a-a40e-70026bd19540"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"::", "Package", "::"}], "\[IndentingNewLine]", ":", "Name", ":",
+      "DiscreteNashEquilibriumFinder", ":", "Title", ":", 
+     RowBox[{
+      RowBox[{"Find", " ", "Pure"}], "-", 
+      RowBox[{
+      "Strategy", " ", "Nash", " ", "Equilibria", " ", "in", " ", "Discrete", 
+       " ", 
+       RowBox[{"Games", ":", "Author", ":", "Gemini", ":", "Date", ":", 
+        RowBox[{"2024", "-", "06", "-", "24"}], ":", "Summary", ":", 
+        RowBox[{
+        "This", " ", "package", " ", "provides", " ", "the", " ", "function", 
+         " ", "FindDiscreteNashEquilibria"}]}]}]}]}], ",", 
+    RowBox[{
+     RowBox[{"which", " ", "finds", " ", "all", " ", "pure"}], "-", 
+     RowBox[{
+     "strategy", " ", "Nash", " ", "equilibria", " ", "in", " ", "a", " ", 
+      "finite"}]}], ",", 
+    RowBox[{
+     RowBox[{"discrete", " ", "two"}], "-", 
+     RowBox[{
+     "player", " ", "game", " ", "by", " ", "exhaustively", " ", "checking", 
+      " ", "every", " ", "strategy", " ", 
+      RowBox[{"profile", "."}]}]}]}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+    "BeginPackage", "[", "\"\<DiscreteNashEquilibriumFinder`\>\"", "]"}], 
+    ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FindDiscreteNashEquilibria", "::", "usage"}], "=", 
+     "\"\<FindDiscreteNashEquilibria[ascore, bscore, aStrategies, \
+bStrategies, game] finds Nash equilibria by checking every possible \
+combination of discrete strategies.\>\""}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"FindDiscreteNashEquilibria", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Function", "--"}], "--"}], "--"}], "--"}], 
+                    "--"}], "--"}], "--"}], "--"}], "--"}], "--"}], "--"}], 
+             "--"}], "--"}], "--"}], "--"}], "--"}], "--"}]}], "-", 
+      RowBox[{"This", " ", "function", " ", "finds", " ", "pure"}], "-", 
+      RowBox[{
+      "strategy", " ", "Nash", " ", "equilibria", " ", "by", " ", "iterating",
+        " ", "through", " ", "all", " ", "possible", " ", "strategy", " ", 
+       "profiles", " ", "in", " ", "a", " ", "finite", " ", "game", " ", 
+       "and", " ", "checking", " ", "the", " ", "Nash", " ", "condition", " ", 
+       RowBox[{"directly", ".", 
+        RowBox[{"Arguments", ":", 
+         RowBox[{"-", "ascore"}], ":", 
+         RowBox[{
+         "A", " ", "function", " ", "defining", " ", "the", " ", "payoff", 
+          " ", "for", " ", "player", " ", 
+          RowBox[{"A", ".", "It"}], " ", "must", " ", "take", " ", "the", " ",
+           "form", " ", 
+          RowBox[{
+           RowBox[{"ascore", "[", 
+            RowBox[{"amove_List", ",", "bmove_List", ",", "game_"}], "]"}], 
+           ".", 
+           RowBox[{"-", 
+            RowBox[{"bscore", ":", 
+             RowBox[{
+             "A", " ", "function", " ", "defining", " ", "the", " ", "payoff",
+               " ", "for", " ", "player", " ", "B"}]}]}]}]}]}]}]}]}], ",", 
+     RowBox[{"with", " ", "the", " ", "same", " ", 
+      RowBox[{"signature", ".", 
+       RowBox[{"-", 
+        RowBox[{"aStrategies", ":", 
+         RowBox[{
+         "A", " ", "list", " ", "of", " ", "all", " ", "possible", " ", 
+          "strategies", " ", "for", " ", "player", " ", 
+          RowBox[{"A", ".", "Example"}]}], ":", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "1"}], "}"}], ",", "...", ",", 
+            RowBox[{"{", 
+             RowBox[{"3", ",", "3"}], "}"}]}], "}"}], "-", 
+          RowBox[{"bStrategies", ":", 
+           RowBox[{
+           "A", " ", "list", " ", "of", " ", "all", " ", "possible", " ", 
+            "strategies", " ", "for", " ", "player", " ", 
+            RowBox[{"B", ".", 
+             RowBox[{"-", "game"}]}]}], ":", 
+           RowBox[{
+           "A", " ", "parameter", " ", "or", " ", "structure", " ", "that", 
+            " ", "can", " ", "be", " ", "passed", " ", "to", " ", "the", " ", 
+            "score", " ", 
+            RowBox[{"functions", ".", "Use"}], " ", 
+            RowBox[{"{", "}"}], " ", "or", " ", "any", " ", "placeholder", 
+            " ", "if", " ", "not", " ", 
+            RowBox[{"needed", ".", 
+             RowBox[{"Method", ":", 
+              RowBox[{
+              "The", " ", "function", " ", "iterates", " ", "through", " ", 
+               "every", " ", "possible", " ", "strategy", " ", "profile", " ", 
+               RowBox[{"(", 
+                RowBox[{"sA", ",", "sB"}], ")"}]}]}]}]}]}]}]}]}]}]}], ",", 
+     RowBox[{
+     "where", " ", "sA", " ", "is", " ", "a", " ", "strategy", " ", "for", 
+      " ", "player", " ", "A", " ", "and", " ", "sB", " ", "is", " ", "a", 
+      " ", "strategy", " ", "for", " ", "player", " ", 
+      RowBox[{"B", ".", "For"}], " ", "each", " ", "profile"}], ",", 
+     RowBox[{"it", " ", "checks", " ", "two", " ", 
+      RowBox[{"conditions", ":", 
+       RowBox[{
+       "1.", " ", "Can", " ", "player", " ", "A", " ", "do", " ", "better", 
+        " ", "by", " ", "unilaterally", " ", "changing", " ", "their", " ", 
+        "strategy", " ", "to", " ", "some", " ", 
+        RowBox[{
+         RowBox[{"sA", "'"}], "?", "2."}], " ", "Can", " ", "player", " ", 
+        "B", " ", "do", " ", "better", " ", "by", " ", "unilaterally", " ", 
+        "changing", " ", "their", " ", "strategy", " ", "to", " ", "some", 
+        " ", 
+        RowBox[{
+         RowBox[{"sB", "'"}], "?", "If"}], " ", "the", " ", "answer", " ", 
+        "to", " ", "both", " ", "questions", " ", "is", " ", 
+        "\"\<no\>\""}]}]}], ",", 
+     RowBox[{
+      RowBox[{"the", " ", "profile", " ", 
+       RowBox[{"(", 
+        RowBox[{"sA", ",", "sB"}], ")"}], " ", "is", " ", "a", " ", "Nash", 
+       " ", "Equilibrium", " ", "and", " ", "is", " ", "added", " ", "to", 
+       " ", "the", " ", "list", " ", "of", " ", 
+       RowBox[{"results", ".", "This"}], " ", "is", " ", "the", " ", 
+       "fundamental", " ", "definition", " ", "of", " ", "a", " ", "pure"}], 
+      "-", 
+      RowBox[{"strategy", " ", "Nash", " ", 
+       RowBox[{"Equilibrium", ".", 
+        RowBox[{"Returns", ":", 
+         RowBox[{"A", " ", "list", " ", "of", " ", "Nash", " ", 
+          RowBox[{"equilibria", ".", "Each"}], " ", "equilibrium", " ", "is", 
+          " ", "represented", " ", "as", " ", "a", " ", "list", " ", 
+          "containing", " ", "player", " ", 
+          RowBox[{"A", "'"}], "s", " ", "strategy", " ", "and", " ", "player",
+           " ", 
+          RowBox[{"B", "'"}], "s", " ", "strategy"}]}]}]}]}], ",", 
+     RowBox[{"e", ".", "g", "."}], ",", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"alpha1", ",", "alpha2"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"beta1", ",", "beta2"}], "}"}]}], "}"}], ",", "..."}], 
+       "}"}], "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FindDiscreteNashEquilibria", "[", 
+      RowBox[{
+      "ascore_", ",", "bscore_", ",", "aStrategies_List", ",", 
+       "bStrategies_List", ",", "game_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"nashEquilibria", "=", 
+          RowBox[{"{", "}"}]}], ",", "isNash", ",", "currentScoreA", ",", 
+         "currentScoreB"}], "}"}], ",", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Iterate", " ", "over", " ", "every", " ", "possible", " ", 
+         "strategy", " ", "for", " ", "player", " ", "A"}], "*)"}], 
+       RowBox[{
+        RowBox[{"Do", "[", 
+         RowBox[{"(*", 
+          RowBox[{
+          "Iterate", " ", "over", " ", "every", " ", "possible", " ", 
+           "strategy", " ", "for", " ", "player", " ", "B"}], "*)"}], 
+         RowBox[{
+          RowBox[{"Do", "[", 
+           RowBox[{"(*", 
+            RowBox[{
+            "Assume", " ", "the", " ", "current", " ", "profile", " ", "is", 
+             " ", "a", " ", "Nash", " ", "Equilibrium", " ", "until", " ", 
+             "proven", " ", "otherwise"}], "*)"}], 
+           RowBox[{
+            RowBox[{
+             RowBox[{"isNash", "=", "True"}], ";", "\[IndentingNewLine]", 
+             RowBox[{"(*", 
+              RowBox[{
+              "Calculate", " ", "the", " ", "scores", " ", "for", " ", "the", 
+               " ", "current", " ", "strategy", " ", "profile"}], "*)"}], 
+             RowBox[{"currentScoreA", "=", 
+              RowBox[{"ascore", "[", 
+               RowBox[{"sA", ",", "sB", ",", "game"}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"currentScoreB", "=", 
+              RowBox[{"bscore", "[", 
+               RowBox[{"sA", ",", "sB", ",", "game"}], "]"}]}], ";", 
+             "\[IndentingNewLine]", 
+             RowBox[{"(*", 
+              RowBox[{
+              "Check", " ", "if", " ", "Player", " ", "A", " ", "has", " ", 
+               "a", " ", "profitable", " ", "unilateral", " ", "deviation"}], 
+              "*)"}], 
+             RowBox[{"Do", "[", 
+              RowBox[{
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"ascore", "[", 
+                   RowBox[{"altA", ",", "sB", ",", "game"}], "]"}], ">", 
+                  "currentScoreA"}], ",", 
+                 RowBox[{
+                  RowBox[{"isNash", "=", "False"}], ";", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"Break", "[", "]"}], ";"}]}], " ", 
+                RowBox[{"(*", 
+                 RowBox[{
+                  RowBox[{
+                  "Found", " ", "a", " ", "better", " ", "strategy", " ", 
+                   "for", " ", "A"}], ",", 
+                  RowBox[{"so", " ", "this", " ", 
+                   RowBox[{"isn", "'"}], "t", " ", "a", " ", "NE"}]}], "*)"}],
+                 "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"altA", ",", 
+                 RowBox[{"DeleteCases", "[", 
+                  RowBox[{"aStrategies", ",", "sA"}], "]"}]}], "}"}]}], "]"}],
+              ";", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"!", "isNash"}], ",", 
+               RowBox[{"Continue", "[", "]"}]}], "]"}], ";", 
+             RowBox[{"(*", 
+              RowBox[{
+              "Move", " ", "to", " ", "the", " ", "next", " ", "profile"}], 
+              "*)"}], 
+             RowBox[{"(*", 
+              RowBox[{
+              "Check", " ", "if", " ", "Player", " ", "B", " ", "has", " ", 
+               "a", " ", "profitable", " ", "unilateral", " ", "deviation"}], 
+              "*)"}], 
+             RowBox[{"Do", "[", 
+              RowBox[{
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"bscore", "[", 
+                   RowBox[{"sA", ",", "altB", ",", "game"}], "]"}], ">", 
+                  "currentScoreB"}], ",", 
+                 RowBox[{
+                  RowBox[{"isNash", "=", "False"}], ";", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"Break", "[", "]"}], ";"}]}], " ", 
+                RowBox[{"(*", 
+                 RowBox[{
+                  RowBox[{
+                  "Found", " ", "a", " ", "better", " ", "strategy", " ", 
+                   "for", " ", "B"}], ",", 
+                  RowBox[{"so", " ", "this", " ", 
+                   RowBox[{"isn", "'"}], "t", " ", "a", " ", "NE"}]}], "*)"}],
+                 "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"altB", ",", 
+                 RowBox[{"DeleteCases", "[", 
+                  RowBox[{"bStrategies", ",", "sB"}], "]"}]}], "}"}]}], "]"}],
+              ";", "\[IndentingNewLine]", 
+             RowBox[{"(*", 
+              RowBox[{
+               RowBox[{"If", " ", "after", " ", "all", " ", "checks"}], ",", 
+               RowBox[{"isNash", " ", "is", " ", "still", " ", "true"}], ",", 
+               RowBox[{"we", " ", "found", " ", "an", " ", "equilibrium"}]}], 
+              "*)"}], 
+             RowBox[{"If", "[", 
+              RowBox[{"isNash", ",", 
+               RowBox[{"AppendTo", "[", 
+                RowBox[{"nashEquilibria", ",", 
+                 RowBox[{"{", 
+                  RowBox[{"sA", ",", "sB"}], "}"}]}], "]"}]}], "]"}], ";"}], 
+            ",", 
+            RowBox[{"{", 
+             RowBox[{"sB", ",", "bStrategies"}], "}"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"sA", ",", "aStrategies"}], "}"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", "nashEquilibria", "]"}], ";"}]}], "]"}]}], 
+    ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"End", "[", "]"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"End", " ", "`Private`", " ", "context"}], "*)"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"EndPackage", "[", "]"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"End", " ", "of", " ", "Package"}], "*)"}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.9596892550294437`*^9, 3.9596892550294437`*^9}, {
+   3.959689303940111*^9, 3.959689318419012*^9}, 3.9596895119050884`*^9},
+ CellLabel->
+  "In[165]:=",ExpressionUUID->"c4518e35-66cc-0b4c-a641-f8beb49c3ecb"]
+},
+WindowSize->{718.5, 825},
+WindowMargins->{{Automatic, -5.25}, {Automatic, 0}},
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"58599f4f-29b6-ff41-8779-71d291b7add2"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 14636, 319, 1760, "Input",ExpressionUUID->"e1b74465-7b46-014e-80ec-8c77fab0d4bd"],
+Cell[CellGroupData[{
+Cell[15219, 343, 10791, 286, 1304, "Input",ExpressionUUID->"90c54d65-8e7e-d94a-94b2-79643508e9b5"],
+Cell[26013, 631, 232, 5, 22, "Print",ExpressionUUID->"d3063429-6c64-a242-b72e-be87f8772532"],
+Cell[26248, 638, 362, 9, 28, "Message",ExpressionUUID->"af777dac-c1e5-af43-8491-367398a060cc"],
+Cell[26613, 649, 286, 7, 32, "Output",ExpressionUUID->"023ce84c-37e6-0e4d-a431-f310e51fe7e5"],
+Cell[CellGroupData[{
+Cell[26924, 660, 227, 4, 40, "Print",ExpressionUUID->"89bbbb69-7921-b543-a9a2-acde766b42d5"],
+Cell[27154, 666, 393, 10, 22, "Print",ExpressionUUID->"6bb2e754-96c5-5243-a0bd-d5b76cd8c284"],
+Cell[27550, 678, 231, 5, 22, "Print",ExpressionUUID->"8e87a50a-fe88-5f44-b3fb-98c9c1456ca7"],
+Cell[27784, 685, 393, 10, 22, "Print",ExpressionUUID->"9db3fee9-d5c8-6641-a6a2-534073683bc9"],
+Cell[28180, 697, 231, 5, 22, "Print",ExpressionUUID->"c7fba058-5842-e34a-a40e-70026bd19540"]
+}, Open  ]]
+}, Open  ]],
+Cell[28438, 706, 13928, 322, 1456, "Input",ExpressionUUID->"c4518e35-66cc-0b4c-a641-f8beb49c3ecb"]
+}
+]
+*)
+
